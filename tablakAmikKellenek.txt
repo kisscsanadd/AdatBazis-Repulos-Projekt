@@ -24,4 +24,4 @@ Ország(id, név, népesség)) mi adjuk
 
 Figyelmeztetés(id, uzenet)admin adhat
 
-Szálloda(id, név, csillagokSzama)
+Szálloda(id, név, csillagokSzama, varos_id)
