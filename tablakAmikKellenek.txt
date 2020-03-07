@@ -2,9 +2,9 @@ Táblák:
 
 UtazásiOsztály(id, név) mi adjuk
 
-Foglalás( id, felhasználóid(fk), Jegy[], járatid(fk), fizetésiMódid(fk)) generálódik
+Foglalás( id, felhasználóid(fk), járatid(fk), fizetésiMódid(fk)) generálódik
 
-Jegy(id, kategória, kedvezmény, utazásiOsztályid(fk)) generálódik
+Jegy(id, kategória, kedvezmény, utazásiOsztályid(fk), foglalásid) generálódik
 
 FizetésiMód(id, név) mi adjuk
 
@@ -12,7 +12,7 @@ Felhasználók(id, felhnév, jelszó, admin(bool)) generálódik
 
 Járat(id, felszállásDátum, felszállásHelyeid(reptér fk), leszállásHelyeid(reptér fk), repülőgépid(fk), helyek)
 
-JáratFigyelmeztetésRelációk(id, járatid(fk), alertid(fk))
+JáratFigyelmeztetésRelációk(id, járatid(fk), figyelmeztetésid(fk))
 
 Repülőgép(id, név, férőhelyek ) admin adhat
 
@@ -22,4 +22,6 @@ Város(id, név, népesség, országid(fk)) mi adjuk
 
 Ország(id, név, népesség)) mi adjuk
 
-Figyelmeztetés(id, message) admin adhat
+Figyelmeztetés(id, uzenet)admin adhat
+
+Szálloda(id, név, csillagokSzama)
