@@ -1,5 +1,6 @@
 DROP TABLE felhasznalo;
 DROP TABLE fizetesimod;
+DROP TABLE szalloda;
 DROP TABLE foglalas;
 DROP TABLE jaratfigyrel;
 DROP TABLE jegy;
@@ -23,6 +24,7 @@ DROP SEQUENCE Repuloter_sequence;
 DROP SEQUENCE Varos_sequence;
 DROP SEQUENCE Orszag_sequence;
 DROP SEQUENCE Figyelmeztetes_sequence;
+DROP SEQUENCE szalloda_sequence;
 
 ALTER SESSION SET NLS_DATE_LANGUAGE = ENGLISH;
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY';
@@ -138,7 +140,7 @@ insert into Figyelmeztetes(uzenet) values('A járat 30 percet késik');
 
 CREATE TABLE Orszag 
     (id        NUMBER(10) NOT NULL,
-     nev       VARCHAR2(20) NOT NULL,
+     nev       VARCHAR2(50) NOT NULL,
   CONSTRAINT Orszag_PRIMARY_KEY PRIMARY KEY (id));
 
 create sequence Orszag_sequence;
@@ -327,3 +329,27 @@ create trigger JaratFigyRel_trigger
          from dual;
     end;
 	/
+	
+
+CREATE TABLE Szalloda 
+    (id              	NUMBER(10) NOT NULL,
+     nev                VARCHAR2(30) NOT NULL,
+     csillagok_szama    NUMBER(1) NOT NULL,
+     varos_id           NUMBER(10) NOT NULL,
+  CONSTRAINT Szalloda_FOREIGN_KEY FOREIGN KEY (varos_id) REFERENCES Varos (id),
+  CONSTRAINT Szalloda_PRIMARY_KEY PRIMARY KEY (id));
+
+create sequence Szalloda_sequence;
+
+create trigger Szalloda_trigger
+    before insert on Szalloda
+    for each row
+    begin
+      select Szalloda_sequence.nextval
+         into:new.id
+         from dual;
+    end;
+	/
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Danubius Hotel Helia', 4, 4);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Hotel Canada', 3, 2);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('The Savoy', 5, 3);
