@@ -1,0 +1,11 @@
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\netcoreapp3.1\WindowsFormsApp1.exe
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\netcoreapp3.1\WindowsFormsApp1.deps.json
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\netcoreapp3.1\WindowsFormsApp1.runtimeconfig.json
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\netcoreapp3.1\WindowsFormsApp1.runtimeconfig.dev.json
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\netcoreapp3.1\WindowsFormsApp1.dll
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\netcoreapp3.1\WindowsFormsApp1.pdb
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\netcoreapp3.1\WindowsFormsApp1.csprojAssemblyReference.cache
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\netcoreapp3.1\WindowsFormsApp1.AssemblyInfoInputs.cache
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\netcoreapp3.1\WindowsFormsApp1.AssemblyInfo.cs
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\netcoreapp3.1\WindowsFormsApp1.dll
+C:\Users\szirb\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\netcoreapp3.1\WindowsFormsApp1.pdb
