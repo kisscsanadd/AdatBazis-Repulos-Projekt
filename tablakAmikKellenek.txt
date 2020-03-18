@@ -4,7 +4,7 @@ UtazásiOsztály(id, név) mi adjuk
 
 Foglalás( id, felhasználóid(fk), járatid(fk), fizetésiMódid(fk)) generálódik
 
-Jegy(id, kategória, utazásiOsztályid(fk), foglalásid) generálódik
+Jegy(id, kategóriaid(fk), utazásiOsztályid(fk), foglalásid) generálódik
 
 FizetésiMód(id, név) mi adjuk
 
