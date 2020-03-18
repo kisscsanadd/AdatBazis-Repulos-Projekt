@@ -18,7 +18,7 @@ Repülőgép(id, név, férőhelyek ) admin adhat
 
 Repülőtér(id, név, városid(fk)) mi adjuk
 
-Város(id, név, népesség, országid(fk)) mi adjuk
+Város(id, név, országid(fk)) mi adjuk
 
 Ország(id, név, népesség)) mi adjuk
 
