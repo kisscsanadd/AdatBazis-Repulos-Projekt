@@ -4,7 +4,7 @@ UtazásiOsztály(id, név) mi adjuk
 
 Foglalás( id, felhasználóid(fk), járatid(fk), fizetésiMódid(fk)) generálódik
 
-Jegy(id, kategória, kedvezmény, utazásiOsztályid(fk), foglalásid) generálódik
+Jegy(id, kategória, utazásiOsztályid(fk), foglalásid) generálódik
 
 FizetésiMód(id, név) mi adjuk
 
@@ -25,3 +25,5 @@ Ország(id, név, népesség)) mi adjuk
 Figyelmeztetés(id, uzenet)admin adhat
 
 Szálloda(id, név, csillagokSzama, varos_id)
+
+Kategória(id, név, kedvezmeny)
