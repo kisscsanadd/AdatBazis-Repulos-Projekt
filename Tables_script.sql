@@ -11,6 +11,7 @@ DROP TABLE varos;
 DROP TABLE orszag;
 DROP TABLE jarat;
 DROP TABLE figyelmeztetes;
+DROP TABLE kategoria;
 
 DROP SEQUENCE UtazasiOsztaly_sequence;
 DROP SEQUENCE Foglalas_sequence;
@@ -25,6 +26,7 @@ DROP SEQUENCE Varos_sequence;
 DROP SEQUENCE Orszag_sequence;
 DROP SEQUENCE Figyelmeztetes_sequence;
 DROP SEQUENCE szalloda_sequence;
+DROP SEQUENCE kategoria_sequence;
 
 ALTER SESSION SET NLS_DATE_LANGUAGE = ENGLISH;
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY';
@@ -102,6 +104,7 @@ CREATE TABLE Jegy
 	 utazasi_osztaly_id	NUMBER(10),
 	 foglalasi_id		NUMBER(10),
   CONSTRAINT Jegy_FOREIGN_KEY FOREIGN KEY (utazasi_osztaly_id) REFERENCES UtazasiOsztaly (id),
+  CONSTRAINT Jegy_FOREIGN_KEY_2 FOREIGN KEY (kategoria_id) REFERENCES Kategoria (id),
   CONSTRAINT Jegy_PRIMARY_KEY PRIMARY KEY (id) );
 
 create sequence Jegy_sequence;
@@ -353,3 +356,27 @@ create trigger Szalloda_trigger
 insert into Szalloda(nev, csillagok_szama, varos_id) values('Danubius Hotel Helia', 4, 4);
 insert into Szalloda(nev, csillagok_szama, varos_id) values('Hotel Canada', 3, 2);
 insert into Szalloda(nev, csillagok_szama, varos_id) values('The Savoy', 5, 3);
+
+
+
+CREATE TABLE Kategoria 
+    (id              	NUMBER(10) NOT NULL,
+     nev                VARCHAR2(30) NOT NULL,
+     kedvezmeny         NUMBER(2) NOT NULL,
+  CONSTRAINT Kategoria_PRIMARY_KEY PRIMARY KEY (id));
+
+create sequence Kategoria_sequence;
+
+create trigger Kategoria_trigger
+    before insert on Kategoria
+    for each row
+    begin
+      select Kategoria_sequence.nextval
+         into:new.id
+         from dual;
+    end;
+	/
+insert into Kategoria(nev, kedvezmeny) values('Gyerek', 15);
+insert into Kategoria(nev, kedvezmeny) values('Diák', 20);
+insert into Kategoria(nev, kedvezmeny) values('Nyugdíjas', 20);
+insert into Kategoria(nev, kedvezmeny) values('Mozgáskorlátozott', 50);
