@@ -54,6 +54,7 @@ public class RegOrLoginController implements Initializable {
             root = FXMLLoader.load(RegOrLoginController.class.getResource("/fxmlView/reg_or_login.fxml"));
             Scene scene = new Scene(root);
 
+            scene.getStylesheets().add(RegOrLoginController.class.getResource("/css/style.css").toExternalForm());
             stage.setTitle("Repülőgép");
             stage.setScene(scene);
             stage.show();

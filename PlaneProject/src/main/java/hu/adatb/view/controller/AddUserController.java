@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.List;
@@ -29,7 +31,7 @@ public class AddUserController implements Initializable {
     PasswordField passwordField;
 
     @FXML
-    Button saveButton;
+    ImageView saveButton;
 
     @FXML
     Label errorMsgName;
@@ -48,7 +50,7 @@ public class AddUserController implements Initializable {
     private User user = new User();
 
     @FXML
-    private void save (ActionEvent event) {
+    private void save (MouseEvent mouseEvent) {
         if (UserController.getInstance().add(user)) {
             RegOrLoginController.back();
         } else {
