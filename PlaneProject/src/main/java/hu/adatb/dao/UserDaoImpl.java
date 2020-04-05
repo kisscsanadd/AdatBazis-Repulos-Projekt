@@ -1,0 +1,64 @@
+package hu.adatb.dao;
+
+import hu.adatb.model.User;
+import hu.adatb.query.Database;
+import hu.adatb.utils.Utils;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static hu.adatb.query.Queries.*;
+
+public class UserDaoImpl implements UserDao {
+
+    @Override
+    public boolean add(User user) {
+        try {
+            PreparedStatement st = Database.ConnectionToDatabaseWithPreparedStatement(INSERT_USER);
+
+            st.setString(1, user.getName());
+            st.setString(2, user.getPassword());
+            st.setInt(3, 0);
+            st.setString(4, user.getEmail());
+            System.out.println(st.getMetaData());
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                Utils.showInformation("Sikeres regisztráció");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Utils.showWarning("Nem sikerült a mentés");
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<User> getAll() {
+        List<User> result = new ArrayList<>();
+
+        try {
+            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+
+            ResultSet rs = stmt.executeQuery(SELECT_USER);
+
+            while (rs.next()) {
+                User user = new User(
+                        rs.getString("felh_nev"),
+                        rs.getString("jelszo"),
+                        rs.getInt("isAdmin"),
+                        rs.getString("email")
+                );
+
+                result.add(user);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            Utils.showWarning("Nem sikerült lekérni a felhasználót");
+        }
+
+        return result;
+    }
+}
