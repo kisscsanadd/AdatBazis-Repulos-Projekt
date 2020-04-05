@@ -55,7 +55,7 @@
             <Font size="15.0" />
          </font>
         </Button>
-        <ImageView fx:id="saveButton" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6" onMouseClicked="#save">
+        <ImageView fx:id="saveButton" styleClass="button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6" onMouseClicked="#save">
             <image>
                 <Image url="@../pictures/registrationPic.jpg" />
             </image>
