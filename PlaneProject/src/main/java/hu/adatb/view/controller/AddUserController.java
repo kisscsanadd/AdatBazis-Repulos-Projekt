@@ -85,6 +85,8 @@ public class AddUserController implements Initializable {
                 }
             }
 
+            saveButton.disableProperty().bind(nameField.textProperty().length().lessThan(1));
+
             if (!match) {
                 errorMsgName.setText("");
             } else {

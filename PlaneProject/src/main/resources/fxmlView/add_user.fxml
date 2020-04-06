@@ -35,7 +35,7 @@
          <font>
             <Font size="13.0" />
          </font></Label>
-        <TextField fx:id="nameField" promptText="Adj meg egy felhasználónevet" GridPane.columnIndex="1">
+        <TextField fx:id="nameField" text="User" promptText="Adj meg egy felhasználónevet" GridPane.columnIndex="1">
          <font>
             <Font size="13.0" />
          </font></TextField>

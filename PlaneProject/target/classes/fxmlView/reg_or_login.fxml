@@ -12,7 +12,7 @@
             <Image url="@../pictures/plane.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="226.0" layoutY="51.0" mnemonicParsing="false" onAction="#registration" text="Regisztráció">
+      <Button layoutX="226.0" layoutY="49.0" mnemonicParsing="false" onAction="#registration" text="Regisztráció">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
