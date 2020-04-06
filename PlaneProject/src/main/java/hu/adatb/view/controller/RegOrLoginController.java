@@ -1,7 +1,10 @@
 package hu.adatb.view.controller;
 
 import hu.adatb.App;
+import hu.adatb.controller.UserController;
+import hu.adatb.model.User;
 import hu.adatb.utils.Utils;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,9 +14,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class RegOrLoginController implements Initializable {
+
+    private static List<User> users;
 
     @FXML
     public void registration() {
@@ -55,6 +61,19 @@ public class RegOrLoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Task<List<User>> task = new Task<>() {
+            @Override
+            protected List<User> call() throws Exception {
+                return users = UserController.getInstance().getAll();
+            }
+        };
 
+        Thread getAllThread = new Thread(task);
+        getAllThread.start();
+    }
+
+    public static List<User> getAllUsers() {
+        System.out.println(App.CurrentTime() + "Get " + users.size() + " users");
+        return users;
     }
 }

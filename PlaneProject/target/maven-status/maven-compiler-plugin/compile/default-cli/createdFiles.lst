@@ -1,6 +1,4 @@
-hu\adatb\view\controller\AddUserController$1.class
 hu\adatb\App.class
-hu\adatb\view\controller\LoginUserController$1.class
 hu\adatb\query\Database.class
 hu\adatb\utils\Utils.class
 hu\adatb\view\controller\RegOrLoginController.class
@@ -8,6 +6,7 @@ hu\adatb\view\controller\AddUserController.class
 hu\adatb\model\User.class
 hu\adatb\controller\UserController.class
 hu\adatb\view\controller\LoginUserController.class
+hu\adatb\view\controller\RegOrLoginController$1.class
 hu\adatb\dao\CityDaoImpl.class
 hu\adatb\dao\UserDao.class
 hu\adatb\controller\CityController.class

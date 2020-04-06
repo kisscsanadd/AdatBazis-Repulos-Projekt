@@ -66,16 +66,7 @@ public class AddUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        Task<List<User>> task = new Task<>() {
-            @Override
-            protected List<User> call() throws Exception {
-                return users = UserController.getInstance().getAll();
-            }
-        };
-
-        Thread getAllThread = new Thread(task);
-        getAllThread.start();
+        users = RegOrLoginController.getAllUsers();
 
         user.nameProperty().bind(nameField.textProperty());
         user.passwordProperty().bind(passwordField.textProperty());

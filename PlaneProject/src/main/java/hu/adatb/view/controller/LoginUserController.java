@@ -31,20 +31,7 @@ public class LoginUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Task<List<User>> task = new Task<>() {
-            @Override
-            protected List<User> call() throws Exception {
-                return users = UserController.getInstance().getAll();
-            }
-        };
-
-        Thread getAllThread = new Thread(task);
-        getAllThread.start();
-        try {
-            getAllThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        users = RegOrLoginController.getAllUsers();
     }
 
     public void login(ActionEvent actionEvent) {
