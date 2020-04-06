@@ -3,6 +3,7 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.CityController;
 import hu.adatb.model.City;
+import hu.adatb.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,20 +39,15 @@ public class MainWindowController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     }
 
-
-    public static void back() {
-        Stage stage = App.StageDeliver();
-        Parent root = null;
+    public static void goToMain(boolean isAdmin) {
         try {
-            root = FXMLLoader.load(MainWindowController.class.getResource("/fxmlView/main_window.fxml"));
-            Scene scene = new Scene(root);
-
-            stage.setTitle("Főoldal");
-            stage.setScene(scene);
+            System.out.println("\n"+ App.CurrentTime() + "Destroyed login page");
+            Stage stage = App.StageDeliver("main_window.fxml", "Főoldal");
             stage.setMaximized(true);
-            stage.show();
-
+            System.out.println(App.CurrentTime() + "Opened main page after login " + "as " + (isAdmin ? "admin" : "user"));
         } catch (IOException e) {
+            System.out.println(App.CurrentTime() + "Cannot open main page");
+            Utils.showWarning("Nem sikerült megnyitni a főoldalt");
             e.printStackTrace();
         }
     }

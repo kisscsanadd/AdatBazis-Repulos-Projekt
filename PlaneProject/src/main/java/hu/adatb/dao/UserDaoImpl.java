@@ -1,5 +1,6 @@
 package hu.adatb.dao;
 
+import hu.adatb.App;
 import hu.adatb.model.User;
 import hu.adatb.query.Database;
 import hu.adatb.utils.Utils;
@@ -25,6 +26,7 @@ public class UserDaoImpl implements UserDao {
             int res = st.executeUpdate();
 
             if (res == 1) {
+                System.out.println(App.CurrentTime() + "Successful registration");
                 Utils.showInformation("Sikeres regisztráció");
                 return true;
             }

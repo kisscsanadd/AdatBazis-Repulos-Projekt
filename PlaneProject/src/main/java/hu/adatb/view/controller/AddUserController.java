@@ -52,7 +52,7 @@ public class AddUserController implements Initializable {
     @FXML
     private void save (MouseEvent mouseEvent) {
         if (UserController.getInstance().add(user)) {
-            RegOrLoginController.back();
+            RegOrLoginController.back("registration");
         } else {
             Utils.showWarning("Nem sikerult a mentes");
             return;
@@ -61,7 +61,7 @@ public class AddUserController implements Initializable {
 
     @FXML
     private void cancel(ActionEvent event) {
-        RegOrLoginController.back();
+        RegOrLoginController.back("registration");
     }
 
     @Override

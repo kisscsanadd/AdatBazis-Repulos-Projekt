@@ -1,6 +1,7 @@
 package hu.adatb.view.controller;
 
 import hu.adatb.App;
+import hu.adatb.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,49 +17,38 @@ public class RegOrLoginController implements Initializable {
 
     @FXML
     public void registration() {
-        Stage stage = App.StageDeliver();
-        Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/fxmlView/add_user.fxml"));
-            Scene scene = new Scene(root);
-
-            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
-            stage.setTitle("Regisztráció");
-            stage.setScene(scene);
-            stage.show();
+            System.out.println("\n" + App.CurrentTime() + "Destroyed first page");
+            App.StageDeliver("add_user.fxml", "Regisztráció", "style.css");
+            System.out.println(App.CurrentTime() + "Opened registration page");
         } catch (IOException e) {
+            System.out.println(App.CurrentTime() + "Cannot open registration page");
+            Utils.showWarning("Nem sikerült megnyitni a regisztrációs ablakot");
             e.printStackTrace();
         }
     }
 
     @FXML
     public void login() {
-        Stage stage = App.StageDeliver();
-        Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/fxmlView/login_user.fxml"));
-            Scene scene = new Scene(root);
-
-            stage.setTitle("Bejelentkezés");
-            stage.setScene(scene);
-            stage.show();
+            System.out.println("\n" + App.CurrentTime() + "Destroyed first page");
+            App.StageDeliver("login_user.fxml", "Bejelentkezés");
+            System.out.println(App.CurrentTime() + "Opened login page");
         } catch (IOException e) {
+            System.out.println(App.CurrentTime() + "Cannot open login page");
+            Utils.showWarning("Nem sikerült megnyitni a bejelentekző ablakot");
             e.printStackTrace();
         }
     }
 
-    public static void back() {
-        Stage stage = App.StageDeliver();
-        Parent root = null;
+    public static void back(String from) {
         try {
-            root = FXMLLoader.load(RegOrLoginController.class.getResource("/fxmlView/reg_or_login.fxml"));
-            Scene scene = new Scene(root);
-
-            scene.getStylesheets().add(RegOrLoginController.class.getResource("/css/style.css").toExternalForm());
-            stage.setTitle("Repülőgép");
-            stage.setScene(scene);
-            stage.show();
+            System.out.println("\n" + App.CurrentTime() + "Destroyed " + from + " page");
+            App.StageDeliver("reg_or_login.fxml", "Repülőgép", "style.css");
+            System.out.println(App.CurrentTime() + "Opened first page");
         } catch (IOException e) {
+            System.out.println(App.CurrentTime() + "Cannot open first page");
+            Utils.showWarning("Nem sikerült megnyitni a főablakot ablakot");
             e.printStackTrace();
         }
     }
