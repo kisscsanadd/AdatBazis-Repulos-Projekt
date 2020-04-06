@@ -84,6 +84,9 @@ public class AddUserController implements Initializable {
                     currentUser = user.getName();
                 }
             }
+            
+            /* TODO - Can delete text value if you can solve that save button disabled when name field is empty (at first time)
+                         and everything else works as now */
 
             saveButton.disableProperty().bind(nameField.textProperty().length().lessThan(1));
 
