@@ -50,7 +50,7 @@ public class RegOrLoginController implements Initializable {
     public static void back(String from) {
         try {
             System.out.println("\n" + App.CurrentTime() + "Destroyed " + from + " page");
-            App.StageDeliver("reg_or_login.fxml", "Repülőgép", "style.css");
+            App.StageDeliver("reg_or_login.fxml", "Repülőjárat foglaló rendszer", "style.css");
             System.out.println(App.CurrentTime() + "Opened first page");
         } catch (IOException e) {
             System.out.println(App.CurrentTime() + "Cannot open first page");
