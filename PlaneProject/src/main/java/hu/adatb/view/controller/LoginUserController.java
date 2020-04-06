@@ -1,9 +1,7 @@
 package hu.adatb.view.controller;
 
-import hu.adatb.controller.UserController;
 import hu.adatb.model.User;
 import hu.adatb.utils.Utils;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,9 +44,17 @@ public class LoginUserController implements Initializable {
         }
 
         if(valid) {
-            MainWindowController.goToMain(isAdmin);    //TODO - separate the logic according to isAdmin
+            if (isAdmin) {
+                AdminWindowController.goToMainForAdmin();
+            } else {
+                // TODO - UserWindowController.goToMainForUser();  -  make it if admin page design is ready
+                Utils.showInformation("Nincs engedélye belépni");
+                nameField.setText("");
+                passwordField.setText("");
+                return;
+            }
         } else {
-            Utils.showWarning("Érvénytelen felhasználó-jelszó páros");
+            Utils.showWarning("Érvénytelen felhasználónév-jelszó páros");
         }
 
     }

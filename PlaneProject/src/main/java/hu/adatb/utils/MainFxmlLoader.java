@@ -8,7 +8,7 @@ public class MainFxmlLoader {
 
     public static Pane getPage(String fileName) {
         try {
-            view = new FXMLLoader().load(MainFxmlLoader.class.getResource("/fxmlView/" + fileName));
+            view = new FXMLLoader().load(MainFxmlLoader.class.getResource("/fxmlView/adminView/" + fileName));
         } catch (Exception e) {
             e.printStackTrace();
         }

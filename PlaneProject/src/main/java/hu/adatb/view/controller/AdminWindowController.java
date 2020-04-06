@@ -14,12 +14,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainWindowController implements Initializable {
+public class AdminWindowController implements Initializable {
 
     @FXML
     private BorderPane mainPane;
 
-    public MainWindowController() {
+    public AdminWindowController() {
     }
 
     @Override
@@ -27,12 +27,12 @@ public class MainWindowController implements Initializable {
 
     }
 
-    public static void goToMain(boolean isAdmin) {
+    public static void goToMainForAdmin() {
         try {
             System.out.println("\n"+ App.CurrentTime() + "Destroyed login page");
-            Stage stage = App.StageDeliver("main_window.fxml", "Főoldal");
+            Stage stage = App.StageDeliver("admin_main_window.fxml", "Főoldal");
             stage.setMaximized(true);
-            System.out.println(App.CurrentTime() + "Opened main page after login " + "as " + (isAdmin ? "admin" : "user"));
+            System.out.println(App.CurrentTime() + "Opened admin main page after login");
         } catch (IOException e) {
             System.out.println(App.CurrentTime() + "Cannot open main page");
             Utils.showWarning("Nem sikerült megnyitni a főoldalt");
