@@ -6,6 +6,7 @@ hu\adatb\view\controller\AddUserController.class
 hu\adatb\model\User.class
 hu\adatb\controller\UserController.class
 hu\adatb\view\controller\LoginUserController.class
+hu\adatb\utils\MainFxmlLoader.class
 hu\adatb\view\controller\RegOrLoginController$1.class
 hu\adatb\dao\CityDaoImpl.class
 hu\adatb\dao\UserDao.class

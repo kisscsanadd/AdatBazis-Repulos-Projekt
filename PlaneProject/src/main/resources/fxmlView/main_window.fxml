@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/10.0.2-internal"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="hu.adatb.view.controller.MainWindowController">
-    <children>
-        <TableView fx:id="table" layoutY="27.0" prefHeight="317.0" prefWidth="600.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
-            <columns>
-                <TableColumn fx:id="nameCol" prefWidth="182.0" text="Name" />
-            </columns>
-        </TableView>
-    </children>
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.MainWindowController">
+   <children>
+      <BorderPane fx:id="mainPane" layoutX="5.0" layoutY="7.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0">
+         <left>
+            <VBox prefHeight="162.0" prefWidth="75.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#buttonAction1" text="Button1">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction2" text="Button2">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </left></BorderPane>
+   </children>
 </AnchorPane>

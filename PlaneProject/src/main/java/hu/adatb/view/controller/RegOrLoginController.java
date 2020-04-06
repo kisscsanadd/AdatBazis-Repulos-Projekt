@@ -70,6 +70,12 @@ public class RegOrLoginController implements Initializable {
 
         Thread getAllThread = new Thread(task);
         getAllThread.start();
+
+        try {
+            getAllThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public static List<User> getAllUsers() {

@@ -1,42 +1,30 @@
 package hu.adatb.view.controller;
 
 import hu.adatb.App;
-import hu.adatb.controller.CityController;
-import hu.adatb.model.City;
+import hu.adatb.utils.MainFxmlLoader;
 import hu.adatb.utils.Utils;
-import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
 
     @FXML
-    private TableView<City> table;
-
-    @FXML
-    private TableColumn<City, String> nameCol;
+    private BorderPane mainPane;
 
     public MainWindowController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<City> cityList = CityController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(cityList));
 
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     }
 
     public static void goToMain(boolean isAdmin) {
@@ -50,5 +38,20 @@ public class MainWindowController implements Initializable {
             Utils.showWarning("Nem sikerült megnyitni a főoldalt");
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void buttonAction1(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + "Opened Screen1");
+        Pane view = MainFxmlLoader.getPage("Screen1.fxml");
+        mainPane.setCenter(view);
+    }
+
+
+    @FXML
+    public void buttonAction2(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + "Opened Screen2");
+        Pane view = MainFxmlLoader.getPage("Screen2.fxml");
+        mainPane.setCenter(view);
     }
 }
