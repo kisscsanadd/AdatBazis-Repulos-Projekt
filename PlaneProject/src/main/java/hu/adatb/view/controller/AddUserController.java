@@ -54,7 +54,6 @@ public class AddUserController implements Initializable {
         if (UserController.getInstance().add(user)) {
             RegOrLoginController.back("registration");
         } else {
-            Utils.showWarning("Nem sikerult a mentes");
             return;
         }
     }
@@ -72,48 +71,51 @@ public class AddUserController implements Initializable {
         user.passwordProperty().bind(passwordField.textProperty());
         user.emailProperty().bind(emailField.textProperty());
 
-        saveButton.disableProperty().bind(nameField.textProperty().isEmpty().
-                or(errorMsgEmail.textProperty().isNotEmpty()).or(passwordField.textProperty().isEmpty()));
+        FieldValidator();
 
         nameField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            var currentUser = "";
             var match = false;
             for (var user: users) {
                 if (newValue.equals(user.getName())) {
                     match = true;
-                    currentUser = user.getName();
                 }
             }
-            
-            /* TODO - Can delete text value if you can solve that save button disabled when name field is empty (at first time)
-                         and everything else works as now */
-
-            saveButton.disableProperty().bind(nameField.textProperty().length().lessThan(1));
 
             if (!match) {
                 errorMsgName.setText("");
+                FieldValidator();
             } else {
                 errorMsgName.setText("Ilyen név már létezik");
-                saveButton.disableProperty().bind(nameField.textProperty().isEqualTo(currentUser));
+                saveButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
             }
         });
 
         emailField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+
             if (newValue.matches("\\S+@\\S+\\.\\S\\S") ||
                     newValue.matches("\\S+@\\S+\\.\\S\\S\\S")) {
                 errorMsgEmail.setText("");
+                FieldValidator();
             } else {
                 errorMsgEmail.setText("Érvénytelen email cím");
+                saveButton.disableProperty().bind(errorMsgEmail.textProperty().isNotEmpty());
             }
         });
 
         passwordField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+
             if (newValue.length() > 4) {
                 errorMsgPassword.setText("");
+                FieldValidator();
             } else {
                 errorMsgPassword.setText("Túl rövid a jelszó");
-                saveButton.disableProperty().bind(passwordField.textProperty().length().lessThan(5));
+                saveButton.disableProperty().bind(errorMsgPassword.textProperty().isNotEmpty());
             }
         });
+    }
+
+    private void FieldValidator() {
+        saveButton.disableProperty().bind(nameField.textProperty().isEmpty().
+                or(emailField.textProperty().isEmpty()).or(passwordField.textProperty().isEmpty()));
     }
 }

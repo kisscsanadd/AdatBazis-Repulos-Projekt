@@ -22,7 +22,7 @@ public class UserDaoImpl implements UserDao {
             st.setString(2, user.getPassword());
             st.setInt(3, 0);
             st.setString(4, user.getEmail());
-            System.out.println(st.getMetaData());
+
             int res = st.executeUpdate();
 
             if (res == 1) {
@@ -31,9 +31,10 @@ public class UserDaoImpl implements UserDao {
                 return true;
             }
         } catch (SQLException | ClassNotFoundException e) {
-            Utils.showWarning("Nem sikerült a mentés");
+            System.out.println(App.CurrentTime() + "Failed registration");
         }
 
+        Utils.showWarning("Nem sikerült a regisztráció");
         return false;
     }
 
