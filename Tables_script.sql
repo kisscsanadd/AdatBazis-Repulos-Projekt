@@ -75,8 +75,8 @@ insert into FizetesiMod(nev) values('Készpénz');
 
 CREATE TABLE Felhasznalo 
     (id              	NUMBER(10) NOT NULL,
-     felh_nev           VARCHAR2(30),
-	 jelszo				VARCHAR2(20),
+     felh_nev           VARCHAR2(30) NOT NULL,
+	 jelszo				VARCHAR2(20) NOT NULL,
 	 isAdmin			NUMBER(1,0) DEFAULT 0,
 	 email				VARCHAR2(50) NOT NULL,
   CONSTRAINT Felhasznalo_PRIMARY_KEY PRIMARY KEY (id));
