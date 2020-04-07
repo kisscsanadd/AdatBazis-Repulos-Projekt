@@ -47,11 +47,7 @@ public class LoginUserController implements Initializable {
             if (isAdmin) {
                 AdminWindowController.goToMainForAdmin();
             } else {
-                // TODO - UserWindowController.goToMainForUser();  -  make it if admin page design is ready
-                Utils.showInformation("Nincs engedélye belépni");
-                nameField.setText("");
-                passwordField.setText("");
-                return;
+                UserWindowController.goToMainForUser();
             }
         } else {
             Utils.showWarning("Érvénytelen felhasználónév-jelszó páros");

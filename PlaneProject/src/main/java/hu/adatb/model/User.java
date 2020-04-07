@@ -3,6 +3,7 @@ package hu.adatb.model;
 import javafx.beans.property.*;
 
 public class User {
+
     private StringProperty name = new SimpleStringProperty();
     private StringProperty password = new SimpleStringProperty();
     private StringProperty email = new SimpleStringProperty();

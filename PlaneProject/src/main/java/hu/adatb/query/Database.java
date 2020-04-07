@@ -19,7 +19,6 @@ public class Database {
         return stmt;
     }
 
-
     public static PreparedStatement ConnectionToDatabaseWithPreparedStatement(String query) throws ClassNotFoundException, SQLException {
         OracleDataSource ods = new OracleDataSource();
         Class.forName ("oracle.jdbc.OracleDriver");
