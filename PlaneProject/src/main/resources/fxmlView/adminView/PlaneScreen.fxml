@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.PlaneWindowController">
+   <children>
+      <Label layoutX="550.0" layoutY="20.0" text="Repülőgépek">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="20.0" prefWidth="160.0">
+         <children>
+            <Button mnemonicParsing="false" text="Repülőgép hozzáadás" />
+         </children>
+      </HBox>
+      <TableView fx:id="table" layoutY="25.0" prefHeight="317.0" prefWidth="550.0">
+         <columns>
+            <TableColumn fx:id="nameCol" prefWidth="182.0" text="Név" />
+            <TableColumn fx:id="ferohelyCol" prefWidth="186.0" text="Ferőhely" />
+            <TableColumn fx:id="actionsCol" prefWidth="186.0" text="Műveletek" />
+         </columns>
+      </TableView>
+   </children>
+   <padding>
+      <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+   </padding>
+</AnchorPane>

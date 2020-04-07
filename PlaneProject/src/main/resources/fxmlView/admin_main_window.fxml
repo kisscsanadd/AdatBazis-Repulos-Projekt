@@ -8,14 +8,29 @@
    <children>
       <BorderPane fx:id="mainPane" layoutX="5.0" layoutY="7.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0">
          <left>
-            <VBox prefHeight="162.0" prefWidth="75.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="190.0" prefWidth="108.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#buttonAction1" text="Button1">
+                  <Button mnemonicParsing="false" onAction="#buttonAction1" text="Repülőjárat">
                      <VBox.margin>
                         <Insets left="7.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction2" text="Button2">
+                  <Button mnemonicParsing="false" onAction="#buttonAction2" text="Repülőgép">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction3" text="Repülőtér">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction4" text="Figyelmeztetés">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction5" text="Szálloda">
                      <VBox.margin>
                         <Insets left="7.0" top="10.0" />
                      </VBox.margin>

@@ -43,13 +43,31 @@ public class AdminWindowController implements Initializable {
     @FXML
     public void buttonAction1(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen1");
-        Pane view = MainFxmlLoader.getPage("Screen1.fxml");
+        Pane view = MainFxmlLoader.getPage("Screen2.fxml");
         mainPane.setCenter(view);
     }
 
 
     @FXML
     public void buttonAction2(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + "Opened Screen2");
+        Pane view = MainFxmlLoader.getPage("PlaneScreen.fxml");
+        mainPane.setCenter(view);
+    }
+    @FXML
+    public void buttonAction3(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + "Opened Screen2");
+        Pane view = MainFxmlLoader.getPage("Screen2.fxml");
+        mainPane.setCenter(view);
+    }
+    @FXML
+    public void buttonAction4(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + "Opened Screen2");
+        Pane view = MainFxmlLoader.getPage("Screen2.fxml");
+        mainPane.setCenter(view);
+    }
+    @FXML
+    public void buttonAction5(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen2");
         Pane view = MainFxmlLoader.getPage("Screen2.fxml");
         mainPane.setCenter(view);
