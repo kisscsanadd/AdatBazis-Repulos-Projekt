@@ -23,6 +23,10 @@ public class HotelController {
         return dao.add(hotel);
     }
 
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }
+
     public List<Hotel> getAll() {
         return dao.getAll();
     }

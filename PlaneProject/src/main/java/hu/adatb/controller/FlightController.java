@@ -23,6 +23,10 @@ public class FlightController {
         return dao.add(flight);
     }
 
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }
+
     public List<Flight> getAll() {
         return dao.getAll();
     }

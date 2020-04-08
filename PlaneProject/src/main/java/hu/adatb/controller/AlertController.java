@@ -22,6 +22,10 @@ public class AlertController {
         return dao.add(alert);
     }
 
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }
+
     public List<Alert> getAll() {
         return dao.getAll();
     }
