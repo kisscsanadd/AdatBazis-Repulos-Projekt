@@ -27,7 +27,7 @@ DROP SEQUENCE Figyelmeztetes_sequence;
 DROP SEQUENCE szalloda_sequence;
 
 ALTER SESSION SET NLS_DATE_LANGUAGE = ENGLISH;
-ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY';
+ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MON-DD HH24:MI';
 
 CREATE TABLE UtazasiOsztaly 
     (id              	NUMBER(10) NOT NULL,
@@ -285,7 +285,8 @@ create trigger Jarat_trigger
          from dual;
     end;
 	/
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('19-NOV-2181' ,1 ,2 ,1 ,999);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('1998-DEC-25 17:30' ,1 ,2 ,1 ,999);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2014-AUG-18 14:30' ,3 ,1 ,4 ,81);
 
 
 

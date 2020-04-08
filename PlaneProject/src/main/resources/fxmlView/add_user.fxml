@@ -57,7 +57,7 @@
         </Button>
         <ImageView fx:id="saveButton" styleClass="button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6" onMouseClicked="#save">
             <image>
-                <Image url="@../pictures/registrationPic.jpg" />
+                <Image url="@../pictures/regButton.png" />
             </image>
         </ImageView>
         <Label fx:id="errorMsgName" styleClass="errorMsg_reg" GridPane.columnIndex="1" GridPane.rowIndex="1" />
