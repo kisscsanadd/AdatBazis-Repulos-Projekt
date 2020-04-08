@@ -48,8 +48,6 @@ public class HotelDaoImpl implements HotelDao{
                         )
                 );
 
-                System.out.println("Hotel: " + hotel.getName() + " " + hotel.getStars() + " " + hotel.getCity().getName());
-
                 result.add(hotel);
             }
 
