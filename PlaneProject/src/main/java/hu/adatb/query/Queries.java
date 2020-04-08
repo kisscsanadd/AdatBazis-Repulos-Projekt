@@ -11,6 +11,7 @@ public class Queries {
     public static final String SELECT_HOTEL = "SELECT * FROM SZALLODA";
     public static final String SELECT_PAYMENT = "SELECT * FROM FIZETESIMOD";
     public static final String SELECT_CATEGORY = "SELECT * FROM KATEGORIA";
+    public static final String SELECT_ALERT = "SELECT * FROM FIGYELMEZTETES";
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
 
 }
