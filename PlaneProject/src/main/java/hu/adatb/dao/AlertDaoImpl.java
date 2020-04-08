@@ -16,7 +16,7 @@ import static hu.adatb.query.Queries.SELECT_ALERT;
 public class AlertDaoImpl implements AlertDao {
     @Override
     public boolean add(Alert alert) {
-        return false;
+        return false;   // TODO - make it
     }
 
     @Override

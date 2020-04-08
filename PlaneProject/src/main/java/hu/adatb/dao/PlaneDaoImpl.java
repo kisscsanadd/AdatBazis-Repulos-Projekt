@@ -16,7 +16,7 @@ public class PlaneDaoImpl implements  PlaneDao {
 
     @Override
     public boolean add(Plane plane) {
-        return false;
+        return false; // TODO - make it
     }
 
     @Override

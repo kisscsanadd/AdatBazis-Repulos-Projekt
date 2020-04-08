@@ -16,7 +16,7 @@ public class CityDaoImpl implements  CityDao {
 
     @Override
     public boolean add(City city) {
-        return false;
+        return false;   // TODO - make it
     }
 
     @Override

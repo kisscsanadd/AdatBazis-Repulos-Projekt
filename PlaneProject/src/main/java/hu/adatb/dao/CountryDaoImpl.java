@@ -15,7 +15,7 @@ import static hu.adatb.query.Queries.SELECT_COUNTRY;
 public class CountryDaoImpl implements CountryDao {
     @Override
     public boolean add(Country country) {
-        return false;
+        return false; // TODO - make it
     }
 
     @Override

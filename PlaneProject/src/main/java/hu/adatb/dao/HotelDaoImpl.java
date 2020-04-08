@@ -18,7 +18,7 @@ import static hu.adatb.query.Queries.*;
 public class HotelDaoImpl implements HotelDao{
     @Override
     public boolean add(Hotel hotel) {
-        return false;
+        return false;   // TODO - make it
     }
 
     @Override
