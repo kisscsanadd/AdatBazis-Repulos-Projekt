@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.AdminWindowController">
+   <children>
+      <BorderPane fx:id="mainPane" layoutX="5.0" layoutY="7.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0">
+         <left>
+            <VBox prefHeight="190.0" prefWidth="108.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#buttonAction1" text="Repülőjárat">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#getPlaneScreen" text="Repülőgép">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction3" text="Repülőtér">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction4" text="Figyelmeztetés">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction5" text="Szálloda">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction5" text="Járatok">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction5" text="Kijelentkezés">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </left></BorderPane>
+   </children>
+</AnchorPane>

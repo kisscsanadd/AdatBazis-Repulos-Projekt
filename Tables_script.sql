@@ -29,7 +29,7 @@ DROP SEQUENCE szalloda_sequence;
 DROP SEQUENCE kategoria_sequence;
 
 ALTER SESSION SET NLS_DATE_LANGUAGE = ENGLISH;
-ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY';
+ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MON-DD HH24:MI';
 
 CREATE TABLE UtazasiOsztaly 
     (id              	NUMBER(10) NOT NULL,
@@ -77,8 +77,8 @@ insert into FizetesiMod(nev) values('Készpénz');
 
 CREATE TABLE Felhasznalo 
     (id              	NUMBER(10) NOT NULL,
-     felh_nev           VARCHAR2(30),
-	 jelszo				VARCHAR2(20),
+     felh_nev           VARCHAR2(30) NOT NULL,
+	 jelszo				VARCHAR2(20) NOT NULL,
 	 isAdmin			NUMBER(1,0) DEFAULT 0,
 	 email				VARCHAR2(50) NOT NULL,
   CONSTRAINT Felhasznalo_PRIMARY_KEY PRIMARY KEY (id));
@@ -288,7 +288,8 @@ create trigger Jarat_trigger
          from dual;
     end;
 	/
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('19-NOV-2181' ,1 ,2 ,1 ,999);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('1998-DEC-25 17:30' ,1 ,2 ,1 ,999);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2014-AUG-18 14:30' ,3 ,1 ,4 ,81);
 
 
 
