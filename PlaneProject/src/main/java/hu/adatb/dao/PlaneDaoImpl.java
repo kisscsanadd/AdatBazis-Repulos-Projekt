@@ -30,6 +30,7 @@ public class PlaneDaoImpl implements  PlaneDao {
 
             while (rs.next()) {
                 Plane plane = new Plane(
+                        rs.getInt("id"),
                         rs.getString("nev"),
                         rs.getInt("ferohely")
                 );

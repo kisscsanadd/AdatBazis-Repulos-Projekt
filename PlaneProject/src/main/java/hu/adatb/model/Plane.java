@@ -7,12 +7,25 @@ import javafx.beans.property.IntegerProperty;
 
 public class Plane {
 
+    private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
     private IntegerProperty seats = new SimpleIntegerProperty();
 
-    public Plane(String name, int seats) {
+    public Plane(int id, String name, int seats) {
         this.name.set(name);
         this.seats.set(seats);
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
     }
 
     public String getName() {
