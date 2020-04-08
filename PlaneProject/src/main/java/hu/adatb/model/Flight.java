@@ -5,42 +5,42 @@ import javafx.beans.property.*;
 public class Flight {
 
     private StringProperty date = new SimpleStringProperty();
-    private StringProperty from = new SimpleStringProperty();
-    private StringProperty to = new SimpleStringProperty();
+    private IntegerProperty fromAirportId = new SimpleIntegerProperty();
+    private IntegerProperty toAirportId = new SimpleIntegerProperty();
     private IntegerProperty freeSeats = new SimpleIntegerProperty();
 
-    public Flight(String date, String from, String to, Integer freeSeats) {
+    public Flight(String date, Integer fromAirportId, Integer toAirportId, Integer freeSeats) {
         this.date.set(date);
-        this.from.set(from);
-        this.to.set(to);
+        this.fromAirportId.set(fromAirportId);
+        this.toAirportId.set(toAirportId);
         this.freeSeats.set(freeSeats);
     }
 
     public Flight() {
     }
 
-    public String getFrom() {
-        return from.get();
+    public Integer getFromAirportId() {
+        return fromAirportId.get();
     }
 
-    public StringProperty fromProperty() {
-        return from;
+    public IntegerProperty fromProperty() {
+        return fromAirportId;
     }
 
-    public void setFrom(String from) {
-        this.from.set(from);
+    public void setFromAirportId(Integer fromAirportId) {
+        this.fromAirportId.set(fromAirportId);
     }
 
-    public String getTo() {
-        return to.get();
+    public Integer getToAirportId() {
+        return toAirportId.get();
     }
 
-    public StringProperty toProperty() {
-        return to;
+    public IntegerProperty toAirportIdProperty() {
+        return toAirportId;
     }
 
-    public void setTo(String to) {
-        this.to.set(to);
+    public void setToAirportId(Integer toAirportId) {
+        this.toAirportId.set(toAirportId);
     }
 
     public String getDate() {
@@ -71,8 +71,8 @@ public class Flight {
     public String toString() {
         return "Flight{" +
                 "date=" + date +
-                ", from=" + from +
-                ", to=" + to +
+                ", from=" + fromAirportId +
+                ", to=" + toAirportId +
                 ", freeSeats=" + freeSeats +
                 '}';
     }
