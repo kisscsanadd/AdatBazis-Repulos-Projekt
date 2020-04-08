@@ -3,6 +3,7 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.AirportController;
 import hu.adatb.controller.FlightController;
+import hu.adatb.controller.UserController;
 import hu.adatb.model.Flight;
 import hu.adatb.utils.Utils;
 import javafx.event.ActionEvent;

@@ -26,6 +26,10 @@ public class BookingController {
         return dao.add(booking);
     }
 
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }
+
     public List<Booking> getAll() {
         return dao.getAll();
     }

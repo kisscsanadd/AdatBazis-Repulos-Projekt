@@ -22,6 +22,10 @@ public class AirportController {
         return dao.add(airport);
     }
 
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }
+
     public List<Airport> getAll() {
         return dao.getAll();
     }

@@ -23,6 +23,10 @@ public class UserController {
         return dao.add(user);
     }
 
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }
+
     public List<User> getAll() {
         return dao.getAll();
     }

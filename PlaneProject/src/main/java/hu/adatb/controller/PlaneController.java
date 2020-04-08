@@ -22,6 +22,10 @@ public class PlaneController {
         return dao.add(plane);
     }
 
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }
+
     public List<Plane> getAll() {
         return dao.getAll();
     }

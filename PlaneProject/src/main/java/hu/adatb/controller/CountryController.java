@@ -22,6 +22,10 @@ public class CountryController {
         return dao.add(country);
     }
 
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }
+
     public List<Country> getAll() {
         return dao.getAll();
     }

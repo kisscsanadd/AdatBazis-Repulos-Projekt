@@ -40,6 +40,21 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean delete(int id) {
+        try {
+            PreparedStatement st = Database.ConnectionToDatabaseWithPreparedStatement(DELETE_USER);
+
+            st.setInt(1, id);
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Deleted user with " + id + " id");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed delete user");
+        }
+
         return false;
     }
 

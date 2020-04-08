@@ -22,6 +22,10 @@ public class CityController {
         return dao.add(city);
     }
 
+    public boolean delete(int id) {
+        return dao.delete(id);
+    }
+
     public List<City> getAll() {
         return dao.getAll();
     }
