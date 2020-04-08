@@ -37,7 +37,7 @@ public class CountryDaoImpl implements CountryDao {
             }
 
         } catch (SQLException | ClassNotFoundException e) {
-            Utils.showWarning("Nem sikerült lekérni az ország neveket");
+            Utils.showWarning("Nem sikerült lekérni az országokat");
         }
 
         return result;

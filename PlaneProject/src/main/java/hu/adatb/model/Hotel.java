@@ -7,13 +7,28 @@ import javafx.beans.property.StringProperty;
 
 public class Hotel {
 
+    private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
     private IntegerProperty stars = new SimpleIntegerProperty();
-    private IntegerProperty cityId = new SimpleIntegerProperty();
+    private City city;
 
-    public Hotel(String name, int stars) {
+    public Hotel(int id, String name, int stars, City city) {
+        this.id.set(id);
         this.name.set(name);
         this.stars.set(stars);
+        this.city = city;
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
     }
 
     public String getName() {
@@ -31,14 +46,20 @@ public class Hotel {
     public int getStars() {
         return stars.get();
     }
+
     public IntegerProperty starsProperty() {
         return stars;
     }
+
     public void setStars(int stars) {
         this.stars.set(stars);
     }
 
-    public int getCityId() {return cityId.get();}
-    public IntegerProperty cityIdProperty() {return cityId; }
-    public void setCityId(int cityId) {this.cityId.set(cityId); }
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
 }

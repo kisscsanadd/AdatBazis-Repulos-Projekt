@@ -46,7 +46,7 @@ public class App extends Application {
         primaryStage = stage;
         try {
             System.out.println("\n"+ App.CurrentTime() + "Start application");
-            StageDeliver("user_main_window.fxml", "Repülőjárat foglaló rendszer");  // TODO - back
+            StageDeliver("reg_or_login.fxml", "Repülőjárat foglaló rendszer");
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a főablakot");
             Platform.exit();

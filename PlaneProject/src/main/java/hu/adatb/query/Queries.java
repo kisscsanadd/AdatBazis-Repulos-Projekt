@@ -8,6 +8,7 @@ public class Queries {
     public static final String SELECT_USER = "SELECT * FROM FELHASZNALO";
     public static final String SELECT_PLANE = "SELECT * FROM REPULOGEP";
     public static final String SELECT_COUNTRY = "SELECT * FROM ORSZAG";
+    public static final String SELECT_HOTEL = "SELECT * FROM SZALLODA";
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
 
 }

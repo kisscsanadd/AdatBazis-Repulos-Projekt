@@ -30,6 +30,7 @@ public class CityDaoImpl implements  CityDao {
 
             while (rs.next()) {
                 City city = new City(
+                        rs.getInt("id"),
                         rs.getString("nev")
                 );
 
@@ -37,7 +38,7 @@ public class CityDaoImpl implements  CityDao {
             }
 
         } catch (SQLException | ClassNotFoundException e) {
-            Utils.showWarning("Nem sikerült lekérni a város neveket");
+            Utils.showWarning("Nem sikerült lekérni a városokat");
         }
 
         return result;
