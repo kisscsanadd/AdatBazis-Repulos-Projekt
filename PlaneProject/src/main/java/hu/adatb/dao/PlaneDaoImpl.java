@@ -12,10 +12,15 @@ import java.util.List;
 
 import static hu.adatb.query.Queries.SELECT_PLANE;
 
-public class PlaneDaoImpl implements  PlaneDao {
+public class PlaneDaoImpl implements PlaneDao {
 
     @Override
     public boolean add(Plane plane) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
         return false;
     }
 

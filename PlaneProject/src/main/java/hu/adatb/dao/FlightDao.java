@@ -8,5 +8,7 @@ public interface FlightDao {
 
     public boolean add (Flight flight);
 
+    public boolean delete (int id);
+
     public List<Flight> getAll();
 }

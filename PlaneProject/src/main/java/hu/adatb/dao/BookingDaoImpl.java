@@ -21,6 +21,11 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
+    @Override
     public List<Booking> getAll() {
         List<Booking> result = new ArrayList<>();
 

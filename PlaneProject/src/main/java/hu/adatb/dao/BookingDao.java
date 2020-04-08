@@ -8,5 +8,7 @@ public interface BookingDao {
 
     public boolean add(Booking booking);
 
+    public boolean delete(int id);
+
     public List<Booking> getAll();
 }
