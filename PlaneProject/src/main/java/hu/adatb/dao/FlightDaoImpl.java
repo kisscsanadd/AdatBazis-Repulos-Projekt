@@ -20,6 +20,11 @@ public class FlightDaoImpl implements FlightDao {
     }
 
     @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
+    @Override
     public List<Flight> getAll() {
         List<Flight> result = new ArrayList<>();
 

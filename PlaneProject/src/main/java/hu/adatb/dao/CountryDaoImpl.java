@@ -19,6 +19,11 @@ public class CountryDaoImpl implements CountryDao {
     }
 
     @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
+    @Override
     public List<Country> getAll() {
         List<Country> result = new ArrayList<>();
 

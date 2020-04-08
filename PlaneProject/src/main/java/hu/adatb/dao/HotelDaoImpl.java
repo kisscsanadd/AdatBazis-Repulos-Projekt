@@ -22,6 +22,11 @@ public class HotelDaoImpl implements HotelDao{
     }
 
     @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
+    @Override
     public List<Hotel> getAll() {
         List<Hotel> result = new ArrayList<>();
 

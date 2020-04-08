@@ -8,5 +8,7 @@ public interface UserDao {
 
     public boolean add (User user);
 
+    public boolean delete (int id);
+
     public List<User> getAll();
 }

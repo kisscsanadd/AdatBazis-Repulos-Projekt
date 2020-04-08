@@ -15,11 +15,16 @@ import java.util.List;
 
 import static hu.adatb.query.Queries.*;
 
-public class AirportDaoImpl implements  AirportDao {
+public class AirportDaoImpl implements AirportDao {
 
     @Override
     public boolean add(Airport airport) {
         return false;   // TODO - make it
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
     }
 
     @Override

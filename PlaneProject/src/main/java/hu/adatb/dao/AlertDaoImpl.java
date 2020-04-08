@@ -20,6 +20,11 @@ public class AlertDaoImpl implements AlertDao {
     }
 
     @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
+    @Override
     public List<Alert> getAll() {
         List<Alert> result = new ArrayList<>();
 

@@ -12,11 +12,16 @@ import java.util.List;
 
 import static hu.adatb.query.Queries.*;
 
-public class CityDaoImpl implements  CityDao {
+public class CityDaoImpl implements CityDao {
 
     @Override
     public boolean add(City city) {
         return false;   // TODO - make it
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
     }
 
     @Override

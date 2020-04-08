@@ -39,6 +39,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
+    @Override
     public List<User> getAll() {
         List<User> result = new ArrayList<>();
 

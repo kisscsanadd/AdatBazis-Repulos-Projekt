@@ -18,7 +18,12 @@ import static hu.adatb.query.Queries.SELECT_TICKET;
 
 public class TicketDaoImpl implements TicketDao {
     @Override
-    public boolean add(Ticket plane) {
+    public boolean add(Ticket ticket) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
         return false;
     }
 

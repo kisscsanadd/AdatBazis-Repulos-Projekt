@@ -8,5 +8,7 @@ public interface AlertDao {
 
     public boolean add(Alert alert);
 
+    public boolean delete(int id);
+
     public List<Alert> getAll();
 }
