@@ -49,7 +49,7 @@ public class AdminWindowController implements Initializable {
 
 
     @FXML
-    public void buttonAction2(ActionEvent actionEvent) {
+    public void getPlaneScreen(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen2");
         Pane view = MainFxmlLoader.getPage("PlaneScreen.fxml");
         mainPane.setCenter(view);

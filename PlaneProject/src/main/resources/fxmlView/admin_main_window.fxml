@@ -15,7 +15,7 @@
                         <Insets left="7.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction2" text="Repülőgép">
+                  <Button mnemonicParsing="false" onAction="#getPlaneScreen" text="Repülőgép">
                      <VBox.margin>
                         <Insets left="7.0" top="10.0" />
                      </VBox.margin>
@@ -31,6 +31,16 @@
                      </VBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#buttonAction5" text="Szálloda">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction5" text="Járatok">
+                     <VBox.margin>
+                        <Insets left="7.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#buttonAction5" text="Kijelentkezés">
                      <VBox.margin>
                         <Insets left="7.0" top="10.0" />
                      </VBox.margin>
