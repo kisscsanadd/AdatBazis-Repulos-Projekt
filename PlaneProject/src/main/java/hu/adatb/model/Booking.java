@@ -7,63 +7,51 @@ import javafx.beans.property.StringProperty;
 
 public class Booking {
 
-    private StringProperty name = new SimpleStringProperty();
-    private IntegerProperty userId = new SimpleIntegerProperty();
-    private IntegerProperty flightId = new SimpleIntegerProperty();
-    private IntegerProperty paymentId = new SimpleIntegerProperty();
+    private IntegerProperty id = new SimpleIntegerProperty();
+    private User user;
+    private Flight flight;
+    private Payment payment;
 
-    public Booking(String name, int userId, int flightId, int paymentId) {
-        this.name.set(name);
-        this.userId.set(userId);
-        this.flightId.set(flightId);
-        this.paymentId.set(paymentId);
+    public Booking(int id, User user, Flight flight, Payment payment) {
+        this.id.set(id);
+        this.user = user;
+        this.flight = flight;
+        this.payment = payment;
     }
 
-    public String getName() {
-        return name.get();
+    public int getId() {
+        return id.get();
     }
 
-    public StringProperty nameProperty() {
-        return name;
+    public IntegerProperty idProperty() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name.set(name);
+    public void setId(int id) {
+        this.id.set(id);
     }
 
-    public Integer getUserId() {
-        return userId.get();
+    public User getUser() {
+        return user;
     }
 
-    public IntegerProperty userIdProperty() {
-        return userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId.set(userId);
+    public Flight getFlight() {
+        return flight;
     }
 
-    public Integer getFlightId() {
-        return flightId.get();
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 
-    public IntegerProperty flightIdProperty() {
-        return flightId;
+    public Payment getPayment() {
+        return payment;
     }
 
-    public void setFlightId(Integer flightId) {
-        this.flightId.set(flightId);
-    }
-
-    public Integer getPaymentId() {
-        return paymentId.get();
-    }
-
-    public IntegerProperty paymentIdProperty() {
-        return paymentId;
-    }
-
-    public void setPaymentId(Integer paymentId) {
-        this.paymentId.set(paymentId);
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }

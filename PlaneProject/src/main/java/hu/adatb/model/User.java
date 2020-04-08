@@ -4,12 +4,14 @@ import javafx.beans.property.*;
 
 public class User {
 
+    private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
     private StringProperty password = new SimpleStringProperty();
     private StringProperty email = new SimpleStringProperty();
     private IntegerProperty isAdmin = new SimpleIntegerProperty();
 
-    public User(String name, String password, Integer isAdmin, String email) {
+    public User(int id, String name, String password, Integer isAdmin, String email) {
+        this.id.set(id);
         this.name.set(name);
         this.password.set(password);
         this.isAdmin.set(isAdmin);
@@ -17,6 +19,18 @@ public class User {
     }
 
     public User() {
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
     }
 
     public int getIsAdmin() {

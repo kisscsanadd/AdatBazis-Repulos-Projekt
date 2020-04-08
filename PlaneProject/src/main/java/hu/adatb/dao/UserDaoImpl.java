@@ -49,6 +49,7 @@ public class UserDaoImpl implements UserDao {
 
             while (rs.next()) {
                 User user = new User(
+                        rs.getInt("id"),
                         rs.getString("felh_nev"),
                         rs.getString("jelszo"),
                         rs.getInt("isAdmin"),
