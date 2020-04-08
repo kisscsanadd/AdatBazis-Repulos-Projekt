@@ -11,13 +11,17 @@ import static hu.adatb.query.Queries.*;
 
 public class GetById {
 
-    public static String GetCityNameById(int id) {
+    public static City GetCityById(int id) {
         try {
             Statement stmt = Database.ConnectionToDatabaseWithStatement();
             ResultSet rs = stmt.executeQuery(SELECT_CITY_BY_ID + id);
 
-            while(rs.next())
-                return rs.getString("nev");
+            while(rs.next()) {
+                return new City (
+                        rs.getInt("id"),
+                        rs.getString("nev")
+                );
+            }
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

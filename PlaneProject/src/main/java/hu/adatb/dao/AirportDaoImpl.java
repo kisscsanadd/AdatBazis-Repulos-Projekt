@@ -33,18 +33,15 @@ public class AirportDaoImpl implements  AirportDao {
 
             while (rs.next()) {
                 var cityId = rs.getInt("varos_id");
-                var cityName = GetById.GetCityNameById(cityId);
+                var city = GetById.GetCityById(cityId);
 
-                if (cityName == null) {
+                if (city == null) {
                     throw new GetByIdException("Cannot get city name by id");
                 }
 
                 Airport airport = new Airport(
                         rs.getString("nev"),
-                        new City(
-                                cityId,
-                                cityName
-                        )
+                        city
                 );
 
                 result.add(airport);

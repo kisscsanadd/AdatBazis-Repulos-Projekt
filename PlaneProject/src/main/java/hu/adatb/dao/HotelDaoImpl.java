@@ -32,9 +32,9 @@ public class HotelDaoImpl implements HotelDao{
 
             while (rs.next()) {
                 var cityId = rs.getInt("varos_id");
-                var cityName = GetById.GetCityNameById(cityId);
+                var city = GetById.GetCityById(cityId);
 
-                if (cityName == null) {
+                if (city == null) {
                     throw new GetByIdException("Cannot get city name by id");
                 }
 
@@ -42,10 +42,7 @@ public class HotelDaoImpl implements HotelDao{
                         rs.getInt("id"),
                         rs.getString("nev"),
                         rs.getInt("csillagok_szama"),
-                        new City(
-                                cityId,
-                                cityName
-                        )
+                        city
                 );
 
                 result.add(hotel);
