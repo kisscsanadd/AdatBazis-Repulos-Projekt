@@ -6,14 +6,12 @@ public class Airport {
 
     private StringProperty name = new SimpleStringProperty();
     private IntegerProperty cityId = new SimpleIntegerProperty();
+    private City city;
 
-    public Airport(String name, Integer cityId)
+    public Airport(String name, City city)
     {
         this.name.set(name);
-        this.cityId.set(cityId);
-    }
-
-    public Airport() {
+        this.city = city;
     }
 
     public String getName() {
@@ -28,15 +26,11 @@ public class Airport {
         this.name.set(name);
     }
 
-    public Integer getCityId() {
-        return cityId.get();
+    public City getCity() {
+        return city;
     }
 
-    public IntegerProperty toCityIdProperty() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId.set(cityId);
+    public void setCity(City city) {
+        this.city = city;
     }
 }

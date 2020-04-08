@@ -8,11 +8,11 @@ import javafx.beans.property.IntegerProperty;
 public class Plane {
 
     private StringProperty name = new SimpleStringProperty();
-    private IntegerProperty ferohely = new SimpleIntegerProperty();
+    private IntegerProperty seats = new SimpleIntegerProperty();
 
-    public Plane(String name, int ferohely) {
+    public Plane(String name, int seats) {
         this.name.set(name);
-        this.ferohely.set(ferohely);
+        this.seats.set(seats);
     }
 
     public String getName() {
@@ -26,15 +26,15 @@ public class Plane {
     public void setName(String name) {
         this.name.set(name);
     }
-    public int getFerohely() {
-        return ferohely.get();
+    public int getSeats() {
+        return seats.get();
     }
 
-    public IntegerProperty ferohelyProperty() {
-        return ferohely;
+    public IntegerProperty seatsProperty() {
+        return seats;
     }
 
-    public void setFerohely(int ferohely) {
-        this.ferohely.set(ferohely);
+    public void setSeats(int seats) {
+        this.seats.set(seats);
     }
 }

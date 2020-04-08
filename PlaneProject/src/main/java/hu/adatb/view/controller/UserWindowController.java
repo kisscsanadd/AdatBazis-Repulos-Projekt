@@ -42,15 +42,11 @@ public class UserWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         flights = FlightController.getInstance().getAll();
         var airports = AirportController.getInstance().getAll();
-        List<String> airportNames = new ArrayList<>();
 
-        for (var airport: airports
-        ) {
-            airportNames.add(airport.getName());
+        for (var airport: airports) {
+            fromCity.getItems().addAll(airport.getName());
+            toCity.getItems().addAll(airport.getName());
         }
-
-        fromCity.getItems().addAll(airportNames);
-        toCity.getItems().addAll(airportNames);
     }
 
     public static void goToMainForUser() {
@@ -69,8 +65,8 @@ public class UserWindowController implements Initializable {
     public void search(ActionEvent actionEvent) {
         for (var flight: flights
              ) {
-            if (fromCity.getSelectionModel().getSelectedItem().equals(flight.getFrom())
-                    && toCity.getSelectionModel().getSelectedItem().equals(flight.getTo())) {
+            if (fromCity.getSelectionModel().getSelectedItem().equals(flight.getFromAirport())
+                    && toCity.getSelectionModel().getSelectedItem().equals(flight.getToAirport())) {
                 System.out.println("Mikor: " + flight.getDate());
             } else {
                 System.out.println("Nincs ilyen");

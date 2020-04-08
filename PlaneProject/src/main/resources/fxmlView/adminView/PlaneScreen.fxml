@@ -14,7 +14,7 @@
       <TableView fx:id="table" layoutY="27.0" prefHeight="317.0" prefWidth="600.0">
          <columns>
             <TableColumn fx:id="nameCol" prefWidth="182.0" text="Név" />
-            <TableColumn fx:id="ferohelyCol" prefWidth="186.0" text="Ferőhely" />
+            <TableColumn fx:id="seatsCol" prefWidth="186.0" text="Ferőhely" />
             <TableColumn fx:id="actionsCol" prefWidth="186.0" text="Műveletek" />
          </columns>
       </TableView>

@@ -5,42 +5,18 @@ import javafx.beans.property.*;
 public class Flight {
 
     private StringProperty date = new SimpleStringProperty();
-    private IntegerProperty fromAirportId = new SimpleIntegerProperty();
-    private IntegerProperty toAirportId = new SimpleIntegerProperty();
+    private StringProperty fromAirport = new SimpleStringProperty();
+    private StringProperty toAirport = new SimpleStringProperty();
     private IntegerProperty freeSeats = new SimpleIntegerProperty();
 
-    public Flight(String date, Integer fromAirportId, Integer toAirportId, Integer freeSeats) {
+    public Flight(String date, String fromAirportId, String toAirportId, Integer freeSeats) {
         this.date.set(date);
-        this.fromAirportId.set(fromAirportId);
-        this.toAirportId.set(toAirportId);
+        this.fromAirport.set(fromAirportId);
+        this.toAirport.set(toAirportId);
         this.freeSeats.set(freeSeats);
     }
 
     public Flight() {
-    }
-
-    public Integer getFromAirportId() {
-        return fromAirportId.get();
-    }
-
-    public IntegerProperty fromProperty() {
-        return fromAirportId;
-    }
-
-    public void setFromAirportId(Integer fromAirportId) {
-        this.fromAirportId.set(fromAirportId);
-    }
-
-    public Integer getToAirportId() {
-        return toAirportId.get();
-    }
-
-    public IntegerProperty toAirportIdProperty() {
-        return toAirportId;
-    }
-
-    public void setToAirportId(Integer toAirportId) {
-        this.toAirportId.set(toAirportId);
     }
 
     public String getDate() {
@@ -53,6 +29,30 @@ public class Flight {
 
     public void setDate(String date) {
         this.date.set(date);
+    }
+
+    public String getFromAirport() {
+        return fromAirport.get();
+    }
+
+    public StringProperty fromAirportProperty() {
+        return fromAirport;
+    }
+
+    public void setFromAirport(String fromAirport) {
+        this.fromAirport.set(fromAirport);
+    }
+
+    public String getToAirport() {
+        return toAirport.get();
+    }
+
+    public StringProperty toAirportProperty() {
+        return toAirport;
+    }
+
+    public void setToAirport(String toAirport) {
+        this.toAirport.set(toAirport);
     }
 
     public int getFreeSeats() {
@@ -71,8 +71,8 @@ public class Flight {
     public String toString() {
         return "Flight{" +
                 "date=" + date +
-                ", from=" + fromAirportId +
-                ", to=" + toAirportId +
+                ", fromAirport=" + fromAirport +
+                ", toAirport=" + toAirport +
                 ", freeSeats=" + freeSeats +
                 '}';
     }

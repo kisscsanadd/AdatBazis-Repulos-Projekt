@@ -30,7 +30,7 @@ public class PlaneWindowController implements Initializable {
     private TableColumn<Plane, String> nameCol;
 
     @FXML
-    private TableColumn<Plane, Integer> ferohelyCol;
+    private TableColumn<Plane, Integer> seatsCol;
 
     @FXML
     private TableColumn<Plane, Void> actionsCol;
@@ -68,7 +68,7 @@ public class PlaneWindowController implements Initializable {
         table.setItems(FXCollections.observableList(list));
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        ferohelyCol.setCellValueFactory(new PropertyValueFactory<>("ferohely"));
+        seatsCol.setCellValueFactory(new PropertyValueFactory<>("ferohely"));
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
                 private final Button deleteBtn = new Button("Törlés");
@@ -106,10 +106,10 @@ public class PlaneWindowController implements Initializable {
 
     private void editPlane(Plane p) {
 
-        //todo create edit
+        // TODO - create edit
     }
 
     private void deletePlane(Plane p){
-        //todo create delete
+        // TODO - create delete
     }
 }
