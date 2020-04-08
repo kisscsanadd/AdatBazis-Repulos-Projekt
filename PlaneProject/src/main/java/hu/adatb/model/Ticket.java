@@ -7,37 +7,51 @@ import javafx.beans.property.StringProperty;
 
 public class Ticket {
 
-    private IntegerProperty categoryId = new SimpleIntegerProperty();
-    private IntegerProperty bookingId = new SimpleIntegerProperty();
-    private IntegerProperty travelClassId = new SimpleIntegerProperty();
+    private IntegerProperty id = new SimpleIntegerProperty();
+    private Category category;
+    private TravelClass travelClass;
+    private Booking booking;
 
-    public Ticket(Integer categoryId, Integer bookingId, Integer travelClassId)
-    {
-        this.categoryId.set(categoryId);
-        this.bookingId.set(bookingId);
-        this.travelClassId.set(travelClassId);
-    }
-
-    public Integer getCategoryId() {
-        return categoryId.get();
-    }
-    public IntegerProperty categoryIdProperty() {
-        return categoryId;
-    }
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId.set(categoryId);
+    public Ticket(int id, Category category, TravelClass travelClass, Booking booking) {
+        this.id.set(id);
+        this.category = category;
+        this.travelClass = travelClass;
+        this.booking = booking;
     }
 
-    public Integer getBookingId() {
-        return bookingId.get();
+    public int getId() {
+        return id.get();
     }
-    public IntegerProperty bookingIdProperty() {
-        return bookingId;
+
+    public IntegerProperty idProperty() {
+        return id;
     }
-    public void setBookingId(Integer bookingId) {this.bookingId.set(bookingId);}
 
-    public Integer getTravelClassId() {return travelClassId.get(); }
-    public IntegerProperty travelClassIdProperty() { return travelClassId;}
-    public void setTravelClassId(Integer travelClassId) {this.travelClassId.set(travelClassId);}
+    public void setId(int id) {
+        this.id.set(id);
+    }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public TravelClass getTravelClass() {
+        return travelClass;
+    }
+
+    public void setTravelClass(TravelClass travelClass) {
+        this.travelClass = travelClass;
+    }
+
+    public Booking getBooking() {
+        return booking;
+    }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
+    }
 }

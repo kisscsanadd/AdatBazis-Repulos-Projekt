@@ -1,8 +1,6 @@
 package hu.adatb.utils;
 
-import hu.adatb.model.Flight;
-import hu.adatb.model.Payment;
-import hu.adatb.model.User;
+import hu.adatb.model.*;
 import hu.adatb.query.Database;
 
 import java.sql.ResultSet;
@@ -80,6 +78,75 @@ public class GetById {
                 return new Payment(
                         rs.getInt("id"),
                         rs.getString("nev")
+                );
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Category GetCategoryById(int id) {
+        try {
+            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+            ResultSet rs = stmt.executeQuery(SELECT_CATEGORY_BY_ID + id);
+
+            while(rs.next()) {
+                return new Category(
+                        rs.getInt("id"),
+                        rs.getString("nev"),
+                        rs.getInt("kedvezmeny")
+                );
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static TravelClass GetTravelClassById(int id) {
+        try {
+            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+            ResultSet rs = stmt.executeQuery(SELECT_TRAVEL_CLASS_BY_ID + id);
+
+            while(rs.next()) {
+                return new TravelClass(
+                        rs.getInt("id"),
+                        rs.getString("nev")
+                );
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Booking GetBookingById(int id) {
+        try {
+            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+            ResultSet rs = stmt.executeQuery(SELECT_BOOKING_BY_ID + id);
+            User user = null;
+            Flight flight = null;
+            Payment payment = null;
+
+            while (rs.next()) {
+                user = GetById.GetUserById(rs.getInt("felh_id"));
+                flight = GetById.GetFlightById(rs.getInt("jarat_id"));
+                payment = GetById.GetPaymentById(rs.getInt("fizetesi_mod_id"));
+            }
+
+            while(rs.next()) {
+                return new Booking(
+                        rs.getInt("id"),
+                        user,
+                        flight,
+                        payment
                 );
             }
 

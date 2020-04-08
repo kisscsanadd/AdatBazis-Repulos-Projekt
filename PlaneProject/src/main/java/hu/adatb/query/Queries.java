@@ -14,9 +14,13 @@ public class Queries {
     public static final String SELECT_PAYMENT = "SELECT * FROM FIZETESIMOD";
     public static final String SELECT_PAYMENT_BY_ID = "SELECT * FROM FIZETESIMOD WHERE ID = ";
     public static final String SELECT_CATEGORY = "SELECT * FROM KATEGORIA";
+    public static final String SELECT_CATEGORY_BY_ID = "SELECT * FROM KATEGORIA WHERE ID = ";
     public static final String SELECT_ALERT = "SELECT * FROM FIGYELMEZTETES";
     public static final String SELECT_TRAVEL_CLASS = "SELECT * FROM UTAZASIOSZTALY";
+    public static final String SELECT_TRAVEL_CLASS_BY_ID = "SELECT * FROM UTAZASIOSZTALY WHERE ID = ";
     public static final String SELECT_BOOKING = "SELECT * FROM FOGLALAS";
+    public static final String SELECT_BOOKING_BY_ID = "SELECT * FROM FOGLALAS WHERE ID = ";
+    public static final String SELECT_TICKET = "SELECT * FROM JEGY";
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
 
 }
