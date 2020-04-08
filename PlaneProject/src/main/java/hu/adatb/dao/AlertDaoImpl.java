@@ -34,8 +34,6 @@ public class AlertDaoImpl implements AlertDao {
                         rs.getString("uzenet")
                 );
 
-                System.out.println("Alert: " + alert.getMessage());
-
                 result.add(alert);
             }
 
