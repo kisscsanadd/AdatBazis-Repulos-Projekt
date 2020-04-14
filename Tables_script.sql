@@ -264,7 +264,11 @@ create trigger Repulogep_trigger
          from dual;
     end;
 	/
-insert into Repulogep(nev, ferohely) values('demo', 50);
+insert into repulogep(nev, ferohely) values ('Airbus A300', 300);
+insert into repulogep(nev, ferohely) values ('Air Force One', 400);
+insert into repulogep(nev, ferohely) values ('Airbus A350 XWB', 150);
+insert into repulogep(nev, ferohely) values ('ANT–20', 40);
+insert into repulogep(nev, ferohely) values ('Boeing 720', 425);
 
 
 
@@ -290,6 +294,7 @@ create trigger Jarat_trigger
 	/
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('1998-DEC-25 17:30' ,1 ,2 ,1 ,999);
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2014-AUG-18 14:30' ,3 ,1 ,4 ,81);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-JUN-11 11:00' ,1 ,2 ,2 ,9);
 
 
 

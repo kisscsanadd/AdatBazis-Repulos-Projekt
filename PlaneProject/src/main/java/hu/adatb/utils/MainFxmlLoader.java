@@ -6,9 +6,17 @@ import javafx.scene.layout.Pane;
 public class MainFxmlLoader {
     private static Pane view;
 
-    public static Pane getPage(String fileName) {
+    public static Pane getPage(String fileName, boolean isAdminView) {
+        String filePath = "/fxmlView/";
+
+        if (isAdminView) {
+            filePath += "adminView/";
+        } else {
+            filePath += "userView/";
+        }
+
         try {
-            view = new FXMLLoader().load(MainFxmlLoader.class.getResource("/fxmlView/adminView/" + fileName));
+            view = new FXMLLoader().load(MainFxmlLoader.class.getResource(filePath + fileName));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -7,6 +7,9 @@ import hu.adatb.utils.Utils;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +37,20 @@ public class FlightDaoImpl implements FlightDao {
             ResultSet rs = stmt.executeQuery(SELECT_FLIGHT);
 
             while (rs.next()) {
+                var date = rs.getDate("felszallas_datum").toLocalDate();
+                var time = rs.getTime("felszallas_datum").toLocalTime();
+
+                LocalDateTime dateTime = LocalDateTime.of(date, time);
+
                 Flight flight = new Flight(
-                        rs.getString("felszallas_datum"),
+                        dateTime,
                         rs.getString("from_airport"),
                         rs.getString("to_airport"),
+                        rs.getString("plane_name"),
                         rs.getInt("szabad_helyek")
                 );
+
+                System.out.println("Flight: " + flight.getDateTime() + " " + flight.getPlane());
 
                 result.add(flight);
             }

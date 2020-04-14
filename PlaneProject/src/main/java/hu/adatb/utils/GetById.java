@@ -6,6 +6,8 @@ import hu.adatb.query.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static hu.adatb.query.Queries.*;
 
@@ -13,8 +15,10 @@ public class GetById {
 
     public static City GetCityById(int id) {
         try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
-            ResultSet rs = stmt.executeQuery(SELECT_CITY_BY_ID + id);
+            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_CITY_BY_ID);
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
                 return new City (
@@ -32,8 +36,11 @@ public class GetById {
 
     public static User GetUserById(int id) {
         try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
-            ResultSet rs = stmt.executeQuery(SELECT_USER_BY_ID + id);
+            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_USER_BY_ID);
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
                 return new User(
@@ -54,14 +61,23 @@ public class GetById {
 
     public static Flight GetFlightById(int id) {
         try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
-            ResultSet rs = stmt.executeQuery(SELECT_FLIGHT_BY_ID + id);
+            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_FLIGHT_BY_ID);
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
+                var date = rs.getDate("felszallas_datum").toLocalDate();
+                var time = rs.getTime("felszallas_datum").toLocalTime();
+
+                LocalDateTime dateTime = LocalDateTime.of(date, time);
+
                 return new Flight(
-                        rs.getString("felszallas_datum"),
+                        dateTime,
                         rs.getString("from_airport"),
                         rs.getString("to_airport"),
+                        rs.getString("plane_name"),
                         rs.getInt("szabad_helyek")
                 );
             }
@@ -75,8 +91,11 @@ public class GetById {
 
     public static Payment GetPaymentById(int id) {
         try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
-            ResultSet rs = stmt.executeQuery(SELECT_PAYMENT_BY_ID + id);
+            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_PAYMENT_BY_ID);
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
                 return new Payment(
@@ -94,8 +113,11 @@ public class GetById {
 
     public static Category GetCategoryById(int id) {
         try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
-            ResultSet rs = stmt.executeQuery(SELECT_CATEGORY_BY_ID + id);
+            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_CATEGORY_BY_ID);
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
                 return new Category(
@@ -114,8 +136,11 @@ public class GetById {
 
     public static TravelClass GetTravelClassById(int id) {
         try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
-            ResultSet rs = stmt.executeQuery(SELECT_TRAVEL_CLASS_BY_ID + id);
+            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_TRAVEL_CLASS_BY_ID);
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
                 return new TravelClass(
@@ -133,27 +158,24 @@ public class GetById {
 
     public static Booking GetBookingById(int id) {
         try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
-            ResultSet rs = stmt.executeQuery(SELECT_BOOKING_BY_ID + id);
-            User user = null;
-            Flight flight = null;
-            Payment payment = null;
+            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_BOOKING_BY_ID);
+
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                user = GetById.GetUserById(rs.getInt("felh_id"));
-                flight = GetById.GetFlightById(rs.getInt("jarat_id"));
-                payment = GetById.GetPaymentById(rs.getInt("fizetesi_mod_id"));
-            }
+                var user = GetById.GetUserById(rs.getInt("felh_id"));
+                var flight = GetById.GetFlightById(rs.getInt("jarat_id"));
+                var payment = GetById.GetPaymentById(rs.getInt("fizetesi_mod_id"));
 
-            while(rs.next()) {
                 return new Booking(
-                        rs.getInt("id"),
+                        id,
                         user,
                         flight,
                         payment
                 );
             }
-
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

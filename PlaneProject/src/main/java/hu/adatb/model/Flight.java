@@ -2,33 +2,41 @@ package hu.adatb.model;
 
 import javafx.beans.property.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Flight {
 
-    private StringProperty date = new SimpleStringProperty();
+    private LocalDateTime dateTime;
     private StringProperty fromAirport = new SimpleStringProperty();
     private StringProperty toAirport = new SimpleStringProperty();
+    private StringProperty plane = new SimpleStringProperty();
     private IntegerProperty freeSeats = new SimpleIntegerProperty();
 
-    public Flight(String date, String fromAirportId, String toAirportId, Integer freeSeats) {
-        this.date.set(date);
-        this.fromAirport.set(fromAirportId);
-        this.toAirport.set(toAirportId);
+    public Flight(LocalDateTime dateTime, String fromAirport, String toAirport, String plane, Integer freeSeats) {
+        this.dateTime = dateTime;
+        this.fromAirport.set(fromAirport);
+        this.toAirport.set(toAirport);
+        this.plane.set(plane);
         this.freeSeats.set(freeSeats);
     }
 
     public Flight() {
     }
 
-    public String getDate() {
-        return date.get();
+    public String getDateTimeInRightFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formatDateTime = dateTime.format(formatter);
+
+        return formatDateTime;
     }
 
-    public StringProperty dateProperty() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(String date) {
-        this.date.set(date);
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getFromAirport() {
@@ -55,6 +63,18 @@ public class Flight {
         this.toAirport.set(toAirport);
     }
 
+    public String getPlane() {
+        return plane.get();
+    }
+
+    public StringProperty planeProperty() {
+        return plane;
+    }
+
+    public void setPlane(String plane) {
+        this.plane.set(plane);
+    }
+
     public int getFreeSeats() {
         return freeSeats.get();
     }
@@ -67,13 +87,4 @@ public class Flight {
         this.freeSeats.set(freeSeats);
     }
 
-    @Override
-    public String toString() {
-        return "Flight{" +
-                "date=" + date +
-                ", fromAirport=" + fromAirport +
-                ", toAirport=" + toAirport +
-                ", freeSeats=" + freeSeats +
-                '}';
-    }
 }
