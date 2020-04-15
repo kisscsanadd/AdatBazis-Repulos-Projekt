@@ -59,6 +59,29 @@ public class GetById {
         return null;
     }
 
+    public static Plane GetPlaneById(int id) {
+        try {
+            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_PLANE_BY_ID);
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                return new Plane (
+                        rs.getInt("id"),
+                        rs.getString("nev"),
+                        rs.getInt("sebesseg"),
+                        rs.getInt("ferohely")
+                );
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static Flight GetFlightById(int id) {
         try {
             var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_FLIGHT_BY_ID);
@@ -73,11 +96,14 @@ public class GetById {
 
                 LocalDateTime dateTime = LocalDateTime.of(date, time);
 
+                var planeId = rs.getInt("repulogep_id");
+                var plane = GetById.GetPlaneById(planeId);
+
                 return new Flight(
                         dateTime,
                         rs.getString("from_airport"),
                         rs.getString("to_airport"),
-                        rs.getString("plane_name"),
+                        plane,
                         rs.getInt("szabad_helyek")
                 );
             }

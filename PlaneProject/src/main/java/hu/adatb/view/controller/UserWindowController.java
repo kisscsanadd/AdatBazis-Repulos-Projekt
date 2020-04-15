@@ -22,10 +22,11 @@ import java.util.ResourceBundle;
 
 public class UserWindowController implements Initializable {
 
-    private List<Flight> flights;
-
     @FXML
     private BorderPane mainPane;
+
+    @FXML
+    private Button listButton;
 
     public UserWindowController() {
     }
@@ -51,6 +52,7 @@ public class UserWindowController implements Initializable {
     @FXML
     public void listingFlights(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened flights");
+        listButton.setDisable(true);    // TODO - maybe somewhere have to set it false
         Pane view = MainFxmlLoader.getPage("flights_list.fxml", false);
         mainPane.setCenter(view);
     }

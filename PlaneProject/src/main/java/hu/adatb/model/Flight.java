@@ -1,5 +1,6 @@
 package hu.adatb.model;
 
+import hu.adatb.utils.DistanceCalculator;
 import javafx.beans.property.*;
 
 import java.time.LocalDateTime;
@@ -10,14 +11,14 @@ public class Flight {
     private LocalDateTime dateTime;
     private StringProperty fromAirport = new SimpleStringProperty();
     private StringProperty toAirport = new SimpleStringProperty();
-    private StringProperty plane = new SimpleStringProperty();
+    private Plane plane;
     private IntegerProperty freeSeats = new SimpleIntegerProperty();
 
-    public Flight(LocalDateTime dateTime, String fromAirport, String toAirport, String plane, Integer freeSeats) {
+    public Flight(LocalDateTime dateTime, String fromAirport, String toAirport, Plane plane, Integer freeSeats) {
         this.dateTime = dateTime;
         this.fromAirport.set(fromAirport);
         this.toAirport.set(toAirport);
-        this.plane.set(plane);
+        this.plane = plane;
         this.freeSeats.set(freeSeats);
     }
 
@@ -26,9 +27,20 @@ public class Flight {
 
     public String getDateTimeInRightFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String formatDateTime = dateTime.format(formatter);
 
-        return formatDateTime;
+        return dateTime.format(formatter);
+    }
+
+    public String getTravelTime(double lat1, double lon1, double lat2, double lon2, Plane plane) {
+        var distance = DistanceCalculator.Distance(lat1, lon1, lat2, lon2);
+        var travelTimeInMinutes = (int)((distance/plane.getSpeed()) * 60);
+
+        int hours = travelTimeInMinutes / 60;
+        int minutes = travelTimeInMinutes - hours * 60;
+
+        return hours > 0
+                ? hours + " óra " + minutes + " perc"
+                : travelTimeInMinutes + " perc";
     }
 
     public LocalDateTime getDateTime() {
@@ -63,16 +75,12 @@ public class Flight {
         this.toAirport.set(toAirport);
     }
 
-    public String getPlane() {
-        return plane.get();
-    }
-
-    public StringProperty planeProperty() {
+    public Plane getPlane() {
         return plane;
     }
 
-    public void setPlane(String plane) {
-        this.plane.set(plane);
+    public void setPlane(Plane plane) {
+        this.plane = plane;
     }
 
     public int getFreeSeats() {

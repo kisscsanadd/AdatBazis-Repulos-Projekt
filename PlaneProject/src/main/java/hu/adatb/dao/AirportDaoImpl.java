@@ -46,6 +46,8 @@ public class AirportDaoImpl implements AirportDao {
 
                 Airport airport = new Airport(
                         rs.getString("nev"),
+                        rs.getDouble("szelesseg"),
+                        rs.getDouble("hosszusag"),
                         city
                 );
 

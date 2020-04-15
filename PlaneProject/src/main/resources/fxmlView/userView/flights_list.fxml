@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.FlightListing">
    <children>
@@ -28,7 +29,7 @@
                   <Insets right="20.0" />
                </GridPane.margin>
             </ComboBox>
-            <Button fx:id="sourceButton" mnemonicParsing="false" onAction="#source" text="Keresés" GridPane.columnIndex="4" />
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" text="Keresés" GridPane.columnIndex="4" />
             <DatePicker fx:id="dateBegin" editable="false" prefHeight="25.0" prefWidth="200.0" promptText="Kezdet" GridPane.columnIndex="2">
                <GridPane.margin>
                   <Insets right="20.0" />
@@ -41,15 +42,21 @@
             </DatePicker>
          </children>
       </GridPane>
-      <TableView fx:id="table" layoutX="421.0" layoutY="65.0" prefHeight="335.0" prefWidth="1041.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+      <TableView fx:id="table" layoutX="421.0" layoutY="65.0" prefHeight="335.0" prefWidth="1041.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
         <columns>
-          <TableColumn fx:id="fromCol" prefWidth="252.0" text="Honnan" />
-          <TableColumn fx:id="toCol" prefWidth="262.0" text="Hova" />
-          <TableColumn fx:id="whenCol" prefWidth="207.0" text="Mikor" />
-          <TableColumn fx:id="withCol" prefWidth="161.0" text="Repülőgép" />
-          <TableColumn fx:id="seatCol" minWidth="0.0" prefWidth="92.0" text="Szabad helyek" />
-          <TableColumn fx:id="actionCol" prefWidth="180.0" sortable="false" text="Foglalás" />
+          <TableColumn fx:id="fromCol" prefWidth="235.0" text="Honnan" />
+          <TableColumn fx:id="toCol" prefWidth="235.0" text="Hova" />
+          <TableColumn fx:id="whenCol" prefWidth="155.0" text="Indulási idő" />
+          <TableColumn fx:id="timeCol" prefWidth="120.0" text="Menetidő" />
+          <TableColumn fx:id="withCol" prefWidth="170.0" text="Repülőgép" />
+          <TableColumn fx:id="seatCol" prefWidth="100.0" text="Szabad helyek" />
+          <TableColumn fx:id="actionCol" prefWidth="100.0" sortable="false" text="Foglalás" />
         </columns>
       </TableView>
+      <Label fx:id="infoText" layoutX="403.0" layoutY="125.0" text="Állítsd be a szűrőket">
+         <font>
+            <Font name="Cambria" size="27.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

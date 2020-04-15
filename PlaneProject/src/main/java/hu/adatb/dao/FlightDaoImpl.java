@@ -2,6 +2,7 @@ package hu.adatb.dao;
 
 import hu.adatb.model.Flight;
 import hu.adatb.query.Database;
+import hu.adatb.utils.GetById;
 import hu.adatb.utils.Utils;
 
 import java.sql.ResultSet;
@@ -42,15 +43,16 @@ public class FlightDaoImpl implements FlightDao {
 
                 LocalDateTime dateTime = LocalDateTime.of(date, time);
 
+                var planeId = rs.getInt("repulogep_id");
+                var plane = GetById.GetPlaneById(planeId);
+
                 Flight flight = new Flight(
                         dateTime,
                         rs.getString("from_airport"),
                         rs.getString("to_airport"),
-                        rs.getString("plane_name"),
+                        plane,
                         rs.getInt("szabad_helyek")
                 );
-
-                System.out.println("Flight: " + flight.getDateTime() + " " + flight.getPlane());
 
                 result.add(flight);
             }
