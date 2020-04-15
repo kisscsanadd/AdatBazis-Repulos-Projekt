@@ -3,8 +3,8 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.AirportController;
 import hu.adatb.controller.FlightController;
-import hu.adatb.controller.UserController;
 import hu.adatb.model.Flight;
+import hu.adatb.utils.MainFxmlLoader;
 import hu.adatb.utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,42 +12,27 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserWindowController implements Initializable {
 
-    private List<Flight> flights;
-
     @FXML
     private BorderPane mainPane;
 
     @FXML
-    private ComboBox fromCity;
-
-    @FXML
-    private ComboBox toCity;
-
-    @FXML
-    private Button search;
+    private Button listButton;
 
     public UserWindowController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        flights = FlightController.getInstance().getAll();
-        var airports = AirportController.getInstance().getAll();
-
-        for (var airport: airports) {
-            fromCity.getItems().addAll(airport.getName());
-            toCity.getItems().addAll(airport.getName());
-        }
     }
 
     public static void goToMainForUser() {
@@ -63,16 +48,12 @@ public class UserWindowController implements Initializable {
         }
     }
 
-    public void search(ActionEvent actionEvent) {
-        for (var flight: flights
-             ) {
-            if (fromCity.getSelectionModel().getSelectedItem().equals(flight.getFromAirport())
-                    && toCity.getSelectionModel().getSelectedItem().equals(flight.getToAirport())) {
-                System.out.println("Mikor: " + flight.getDate());
-            } else {
-                System.out.println("Nincs ilyen");
-            }
 
-        }
+    @FXML
+    public void listingFlights(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + "Opened flights");
+        listButton.setDisable(true);    // TODO - maybe somewhere have to set it false
+        Pane view = MainFxmlLoader.getPage("flights_list.fxml", false);
+        mainPane.setCenter(view);
     }
 }

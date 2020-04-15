@@ -9,10 +9,13 @@ public class Plane {
 
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
+    private IntegerProperty speed = new SimpleIntegerProperty();
     private IntegerProperty seats = new SimpleIntegerProperty();
 
-    public Plane(int id, String name, int seats) {
+    public Plane(int id, String name, int speed, int seats) {
+        this.id.set(id);
         this.name.set(name);
+        this.speed.set(speed);
         this.seats.set(seats);
     }
 
@@ -39,6 +42,19 @@ public class Plane {
     public void setName(String name) {
         this.name.set(name);
     }
+
+    public int getSpeed() {
+        return speed.get();
+    }
+
+    public IntegerProperty speedProperty() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed.set(speed);
+    }
+
     public int getSeats() {
         return seats.get();
     }

@@ -4,6 +4,7 @@ DROP TABLE szalloda;
 DROP TABLE foglalas;
 DROP TABLE jaratfigyrel;
 DROP TABLE jegy;
+DROP TABLE kategoria;
 DROP TABLE repulogep;
 DROP TABLE repuloter;
 DROP TABLE utazasiosztaly;
@@ -11,11 +12,11 @@ DROP TABLE varos;
 DROP TABLE orszag;
 DROP TABLE jarat;
 DROP TABLE figyelmeztetes;
-DROP TABLE kategoria;
 
 DROP SEQUENCE UtazasiOsztaly_sequence;
 DROP SEQUENCE Foglalas_sequence;
 DROP SEQUENCE Jegy_sequence;
+DROP SEQUENCE Kategoria_sequence;
 DROP SEQUENCE FizetesiMod_sequence;
 DROP SEQUENCE Felhasznalo_sequence;
 DROP SEQUENCE Jarat_sequence;
@@ -26,7 +27,6 @@ DROP SEQUENCE Varos_sequence;
 DROP SEQUENCE Orszag_sequence;
 DROP SEQUENCE Figyelmeztetes_sequence;
 DROP SEQUENCE szalloda_sequence;
-DROP SEQUENCE kategoria_sequence;
 
 ALTER SESSION SET NLS_DATE_LANGUAGE = ENGLISH;
 ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MON-DD HH24:MI';
@@ -94,7 +94,32 @@ create trigger Felhasznalo_trigger
          from dual;
     end;
 	/
-insert into Felhasznalo(felh_nev,jelszo,isAdmin, email) values('admin', 'admin', 1, 'admin@admin.admin');
+insert into Felhasznalo(felh_nev,jelszo,isAdmin, email) values('admin', 'admin', 1, 'admin@admin.hu');
+insert into Felhasznalo(felh_nev,jelszo,isAdmin, email) values('user', 'userr', 0, 'user@user.hu');
+
+
+
+CREATE TABLE Kategoria 
+    (id              	NUMBER(10) NOT NULL,
+     nev                VARCHAR2(30) NOT NULL,
+     kedvezmeny         NUMBER(2) NOT NULL,
+  CONSTRAINT Kategoria_PRIMARY_KEY PRIMARY KEY (id));
+
+create sequence Kategoria_sequence;
+
+create trigger Kategoria_trigger
+    before insert on Kategoria
+    for each row
+    begin
+      select Kategoria_sequence.nextval
+         into:new.id
+         from dual;
+    end;
+	/
+insert into Kategoria(nev, kedvezmeny) values('Gyerek', 15);
+insert into Kategoria(nev, kedvezmeny) values('Diák', 20);
+insert into Kategoria(nev, kedvezmeny) values('Nyugdíjas', 20);
+insert into Kategoria(nev, kedvezmeny) values('Mozgáskorlátozott', 50);
 
 
 
@@ -212,6 +237,8 @@ insert into Varos(nev, orszag_id) values('Nizza', 10);
 CREATE TABLE Repuloter
     (id        NUMBER(10) NOT NULL,
      nev       VARCHAR2(50) NOT NULL,
+     szelesseg      FLOAT NOT NULL,
+     hosszusag      FLOAT NOT NULL,
      varos_id  NUMBER(10) NOT NULL,
   CONSTRAINT Repuloter_FOREIGN_KEY FOREIGN KEY (varos_id) REFERENCES Varos (id),
   CONSTRAINT Repuloter_PRIMARY_KEY PRIMARY KEY (id));
@@ -227,29 +254,30 @@ create trigger Repuloter_trigger
          from dual;
     end;
 	/
-insert into Repuloter(nev, varos_id) values('Budapest Liszt Ferenc nemzetközi', 1);
-insert into Repuloter(nev, varos_id) values('Berlin-Schönefeld', 2);
-insert into Repuloter(nev, varos_id) values('London-Gatwick', 3);
-insert into Repuloter(nev, varos_id) values('Róma-Fiumicino', 4);
-insert into Repuloter(nev, varos_id) values('Amszterdam-Schiphol', 5);
-insert into Repuloter(nev, varos_id) values('Brüsszeli', 6);
-insert into Repuloter(nev, varos_id) values('Madrid-Barajasi', 7);
-insert into Repuloter(nev, varos_id) values('Lisszaboni', 8);
-insert into Repuloter(nev, varos_id) values('Stockholm-Arlanda', 9);
-insert into Repuloter(nev, varos_id) values('Párizs–Orly', 10);
-insert into Repuloter(nev, varos_id) values('Helsinki–Vantaai', 11);
-insert into Repuloter(nev, varos_id) values('Frankfurti', 12);
-insert into Repuloter(nev, varos_id) values('Köln–Bonn', 13);
-insert into Repuloter(nev, varos_id) values('Milánó-Linatei', 14);
-insert into Repuloter(nev, varos_id) values('Velence Marco Polo', 15);
-insert into Repuloter(nev, varos_id) values('Bilbaói', 16);
-insert into Repuloter(nev, varos_id) values('Nizza Côte d’Azur', 17);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Budapest Liszt Ferenc nemzetközi', 47.44, 19.26, 1);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Berlin-Schönefeld', 52.37, 13.52, 2);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('London-Gatwick', 51.14, -0.16, 3);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Róma-Fiumicino', 41.8, 12.24, 4);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Amszterdam-Schiphol', 52.31, 4.67, 5);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Brüsszeli', 50.9, 4.48, 6);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Madrid-Barajasi', 40.49, -3.57, 7);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Lisszaboni', 38.77, -9.13, 8);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Stockholm-Arlanda', 59.65, 17.92, 9);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Párizs–Orly', 48.73, 2.37, 10);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Helsinki–Vantaai', 60.32, 24.96, 11);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Frankfurti', 50.04, 8.56, 12);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Köln–Bonn', 50.86, 7.14, 13);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Milánó-Linatei', 45.44, 9.27, 14);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Velence Marco Polo', 45.5, 12.35, 15);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Bilbaói', 43.3, -2.91, 16);
+insert into Repuloter(nev, szelesseg, hosszusag, varos_id) values('Nizza Côte d’Azur', 43.66, 7.21, 17);
 
 
 
 CREATE TABLE Repulogep
     (id        NUMBER(10) NOT NULL,
      nev       VARCHAR2(20) NOT NULL,
+     sebesseg  NUMBER(4) NOT NULL,
      ferohely  NUMBER(3) NOT NULL,
   CONSTRAINT Repulogep_PRIMARY_KEY PRIMARY KEY (id));
 
@@ -264,7 +292,11 @@ create trigger Repulogep_trigger
          from dual;
     end;
 	/
-insert into Repulogep(nev, ferohely) values('demo', 50);
+insert into repulogep(nev, sebesseg, ferohely) values ('Airbus A300', 913, 300);
+insert into repulogep(nev, sebesseg, ferohely) values ('Air Force One', 1015, 400);
+insert into repulogep(nev, sebesseg, ferohely) values ('Airbus A350 XWB', 975, 150);
+insert into repulogep(nev, sebesseg, ferohely) values ('ANT–20', 220, 40);
+insert into repulogep(nev, sebesseg, ferohely) values ('Boeing 720', 1009, 425);
 
 
 
@@ -290,6 +322,7 @@ create trigger Jarat_trigger
 	/
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('1998-DEC-25 17:30' ,1 ,2 ,1 ,999);
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2014-AUG-18 14:30' ,3 ,1 ,4 ,81);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-JUN-11 11:00' ,1 ,2 ,2 ,9);
 
 
 
@@ -357,27 +390,3 @@ create trigger Szalloda_trigger
 insert into Szalloda(nev, csillagok_szama, varos_id) values('Danubius Hotel Helia', 4, 4);
 insert into Szalloda(nev, csillagok_szama, varos_id) values('Hotel Canada', 3, 2);
 insert into Szalloda(nev, csillagok_szama, varos_id) values('The Savoy', 5, 3);
-
-
-
-CREATE TABLE Kategoria 
-    (id              	NUMBER(10) NOT NULL,
-     nev                VARCHAR2(30) NOT NULL,
-     kedvezmeny         NUMBER(2) NOT NULL,
-  CONSTRAINT Kategoria_PRIMARY_KEY PRIMARY KEY (id));
-
-create sequence Kategoria_sequence;
-
-create trigger Kategoria_trigger
-    before insert on Kategoria
-    for each row
-    begin
-      select Kategoria_sequence.nextval
-         into:new.id
-         from dual;
-    end;
-	/
-insert into Kategoria(nev, kedvezmeny) values('Gyerek', 15);
-insert into Kategoria(nev, kedvezmeny) values('Diák', 20);
-insert into Kategoria(nev, kedvezmeny) values('Nyugdíjas', 20);
-insert into Kategoria(nev, kedvezmeny) values('Mozgáskorlátozott', 50);

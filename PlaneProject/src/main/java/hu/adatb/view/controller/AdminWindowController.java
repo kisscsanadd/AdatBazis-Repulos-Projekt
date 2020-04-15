@@ -43,7 +43,7 @@ public class AdminWindowController implements Initializable {
     @FXML
     public void buttonAction1(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen1");
-        Pane view = MainFxmlLoader.getPage("Screen2.fxml");
+        Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
         mainPane.setCenter(view);
     }
 
@@ -51,25 +51,25 @@ public class AdminWindowController implements Initializable {
     @FXML
     public void getPlaneScreen(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen2");
-        Pane view = MainFxmlLoader.getPage("PlaneScreen.fxml");
+        Pane view = MainFxmlLoader.getPage("PlaneScreen.fxml", true);
         mainPane.setCenter(view);
     }
     @FXML
     public void buttonAction3(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen2");
-        Pane view = MainFxmlLoader.getPage("Screen2.fxml");
+        Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
         mainPane.setCenter(view);
     }
     @FXML
     public void buttonAction4(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen2");
-        Pane view = MainFxmlLoader.getPage("Screen2.fxml");
+        Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
         mainPane.setCenter(view);
     }
     @FXML
     public void buttonAction5(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen2");
-        Pane view = MainFxmlLoader.getPage("Screen2.fxml");
+        Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
         mainPane.setCenter(view);
     }
 }

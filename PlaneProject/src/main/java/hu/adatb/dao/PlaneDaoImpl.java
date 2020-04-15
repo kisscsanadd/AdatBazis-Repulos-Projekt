@@ -37,6 +37,7 @@ public class PlaneDaoImpl implements PlaneDao {
                 Plane plane = new Plane(
                         rs.getInt("id"),
                         rs.getString("nev"),
+                        rs.getInt("sebesseg"),
                         rs.getInt("ferohely")
                 );
 

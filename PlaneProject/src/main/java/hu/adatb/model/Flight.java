@@ -1,34 +1,54 @@
 package hu.adatb.model;
 
+import hu.adatb.utils.DistanceCalculator;
 import javafx.beans.property.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Flight {
 
-    private StringProperty date = new SimpleStringProperty();
+    private LocalDateTime dateTime;
     private StringProperty fromAirport = new SimpleStringProperty();
     private StringProperty toAirport = new SimpleStringProperty();
+    private Plane plane;
     private IntegerProperty freeSeats = new SimpleIntegerProperty();
 
-    public Flight(String date, String fromAirportId, String toAirportId, Integer freeSeats) {
-        this.date.set(date);
-        this.fromAirport.set(fromAirportId);
-        this.toAirport.set(toAirportId);
+    public Flight(LocalDateTime dateTime, String fromAirport, String toAirport, Plane plane, Integer freeSeats) {
+        this.dateTime = dateTime;
+        this.fromAirport.set(fromAirport);
+        this.toAirport.set(toAirport);
+        this.plane = plane;
         this.freeSeats.set(freeSeats);
     }
 
     public Flight() {
     }
 
-    public String getDate() {
-        return date.get();
+    public String getDateTimeInRightFormat() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        return dateTime.format(formatter);
     }
 
-    public StringProperty dateProperty() {
-        return date;
+    public String getTravelTime(double lat1, double lon1, double lat2, double lon2, Plane plane) {
+        var distance = DistanceCalculator.Distance(lat1, lon1, lat2, lon2);
+        var travelTimeInMinutes = (int)((distance/plane.getSpeed()) * 60);
+
+        int hours = travelTimeInMinutes / 60;
+        int minutes = travelTimeInMinutes - hours * 60;
+
+        return hours > 0
+                ? hours + " óra " + minutes + " perc"
+                : travelTimeInMinutes + " perc";
     }
 
-    public void setDate(String date) {
-        this.date.set(date);
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getFromAirport() {
@@ -55,6 +75,14 @@ public class Flight {
         this.toAirport.set(toAirport);
     }
 
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
+
     public int getFreeSeats() {
         return freeSeats.get();
     }
@@ -67,13 +95,4 @@ public class Flight {
         this.freeSeats.set(freeSeats);
     }
 
-    @Override
-    public String toString() {
-        return "Flight{" +
-                "date=" + date +
-                ", fromAirport=" + fromAirport +
-                ", toAirport=" + toAirport +
-                ", freeSeats=" + freeSeats +
-                '}';
-    }
 }
