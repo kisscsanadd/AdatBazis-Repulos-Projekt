@@ -1,12 +1,10 @@
 package hu.adatb.view.controller;
 
-import hu.adatb.App;
 import hu.adatb.controller.AirportController;
 import hu.adatb.controller.CityController;
-import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Airport;
 import hu.adatb.model.City;
-import hu.adatb.model.Plane;
+import hu.adatb.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,9 +15,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-import java.awt.*;
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,10 +41,9 @@ public class AddAirportController implements Initializable {
     Button saveButton;
 
     @FXML
-    ComboBox cities;
+    ComboBox<String> cities;
 
     private List<Airport> airports;
-    private List<City> citylist;
 
     public AddAirportController() {
     }
@@ -57,38 +53,30 @@ public class AddAirportController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         if (AirportController.getInstance().add(airport)) {
-            try {
-                App.StageDeliver("/adminView/AirportScreen.fxml", "Repülőterek", "style.css");
-                ((Node) event.getSource()).getScene().getWindow().hide();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            stage.close();
         } else {
-            return;
+            Utils.showWarning("Nem sikerült menteni az új repülőteret");
         }
     }
 
     @FXML
     private void cancel(ActionEvent event){
-        try {
-            App.StageDeliver("adminView/AirportScreen.fxml", "Repülőterek", "style.css");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //TODO  not sure if this is the correct way
-        citylist = CityController.getInstance().getAll();
-        List<String> CityNameList = citylist.stream().map(City::getName).collect(Collectors.toList());
-        ObservableList<String> obsCityList = FXCollections.observableList(CityNameList);
+        List<City> cityList = CityController.getInstance().getAll();
+        List<String> CityNameList = cityList.stream().map(City::getName).collect(Collectors.toList());
 
         longitudeSpinner.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(
-                -180.0, 180, 0, 0.5));
+                -180.0, 180, 0, 0.4));
         latitudeSpinner.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(
-                -90.0, 90.0, 0, 0.5));
-        cities.setItems(obsCityList);
+                -90.0, 90.0, 0, 0.4));
+
+        cities.getItems().addAll(CityNameList);
 
         airports = AirportController.getInstance().getAll();
 
@@ -117,7 +105,8 @@ public class AddAirportController implements Initializable {
     }
 
     private void FieldValidator() {
-        saveButton.disableProperty().bind(nameField.textProperty().isEmpty());
+        saveButton.disableProperty().bind(nameField.textProperty().isEmpty()
+                .or(cities.valueProperty().isNull()));
     }
 
 

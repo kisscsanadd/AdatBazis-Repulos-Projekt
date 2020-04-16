@@ -1,7 +1,9 @@
 package hu.adatb.view.controller;
 
+import hu.adatb.App;
 import hu.adatb.controller.AirportController;
 import hu.adatb.model.Airport;
+import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -48,20 +50,11 @@ public class AirportWindowController implements Initializable {
 
     @FXML
     public void addAirport() {
-
-        Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/fxmlView/adminView/add_airport.fxml"));
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-
+            App.DialogDeliver("add_airport.fxml","Repülőtér hozzáadása");
         } catch (IOException e) {
-            e.printStackTrace();
+            Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
-
     }
 
     public AirportWindowController() {
