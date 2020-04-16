@@ -27,4 +27,14 @@ public class Queries {
 
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
 
+    public static final String INSERT_PLANE = "INSERT INTO REPULOGEP (nev, sebesseg, ferohely) values(?, ?, ?)";
+
+    public static final String INSERT_HOTEL = "INSERT INTO SZALLODA (nev, csillagok_szama, varos_id) values(?, ?, ?)";
+
+    public static final String INSERT_AIRPORT = "INSERT INTO REPULOTER (nev, szelesseg, hosszusag, varos_id) values(?, ?, ?, ?)";
+
+    public static final String INSERT_ALERT = "INSERT INTO FIGYELMEZTETES (uzenet) values(?)";
+
+    public static final String INSERT_FLIGHT = "INSERT INTO JARAT (felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values(?, ?, ?, ?, ?)";
+
 }

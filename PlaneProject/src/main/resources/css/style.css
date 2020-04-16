@@ -10,3 +10,7 @@
     -fx-graphic: url('../pictures/registrationPic.jpg');
     -fx-arc-width: 50;
 }
+
+.warning {
+    -fx-text-fill: red;
+}

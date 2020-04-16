@@ -30,6 +30,9 @@ public class PlaneWindowController implements Initializable {
     private TableColumn<Plane, String> nameCol;
 
     @FXML
+    private TableColumn<Plane, Integer> speedCol;
+
+    @FXML
     private TableColumn<Plane, Integer> seatsCol;
 
     @FXML
@@ -46,7 +49,7 @@ public class PlaneWindowController implements Initializable {
 
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/hu/adatb/fxmlView/add_plane.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/fxmlView/adminView/add_plane.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -68,7 +71,8 @@ public class PlaneWindowController implements Initializable {
         table.setItems(FXCollections.observableList(list));
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        seatsCol.setCellValueFactory(new PropertyValueFactory<>("ferohely"));
+        speedCol.setCellValueFactory(new PropertyValueFactory<>("speed"));
+        seatsCol.setCellValueFactory(new PropertyValueFactory<>("seats"));
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
                 private final Button deleteBtn = new Button("Törlés");
