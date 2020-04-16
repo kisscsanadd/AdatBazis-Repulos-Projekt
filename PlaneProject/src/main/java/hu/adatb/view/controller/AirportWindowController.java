@@ -1,12 +1,8 @@
 package hu.adatb.view.controller;
 
-import hu.adatb.App;
-import hu.adatb.controller.PlaneController;
-import hu.adatb.model.Plane;
-import hu.adatb.utils.Utils;
-import javafx.beans.property.SimpleIntegerProperty;
+import hu.adatb.controller.AirportController;
+import hu.adatb.model.Airport;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,48 +20,62 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PlaneWindowController implements Initializable {
+public class AirportWindowController implements Initializable {
 
     @FXML
-    private TableView<Plane> table;
+    private TableView<Airport> table;
 
     @FXML
-    private TableColumn<Plane, String> nameCol;
+    private TableColumn<Airport, String> nameCol;
 
     @FXML
-    private TableColumn<Plane, Integer> speedCol;
+    private TableColumn<Airport, Double> longitudeCol;
 
     @FXML
-    private TableColumn<Plane, Integer> seatsCol;
+    private TableColumn<Airport, Double> latitudeCol;
 
     @FXML
-    private TableColumn<Plane, Void> actionsCol;
+    private TableColumn<Airport, String> cityCol;
 
     @FXML
-    public void addPlane() {
-        try {
-            App.DialogDeliver("add_plane.fxml", "Repülőgép hozzáadás");
-        } catch (IOException e) {
-            Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
-        }
-    }
+    private TableColumn<Airport, Void> actionsCol;
 
-    public PlaneWindowController() {
-    }
-
+    @FXML
     public void refreshTable() {
-        List<Plane> list = PlaneController.getInstance().getAll();
+        List<Airport> list = AirportController.getInstance().getAll();
         table.setItems(FXCollections.observableList(list));
+    }
+
+    @FXML
+    public void addAirport() {
+
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxmlView/adminView/add_airport.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public AirportWindowController() {
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Plane> list = PlaneController.getInstance().getAll();
+        List<Airport> list = AirportController.getInstance().getAll();
         table.setItems(FXCollections.observableList(list));
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        speedCol.setCellValueFactory(new PropertyValueFactory<>("speed"));
-        seatsCol.setCellValueFactory(new PropertyValueFactory<>("seats"));
+        longitudeCol.setCellValueFactory(new PropertyValueFactory<>("longitude"));
+        latitudeCol.setCellValueFactory(new PropertyValueFactory<>("latitude"));
+        cityCol.setCellValueFactory(cityName -> new SimpleStringProperty(cityName.getValue().getCity().getName()));
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
                 private final Button deleteBtn = new Button("Törlés");
@@ -73,14 +83,14 @@ public class PlaneWindowController implements Initializable {
 
                 {
                     deleteBtn.setOnAction(event -> {
-                        Plane p = getTableView().getItems().get(getIndex());
-                        deletePlane(p);
+                        Airport a = getTableView().getItems().get(getIndex());
+                        deleteAirport(a);
                         refreshTable();
                     });
 
                     editBtn.setOnAction(event -> {
-                        Plane p = getTableView().getItems().get(getIndex());
-                        editPlane(p);
+                        Airport a = getTableView().getItems().get(getIndex());
+                        editAirport(a);
                         refreshTable();
                     });
                 }
@@ -101,12 +111,12 @@ public class PlaneWindowController implements Initializable {
         });
     }
 
-    private void editPlane(Plane p) {
+    private void editAirport(Airport a) {
 
         // TODO - create edit
     }
 
-    private void deletePlane(Plane p){
+    private void deleteAirport(Airport a){
         // TODO - create delete
     }
 }
