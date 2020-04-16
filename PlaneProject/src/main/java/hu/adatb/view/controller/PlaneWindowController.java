@@ -1,5 +1,6 @@
 package hu.adatb.view.controller;
 
+import hu.adatb.App;
 import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Plane;
 import javafx.collections.FXCollections;
@@ -42,13 +43,12 @@ public class PlaneWindowController implements Initializable {
     }
 
     @FXML
-    public void addPlane() {
-
-        Parent root = null;
+    public void addPlane() throws IOException {
         try {
-            root = FXMLLoader.load(getClass().getResource("/hu/adatb/fxmlView/add_plane.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxmlView/adminView/add_plane.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -68,7 +68,7 @@ public class PlaneWindowController implements Initializable {
         table.setItems(FXCollections.observableList(list));
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        seatsCol.setCellValueFactory(new PropertyValueFactory<>("ferohely"));
+        seatsCol.setCellValueFactory(new PropertyValueFactory<>("seats"));
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
                 private final Button deleteBtn = new Button("Törlés");

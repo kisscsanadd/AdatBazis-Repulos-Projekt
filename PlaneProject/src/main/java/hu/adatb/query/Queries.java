@@ -22,5 +22,6 @@ public class Queries {
     public static final String SELECT_BOOKING_BY_ID = "SELECT * FROM FOGLALAS WHERE ID = ";
     public static final String SELECT_TICKET = "SELECT * FROM JEGY";
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
+    public static final String INSERT_PLANE = "INSERT INTO REPULOGEP (nev, ferohely) values(?, ?)";
 
 }

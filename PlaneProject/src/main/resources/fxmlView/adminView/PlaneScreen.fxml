@@ -8,7 +8,7 @@
    <children>
       <HBox prefHeight="20.0" prefWidth="160.0">
          <children>
-            <Button mnemonicParsing="false" text="Repülőgép hozzáadás" />
+            <Button mnemonicParsing="false" onAction="#addPlane" text="Repülőgép hozzáadás" />
          </children>
       </HBox>
       <TableView fx:id="table" layoutY="27.0" prefHeight="317.0" prefWidth="600.0">

@@ -15,6 +15,8 @@ public class Plane {
         this.name.set(name);
         this.seats.set(seats);
     }
+    public Plane() {
+    }
 
     public int getId() {
         return id.get();
