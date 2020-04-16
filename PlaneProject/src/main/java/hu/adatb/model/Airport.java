@@ -18,6 +18,10 @@ public class Airport {
         this.city = city;
     }
 
+    public Airport() {
+
+    }
+
     public String getName() {
         return name.get();
     }

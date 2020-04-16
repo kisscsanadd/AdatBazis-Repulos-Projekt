@@ -20,7 +20,7 @@
                         <Insets left="7.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction3" text="Repülőtér">
+                  <Button mnemonicParsing="false" onAction="#getAirportScreen" text="Repülőtér">
                      <VBox.margin>
                         <Insets left="7.0" top="10.0" />
                      </VBox.margin>
