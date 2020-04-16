@@ -3,11 +3,13 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Plane;
+import hu.adatb.utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,29 +44,21 @@ public class AddPlaneController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         if (PlaneController.getInstance().add(plane)) {
-            try {
-                App.StageDeliver("/adminView/PlaneScreen.fxml", "Repülőgépek", "style.css");
-                ((Node) event.getSource()).getScene().getWindow().hide();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            stage.close();
         } else {
-            return;
+            Utils.showWarning("Nem sikerült menteni az új repülőgépet");
         }
     }
 
     @FXML
     private void cancel(ActionEvent event){
-        try {
-            App.StageDeliver("adminView/PlaneScreen.fxml", "Repülőgépek", "style.css");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         seatsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                 10, 1000, 10, 10));
         speedSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
@@ -105,6 +99,4 @@ public class AddPlaneController implements Initializable {
             plane.seatsProperty().set(10);
         }
     }
-
-
 }

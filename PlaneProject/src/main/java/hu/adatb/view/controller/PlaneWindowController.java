@@ -1,7 +1,12 @@
 package hu.adatb.view.controller;
 
+import hu.adatb.App;
 import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Plane;
+import hu.adatb.utils.Utils;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -39,30 +44,20 @@ public class PlaneWindowController implements Initializable {
     private TableColumn<Plane, Void> actionsCol;
 
     @FXML
-    public void refreshTable() {
-        List<Plane> list = PlaneController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
-    }
-
-    @FXML
     public void addPlane() {
-
-        Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/fxmlView/adminView/add_plane.fxml"));
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-
+            App.DialogDeliver("add_plane.fxml", "Repülőgép hozzáadás");
         } catch (IOException e) {
-            e.printStackTrace();
+            Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
-
     }
 
     public PlaneWindowController() {
+    }
+
+    public void refreshTable() {
+        List<Plane> list = PlaneController.getInstance().getAll();
+        table.setItems(FXCollections.observableList(list));
     }
 
     @Override
