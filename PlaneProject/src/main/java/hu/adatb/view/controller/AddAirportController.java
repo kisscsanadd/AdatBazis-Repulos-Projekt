@@ -94,8 +94,11 @@ public class AddAirportController implements Initializable {
         airports = AirportController.getInstance().getAll();
 
         airport.nameProperty().bindBidirectional(nameField.textProperty());
-        longitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.longitudeProperty().asObject());
-        latitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.latitudeProperty().asObject());
+        airport.latitudeProperty().bind(latitudeSpinner.valueProperty());
+        airport.longitudeProperty().bind(longitudeSpinner.valueProperty());
+
+        //longitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.longitudeProperty().asObject());
+        //latitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.latitudeProperty().asObject());
 
         FieldValidator();
 
