@@ -65,9 +65,12 @@ public class AddPlaneController implements Initializable {
                 100, 2000, 100, 10));
         planes = PlaneController.getInstance().getAll();
 
-        plane.nameProperty().bindBidirectional(nameField.textProperty());
-        speedSpinner.getValueFactory().valueProperty().bindBidirectional(plane.speedProperty().asObject());
-        seatsSpinner.getValueFactory().valueProperty().bindBidirectional(plane.seatsProperty().asObject());
+        plane.nameProperty().bind(nameField.textProperty());
+        plane.seatsProperty().bind(seatsSpinner.valueProperty());
+        plane.speedProperty().bind(speedSpinner.valueProperty());
+
+        //speedSpinner.getValueFactory().valueProperty().bindBidirectional(plane.speedProperty().asObject());
+        //seatsSpinner.getValueFactory().valueProperty().bindBidirectional(plane.seatsProperty().asObject());
 
         FieldValidator();
 
@@ -92,11 +95,11 @@ public class AddPlaneController implements Initializable {
     private void FieldValidator() {
         saveButton.disableProperty().bind(nameField.textProperty().isEmpty());
         //TODO better logic for these:
-        if(plane.speedProperty().get()<100){
+        /*if(plane.speedProperty().get()<100){
             plane.speedProperty().set(100);
         }
         if(plane.seatsProperty().get()<10){
             plane.seatsProperty().set(10);
-        }
+        }*/
     }
 }
