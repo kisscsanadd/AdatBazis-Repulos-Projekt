@@ -3,6 +3,8 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.AirportController;
 import hu.adatb.model.Airport;
+import hu.adatb.model.City;
+import hu.adatb.utils.GetById;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -55,6 +57,7 @@ public class AirportWindowController implements Initializable {
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
+        refreshTable();
     }
 
     public AirportWindowController() {

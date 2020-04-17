@@ -4,10 +4,12 @@ import hu.adatb.controller.AirportController;
 import hu.adatb.controller.CityController;
 import hu.adatb.model.Airport;
 import hu.adatb.model.City;
+import hu.adatb.utils.GetById;
 import hu.adatb.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -16,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.List;
@@ -41,9 +44,11 @@ public class AddAirportController implements Initializable {
     Button saveButton;
 
     @FXML
-    ComboBox<String> cities;
+    ComboBox<City> cities;
 
     private List<Airport> airports;
+
+    private GetById getById;
 
     public AddAirportController() {
     }
@@ -69,20 +74,51 @@ public class AddAirportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<City> cityList = CityController.getInstance().getAll();
-        List<String> CityNameList = cityList.stream().map(City::getName).collect(Collectors.toList());
+        ObservableList<City> obsCityList = FXCollections.observableList(cityList);
+
+        City randomcity = getById.GetCityById(3);
 
         longitudeSpinner.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(
                 -180.0, 180, 0, 0.4));
         latitudeSpinner.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(
                 -90.0, 90.0, 0, 0.4));
 
-        cities.getItems().addAll(CityNameList);
+        cities.getItems().addAll(obsCityList);
+
+        Callback<ListView<City>, ListCell<City>> factory = lv -> new ListCell<City>() {
+
+            @Override
+            protected void updateItem(City item, boolean empty){
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getName());
+            }
+        };
+
+        cities.setCellFactory(factory);
+        cities.setButtonCell(factory.call(null));
 
         airports = AirportController.getInstance().getAll();
 
         airport.nameProperty().bindBidirectional(nameField.textProperty());
         longitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.longitudeProperty().asObject());
         latitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.latitudeProperty().asObject());
+
+        EventHandler<ActionEvent> event =
+                new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent e)
+                    {
+                        if(cities.getSelectionModel().getSelectedItem() != null){
+                            airport.setCity(cities.getValue());
+                    }else {
+                            airport.setCity(getById.GetCityById(1));
+                        }
+
+                    }
+                };
+
+            cities.setOnAction(event);
+
+
 
         FieldValidator();
 

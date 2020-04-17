@@ -1,5 +1,6 @@
 package hu.adatb.dao;
 
+import hu.adatb.App;
 import hu.adatb.model.Airport;
 import hu.adatb.model.City;
 import hu.adatb.query.Database;
@@ -7,6 +8,7 @@ import hu.adatb.utils.GetById;
 import hu.adatb.utils.GetByIdException;
 import hu.adatb.utils.Utils;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,7 +21,27 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public boolean add(Airport airport) {
-        return false;   // TODO - make it
+        try {
+            PreparedStatement st = Database.ConnectionToDatabaseWithPreparedStatement(INSERT_AIRPORT);
+
+            st.setString(1, airport.getName());
+            st.setDouble(2, airport.getLatitude());
+            st.setDouble(3, airport.getLongitude());
+            st.setInt(4, airport.getCity().getId());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Successful addition");
+                Utils.showInformation("Sikeres hozzáadás");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed addition");
+        }
+
+        Utils.showWarning("Nem sikerült a hozzáadás");
+        return false;
     }
 
     @Override
