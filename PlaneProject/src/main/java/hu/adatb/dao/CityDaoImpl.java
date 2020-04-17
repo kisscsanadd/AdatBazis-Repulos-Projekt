@@ -4,6 +4,7 @@ import hu.adatb.model.City;
 import hu.adatb.query.Database;
 import hu.adatb.utils.Utils;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,7 +17,7 @@ public class CityDaoImpl implements CityDao {
 
     @Override
     public boolean add(City city) {
-        return false;
+        return false;   // TODO - make it
     }
 
     @Override
@@ -28,8 +29,8 @@ public class CityDaoImpl implements CityDao {
     public List<City> getAll() {
         List<City> result = new ArrayList<>();
 
-        try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+        try (Connection conn = Database.ConnectionToDatabase();
+             Statement stmt = conn.createStatement()){
 
             ResultSet rs = stmt.executeQuery(SELECT_CITY);
 

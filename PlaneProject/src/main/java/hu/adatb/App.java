@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.io.IOException;
  */
 public class App extends Application {
     private static Stage primaryStage;
+    private static Stage dialogStage;
 
     public static String CurrentTime() {
         return "[" + java.time.LocalDateTime.now() + "] ";
@@ -41,9 +43,22 @@ public class App extends Application {
         return StageDeliver(fileName, title, "");
     }
 
+    public static Stage DialogDeliver(String fileName, String title) throws IOException {
+        Parent root = FXMLLoader.load(App.class.getResource("/fxmlView/adminView/" + fileName));
+        var scene = new Scene(root);
+
+        dialogStage.getIcons().add(new Image(App.class.getResourceAsStream("/pictures/icon.jpg")));
+        dialogStage.setScene(scene);
+        dialogStage.setTitle(title);
+        dialogStage.showAndWait();  // change it if you want to open more than one dialog stage in the same time
+
+        return dialogStage;
+    }
+
     @Override
     public void start(Stage stage) {
         primaryStage = stage;
+        dialogStage = new Stage();
         try {
             System.out.println("\n"+ App.CurrentTime() + "Start application");
             StageDeliver("reg_or_login.fxml", "Repülőjárat foglaló rendszer");

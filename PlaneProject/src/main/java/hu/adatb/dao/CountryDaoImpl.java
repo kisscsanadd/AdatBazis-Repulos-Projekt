@@ -4,6 +4,7 @@ import hu.adatb.model.Country;
 import hu.adatb.query.Database;
 import hu.adatb.utils.Utils;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +16,7 @@ import static hu.adatb.query.Queries.SELECT_COUNTRY;
 public class CountryDaoImpl implements CountryDao {
     @Override
     public boolean add(Country country) {
-        return false;
+        return false; // TODO - make it
     }
 
     @Override
@@ -27,8 +28,8 @@ public class CountryDaoImpl implements CountryDao {
     public List<Country> getAll() {
         List<Country> result = new ArrayList<>();
 
-        try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+        try (Connection conn = Database.ConnectionToDatabase();
+             Statement stmt = conn.createStatement()){
 
             ResultSet rs = stmt.executeQuery(SELECT_COUNTRY);
 

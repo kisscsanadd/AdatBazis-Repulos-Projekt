@@ -8,41 +8,41 @@
    <children>
       <BorderPane fx:id="mainPane" layoutX="5.0" layoutY="7.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0">
          <left>
-            <VBox prefHeight="245.0" prefWidth="109.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="432.0" prefWidth="116.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#buttonAction1" text="Repülőjárat">
+                  <Button mnemonicParsing="false" onAction="#buttonAction1" prefHeight="50.0" prefWidth="100.0" text="Repülőjárat">
                      <VBox.margin>
-                        <Insets left="7.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#getPlaneScreen" text="Repülőgép">
+                  <Button mnemonicParsing="false" onAction="#getPlaneScreen" prefHeight="50.0" prefWidth="100.0" text="Repülőgép">
                      <VBox.margin>
-                        <Insets left="7.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction3" text="Repülőtér">
+                  <Button mnemonicParsing="false" onAction="#getAirportScreen" prefHeight="50.0" prefWidth="100.0" text="Repülőtér">
                      <VBox.margin>
-                        <Insets left="7.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction4" text="Figyelmeztetés">
+                  <Button mnemonicParsing="false" onAction="#buttonAction4" prefHeight="50.0" prefWidth="100.0" text="Figyelmeztetés">
                      <VBox.margin>
-                        <Insets left="7.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction5" text="Szálloda">
+                  <Button mnemonicParsing="false" onAction="#buttonAction5" prefHeight="50.0" prefWidth="100.0" text="Szálloda">
                      <VBox.margin>
-                        <Insets left="7.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction5" text="Járatok">
+                  <Button mnemonicParsing="false" onAction="#buttonAction5" prefHeight="50.0" prefWidth="100.0" text="Járatok">
                      <VBox.margin>
-                        <Insets left="7.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction5" text="Kijelentkezés">
+                  <Button mnemonicParsing="false" onAction="#buttonAction5" prefHeight="50.0" prefWidth="100.0" text="Kijelentkezés">
                      <VBox.margin>
-                        <Insets left="7.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
                </children>

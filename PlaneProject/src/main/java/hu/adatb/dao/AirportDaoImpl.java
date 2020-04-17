@@ -1,5 +1,6 @@
 package hu.adatb.dao;
 
+import hu.adatb.App;
 import hu.adatb.model.Airport;
 import hu.adatb.model.City;
 import hu.adatb.query.Database;
@@ -7,9 +8,7 @@ import hu.adatb.utils.GetById;
 import hu.adatb.utils.GetByIdException;
 import hu.adatb.utils.Utils;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +18,26 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public boolean add(Airport airport) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(INSERT_AIRPORT)){
+
+            st.setString(1, airport.getName());
+            st.setDouble(2, airport.getLatitude());
+            st.setDouble(3, airport.getLongitude());
+            st.setInt(4, airport.getCity().getId());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Successful addition");
+                Utils.showInformation("Sikeres hozzáadás");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed addition");
+        }
+
+        Utils.showWarning("Nem sikerült a hozzáadás");
         return false;
     }
 
@@ -31,8 +50,8 @@ public class AirportDaoImpl implements AirportDao {
     public List<Airport> getAll() {
         List<Airport> result = new ArrayList<>();
 
-        try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+        try(Connection conn = Database.ConnectionToDatabase();
+            Statement stmt = conn.createStatement()) {
 
             ResultSet rs = stmt.executeQuery(SELECT_AIRPORT);
 
@@ -57,6 +76,7 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException | ClassNotFoundException | GetByIdException e) {
             Utils.showWarning("Nem sikerült lekérni a repülőtereket");
         }
+
 
         return result;
     }
