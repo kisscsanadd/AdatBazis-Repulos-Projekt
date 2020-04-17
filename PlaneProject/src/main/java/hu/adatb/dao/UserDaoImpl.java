@@ -15,8 +15,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean add(User user) {
-        try {
-            PreparedStatement st = Database.ConnectionToDatabaseWithPreparedStatement(INSERT_USER);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(INSERT_USER)){
 
             st.setString(1, user.getName());
             st.setString(2, user.getPassword());
@@ -40,8 +40,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean delete(int id) {
-        try {
-            PreparedStatement st = Database.ConnectionToDatabaseWithPreparedStatement(DELETE_USER);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(DELETE_USER)){
 
             st.setInt(1, id);
 
@@ -62,8 +62,8 @@ public class UserDaoImpl implements UserDao {
     public List<User> getAll() {
         List<User> result = new ArrayList<>();
 
-        try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+        try (Connection conn = Database.ConnectionToDatabase();
+             Statement stmt = conn.createStatement()){
 
             ResultSet rs = stmt.executeQuery(SELECT_USER);
 

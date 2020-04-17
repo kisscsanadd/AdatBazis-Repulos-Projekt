@@ -8,10 +8,7 @@ import hu.adatb.utils.GetById;
 import hu.adatb.utils.GetByIdException;
 import hu.adatb.utils.Utils;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +18,8 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public boolean add(Airport airport) {
-        try {
-            PreparedStatement st = Database.ConnectionToDatabaseWithPreparedStatement(INSERT_AIRPORT);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(INSERT_AIRPORT)){
 
             st.setString(1, airport.getName());
             st.setDouble(2, airport.getLatitude());
@@ -53,8 +50,8 @@ public class AirportDaoImpl implements AirportDao {
     public List<Airport> getAll() {
         List<Airport> result = new ArrayList<>();
 
-        try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+        try(Connection conn = Database.ConnectionToDatabase();
+            Statement stmt = conn.createStatement()) {
 
             ResultSet rs = stmt.executeQuery(SELECT_AIRPORT);
 
@@ -79,6 +76,7 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException | ClassNotFoundException | GetByIdException e) {
             Utils.showWarning("Nem sikerült lekérni a repülőtereket");
         }
+
 
         return result;
     }

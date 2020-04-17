@@ -5,22 +5,18 @@ import hu.adatb.model.Plane;
 import hu.adatb.query.Database;
 import hu.adatb.utils.Utils;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static hu.adatb.query.Queries.INSERT_PLANE;
-import static hu.adatb.query.Queries.SELECT_PLANE;
+import static hu.adatb.query.Queries.*;
 
 public class PlaneDaoImpl implements PlaneDao {
 
     @Override
     public boolean add(Plane plane) {
-        try {
-            PreparedStatement st = Database.ConnectionToDatabaseWithPreparedStatement(INSERT_PLANE);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(INSERT_PLANE)){
 
             st.setString(1, plane.getName());
             st.setInt(2, plane.getSpeed());
@@ -50,8 +46,8 @@ public class PlaneDaoImpl implements PlaneDao {
     public List<Plane> getAll() {
         List<Plane> result = new ArrayList<>();
 
-        try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+        try(Connection conn = Database.ConnectionToDatabase();
+            Statement stmt = conn.createStatement()) {
 
             ResultSet rs = stmt.executeQuery(SELECT_PLANE);
 

@@ -7,6 +7,7 @@ import hu.adatb.utils.GetById;
 import hu.adatb.utils.GetByIdException;
 import hu.adatb.utils.Utils;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,8 +31,8 @@ public class HotelDaoImpl implements HotelDao{
     public List<Hotel> getAll() {
         List<Hotel> result = new ArrayList<>();
 
-        try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+        try (Connection conn = Database.ConnectionToDatabase();
+             Statement stmt = conn.createStatement()){
 
             ResultSet rs = stmt.executeQuery(SELECT_HOTEL);
 

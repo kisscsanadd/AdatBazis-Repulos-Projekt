@@ -3,9 +3,7 @@ package hu.adatb.utils;
 import hu.adatb.model.*;
 import hu.adatb.query.Database;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -14,11 +12,12 @@ import static hu.adatb.query.Queries.*;
 public class GetById {
 
     public static City GetCityById(int id) {
-        try {
-            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_CITY_BY_ID);
-            stmt.setInt(1, id);
+        try(Connection conn = Database.ConnectionToDatabase();
+            PreparedStatement st = conn.prepareStatement(SELECT_CITY_BY_ID);) {
 
-            ResultSet rs = stmt.executeQuery();
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
                 return new City (
@@ -35,12 +34,12 @@ public class GetById {
     }
 
     public static User GetUserById(int id) {
-        try {
-            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_USER_BY_ID);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_USER_BY_ID)){
 
-            stmt.setInt(1, id);
+            st.setInt(1, id);
 
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
                 return new User(
@@ -60,11 +59,12 @@ public class GetById {
     }
 
     public static Plane GetPlaneById(int id) {
-        try {
-            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_PLANE_BY_ID);
-            stmt.setInt(1, id);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_PLANE_BY_ID)){
 
-            ResultSet rs = stmt.executeQuery();
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
                 return new Plane (
@@ -83,12 +83,12 @@ public class GetById {
     }
 
     public static Flight GetFlightById(int id) {
-        try {
-            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_FLIGHT_BY_ID);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_FLIGHT_BY_ID)){
 
-            stmt.setInt(1, id);
+            st.setInt(1, id);
 
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
                 var date = rs.getDate("felszallas_datum").toLocalDate();
@@ -116,12 +116,12 @@ public class GetById {
     }
 
     public static Payment GetPaymentById(int id) {
-        try {
-            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_PAYMENT_BY_ID);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_PAYMENT_BY_ID)){
 
-            stmt.setInt(1, id);
+            st.setInt(1, id);
 
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
                 return new Payment(
@@ -138,12 +138,12 @@ public class GetById {
     }
 
     public static Category GetCategoryById(int id) {
-        try {
-            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_CATEGORY_BY_ID);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_CATEGORY_BY_ID)){
 
-            stmt.setInt(1, id);
+            st.setInt(1, id);
 
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
                 return new Category(
@@ -161,12 +161,12 @@ public class GetById {
     }
 
     public static TravelClass GetTravelClassById(int id) {
-        try {
-            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_TRAVEL_CLASS_BY_ID);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_TRAVEL_CLASS_BY_ID)){
 
-            stmt.setInt(1, id);
+            st.setInt(1, id);
 
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
                 return new TravelClass(
@@ -183,12 +183,12 @@ public class GetById {
     }
 
     public static Booking GetBookingById(int id) {
-        try {
-            var stmt = Database.ConnectionToDatabaseWithPreparedStatement(SELECT_BOOKING_BY_ID);
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_BOOKING_BY_ID)){
 
-            stmt.setInt(1, id);
+            st.setInt(1, id);
 
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
                 var user = GetById.GetUserById(rs.getInt("felh_id"));

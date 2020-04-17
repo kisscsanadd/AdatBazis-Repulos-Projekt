@@ -5,6 +5,7 @@ import hu.adatb.model.Payment;
 import hu.adatb.query.Database;
 import hu.adatb.utils.Utils;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,8 +19,8 @@ public class CategoryDaoImpl implements  CategoryDao{
     public List<Category> getAll() {
         List<Category> result = new ArrayList<>();
 
-        try {
-            Statement stmt = Database.ConnectionToDatabaseWithStatement();
+        try (Connection conn = Database.ConnectionToDatabase();
+             Statement stmt = conn.createStatement()){
 
             ResultSet rs = stmt.executeQuery(SELECT_CATEGORY);
 
