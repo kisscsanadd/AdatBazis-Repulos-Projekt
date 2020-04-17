@@ -48,6 +48,7 @@ public class PlaneWindowController implements Initializable {
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
+        refreshTable();
     }
 
     public PlaneWindowController() {
