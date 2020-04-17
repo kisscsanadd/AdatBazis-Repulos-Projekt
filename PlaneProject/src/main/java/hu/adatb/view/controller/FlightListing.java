@@ -1,11 +1,13 @@
 package hu.adatb.view.controller;
 
+import hu.adatb.App;
 import hu.adatb.controller.AirportController;
 import hu.adatb.controller.FlightController;
 import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Airport;
 import hu.adatb.model.Flight;
 import hu.adatb.model.Plane;
+import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -36,9 +39,6 @@ public class FlightListing implements Initializable {
 
     @FXML
     DatePicker dateEnd;
-
-    @FXML
-    Button sourceButton;
 
     @FXML
     public TableView<Flight> table = new TableView<>();
@@ -72,6 +72,7 @@ public class FlightListing implements Initializable {
 
     private List<Flight> flights;
     private List<Airport> airports;
+    private static Flight bookedFlight;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -144,9 +145,13 @@ public class FlightListing implements Initializable {
 
                     {
                         bookingButton.setOnAction(event -> {
-                            Flight flight = table.getItems().get(getIndex());
+                            bookedFlight = table.getItems().get(getIndex());
 
-                            // TODO - open another window
+                            try {
+                                App.DialogDeliver("add_booking.fxml","Foglalás", false);
+                            } catch (IOException e) {
+                                Utils.showWarning("Nem sikerült megnyitni a foglalás ablakot");
+                            }
                         });
                     }
 
@@ -171,5 +176,9 @@ public class FlightListing implements Initializable {
             infoText.setVisible(true);
             infoText.setText("Nincs a szűrőknek megfelelő járat");
         }
+    }
+
+    public static Flight getBookedFlight() {
+        return bookedFlight;
     }
 }

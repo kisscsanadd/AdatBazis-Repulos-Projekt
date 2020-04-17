@@ -43,16 +43,27 @@ public class App extends Application {
         return StageDeliver(fileName, title, "");
     }
 
-    public static Stage DialogDeliver(String fileName, String title) throws IOException {
-        Parent root = FXMLLoader.load(App.class.getResource("/fxmlView/adminView/" + fileName));
+    public static Stage DialogDeliver(String fileName, String title, boolean isAdmin) throws IOException {
+        Parent root = null;
+
+        if (isAdmin) {
+            root = FXMLLoader.load(App.class.getResource("/fxmlView/adminView/" + fileName));
+        } else {
+            root = FXMLLoader.load(App.class.getResource("/fxmlView/userView/" + fileName));
+        }
+
         var scene = new Scene(root);
 
         dialogStage.getIcons().add(new Image(App.class.getResourceAsStream("/pictures/icon.jpg")));
         dialogStage.setScene(scene);
         dialogStage.setTitle(title);
-        dialogStage.showAndWait();  // change it if you want to open more than one dialog stage in the same time
+        dialogStage.show();
 
         return dialogStage;
+    }
+
+    public static Stage DialogDeliver(String fileName, String title) throws  IOException {
+        return  DialogDeliver(fileName, title, true);
     }
 
     @Override
