@@ -93,7 +93,7 @@ public class AddAirportController implements Initializable {
 
         airports = AirportController.getInstance().getAll();
 
-        airport.nameProperty().bindBidirectional(nameField.textProperty());
+        airport.nameProperty().bind(nameField.textProperty());
         airport.latitudeProperty().bind(latitudeSpinner.valueProperty());
         airport.longitudeProperty().bind(longitudeSpinner.valueProperty());
 
