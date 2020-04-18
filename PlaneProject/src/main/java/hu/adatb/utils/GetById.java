@@ -100,6 +100,7 @@ public class GetById {
                 var plane = GetById.GetPlaneById(planeId);
 
                 return new Flight(
+                        rs.getInt("id"),
                         dateTime,
                         rs.getString("from_airport"),
                         rs.getString("to_airport"),

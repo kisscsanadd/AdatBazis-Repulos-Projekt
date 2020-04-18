@@ -48,6 +48,7 @@ public class FlightDaoImpl implements FlightDao {
                 var plane = GetById.GetPlaneById(planeId);
 
                 Flight flight = new Flight(
+                        rs.getInt("id"),
                         dateTime,
                         rs.getString("from_airport"),
                         rs.getString("to_airport"),

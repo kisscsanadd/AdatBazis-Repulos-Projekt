@@ -8,13 +8,15 @@ import java.time.format.DateTimeFormatter;
 
 public class Flight {
 
+    private IntegerProperty id = new SimpleIntegerProperty();
     private LocalDateTime dateTime;
     private StringProperty fromAirport = new SimpleStringProperty();
     private StringProperty toAirport = new SimpleStringProperty();
     private Plane plane;
     private IntegerProperty freeSeats = new SimpleIntegerProperty();
 
-    public Flight(LocalDateTime dateTime, String fromAirport, String toAirport, Plane plane, Integer freeSeats) {
+    public Flight(int id, LocalDateTime dateTime, String fromAirport, String toAirport, Plane plane, Integer freeSeats) {
+        this.id.set(id);
         this.dateTime = dateTime;
         this.fromAirport.set(fromAirport);
         this.toAirport.set(toAirport);
@@ -23,6 +25,26 @@ public class Flight {
     }
 
     public Flight() {
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(hu.adatb.model.Plane plane) {
+        this.plane = plane;
     }
 
     public String getDateTimeInRightFormat() {
@@ -73,14 +95,6 @@ public class Flight {
 
     public void setToAirport(String toAirport) {
         this.toAirport.set(toAirport);
-    }
-
-    public Plane getPlane() {
-        return plane;
-    }
-
-    public void setPlane(Plane plane) {
-        this.plane = plane;
     }
 
     public int getFreeSeats() {

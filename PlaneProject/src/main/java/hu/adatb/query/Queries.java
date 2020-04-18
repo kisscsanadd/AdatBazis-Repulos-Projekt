@@ -37,4 +37,6 @@ public class Queries {
 
     public static final String INSERT_FLIGHT = "INSERT INTO JARAT (felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values(?, ?, ?, ?, ?)";
 
+    public static final String INSERT_BOOKING = "INSERT INTO FOGLALAS (felh_id, jarat_id, fizetesi_mod_id) values(?, ?, ?)";
+
 }

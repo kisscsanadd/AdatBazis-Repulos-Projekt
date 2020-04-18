@@ -15,6 +15,18 @@ public class TravelClass {
         this.name.set(name);
     }
 
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
     public String getName() {
         return name.get();
     }

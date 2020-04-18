@@ -19,6 +19,9 @@ public class Booking {
         this.payment = payment;
     }
 
+    public Booking() {
+    }
+
     public int getId() {
         return id.get();
     }

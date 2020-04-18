@@ -27,6 +27,8 @@ public class LoginUserController implements Initializable {
 
     private List<User> users;
 
+    private static User user;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         users = RegOrLoginController.getAllUsers();
@@ -40,6 +42,10 @@ public class LoginUserController implements Initializable {
             if (nameField.getText().equals(user.getName()) && passwordField.getText().equals(user.getPassword())) {
                 valid = true;
                 isAdmin = user.getIsAdmin() == 1;
+
+                LoginUserController.user = new User(user.getId(), user.getName(), user.getPassword(), user.getIsAdmin(), user.getEmail());
+
+                break;
             }
         }
 
@@ -58,5 +64,9 @@ public class LoginUserController implements Initializable {
     @FXML
     private void cancel(ActionEvent event) {
         RegOrLoginController.back("login");
+    }
+
+    public static User getUser(){
+        return LoginUserController.user;
     }
 }

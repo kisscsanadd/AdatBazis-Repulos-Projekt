@@ -1,23 +1,39 @@
 package hu.adatb.dao;
 
+import hu.adatb.App;
 import hu.adatb.model.*;
 import hu.adatb.query.Database;
 import hu.adatb.utils.GetById;
 import hu.adatb.utils.GetByIdException;
 import hu.adatb.utils.Utils;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static hu.adatb.query.Queries.SELECT_BOOKING;
+import static hu.adatb.query.Queries.*;
 
 public class BookingDaoImpl implements BookingDao {
     @Override
     public boolean add(Booking booking) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(INSERT_BOOKING)){
+
+            st.setInt(1, booking.getUser().getId());
+            st.setInt(2, booking.getFlight().getId());
+            st.setInt(3, booking.getPayment().getId());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Successful booking");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed booking");
+        }
+
+        Utils.showWarning("Nem sikerült a foglalás");
         return false;
     }
 
