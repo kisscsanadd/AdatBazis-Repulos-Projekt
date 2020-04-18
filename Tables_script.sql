@@ -390,3 +390,13 @@ create trigger Szalloda_trigger
 insert into Szalloda(nev, csillagok_szama, varos_id) values('Danubius Hotel Helia', 4, 4);
 insert into Szalloda(nev, csillagok_szama, varos_id) values('Hotel Canada', 3, 2);
 insert into Szalloda(nev, csillagok_szama, varos_id) values('The Savoy', 5, 3);
+
+
+
+CREATE OR REPLACE TRIGGER jarat_szabadhely_csokkentes
+AFTER INSERT
+ON jegy
+FOR EACH ROW
+BEGIN    
+    UPDATE jarat SET szabad_helyek = szabad_helyek - 1 WHERE id = (SELECT jarat_id FROM FOGLALAS WHERE id = :NEW.foglalasi_id);
+END;

@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -72,8 +73,28 @@ public class FlightListing implements Initializable {
     private Label infoText;
 
     private List<Flight> flights;
+    private List<Flight> filteredFlights;
     private List<Airport> airports;
     private static Flight bookedFlight;
+
+    String selectedFromAirport;
+    String selectedToAirport;
+    LocalDate selectedDateBegin;
+    LocalDate selectedDateEnd;
+
+    public void refreshTable() {
+        filteredFlights = flights.stream()
+                .filter(flight-> flight.getFromAirport().equals(selectedFromAirport)
+                        && flight.getToAirport().equals(selectedToAirport)
+                        && ((flight.getDateTime().toLocalDate()).isAfter(selectedDateBegin)
+                        || (flight.getDateTime().toLocalDate()).isEqual(selectedDateBegin))
+                        && ((flight.getDateTime().toLocalDate()).isBefore(selectedDateEnd)
+                        || (flight.getDateTime().toLocalDate()).isEqual(selectedDateEnd))
+                        && flight.getFreeSeats() > 0
+                ).collect(Collectors.toList());
+
+        table.setItems(FXCollections.observableList(filteredFlights));
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -93,23 +114,12 @@ public class FlightListing implements Initializable {
 
     @FXML
     public void search(ActionEvent actionEvent) {
-        var selectedFromAirport = fromAirport.getSelectionModel().getSelectedItem();
-        var selectedToAirport = toAirport.getSelectionModel().getSelectedItem();
-        var selectedDateBegin = dateBegin.getValue();
-        var selectedDateEnd = dateEnd.getValue();
+        selectedFromAirport = fromAirport.getSelectionModel().getSelectedItem();
+        selectedToAirport = toAirport.getSelectionModel().getSelectedItem();
+        selectedDateBegin = dateBegin.getValue();
+        selectedDateEnd = dateEnd.getValue();
 
-        List<Flight> filteredFlights;
-
-        filteredFlights = flights.stream()
-                .filter(flight-> flight.getFromAirport().equals(selectedFromAirport)
-                        && flight.getToAirport().equals(selectedToAirport)
-                        && ((flight.getDateTime().toLocalDate()).isAfter(selectedDateBegin)
-                            || (flight.getDateTime().toLocalDate()).isEqual(selectedDateBegin))
-                        && ((flight.getDateTime().toLocalDate()).isBefore(selectedDateEnd)
-                            || (flight.getDateTime().toLocalDate()).isEqual(selectedDateEnd))
-                ).collect(Collectors.toList());
-
-        table.setItems(FXCollections.observableList(filteredFlights));
+        refreshTable();
 
         fromCol.setCellValueFactory(new PropertyValueFactory<>("fromAirport"));
         toCol.setCellValueFactory(new PropertyValueFactory<>("toAirport"));
@@ -123,7 +133,6 @@ public class FlightListing implements Initializable {
                                         __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
-
 
         actionCol.setCellFactory(param ->
                 new TableCell<>(){
@@ -139,6 +148,8 @@ public class FlightListing implements Initializable {
                             } catch (IOException e) {
                                 Utils.showWarning("Nem sikerült megnyitni a foglalás ablakot");
                             }
+
+                            refreshTable();     // TODO - here its not working
                         });
                     }
 

@@ -46,10 +46,13 @@ public class AddBookingController implements Initializable {
     private static Booking booking = new Booking();
     private Ticket ticket = new Ticket();
 
+    private Flight bookedFlight;
+
     private static int countOfTicket = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        bookedFlight = FlightListing.getBookedFlight();
         var payments = PaymentController.getInstance().getAll();
         ObservableList<Payment> obsPaymentList = FXCollections.observableList(payments);
 
@@ -66,7 +69,7 @@ public class AddBookingController implements Initializable {
         paymentComboBox.setCellFactory(factory);
         paymentComboBox.setButtonCell(factory.call(null));
 
-        ticketSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10));
+        ticketSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,(Math.min(10, bookedFlight.getFreeSeats())) ));
 
         // ----------------------
 
@@ -148,7 +151,7 @@ public class AddBookingController implements Initializable {
         booking.setId(maxId);
         booking.setUser(LoginUserController.getUser());
         booking.setPayment(paymentComboBox.getSelectionModel().getSelectedItem());
-        booking.setFlight(FlightListing.getBookedFlight());
+        booking.setFlight(bookedFlight);
     }
 
     private void PopulateTicket() {

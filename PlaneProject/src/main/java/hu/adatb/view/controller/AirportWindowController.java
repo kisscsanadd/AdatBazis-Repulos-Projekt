@@ -37,7 +37,6 @@ public class AirportWindowController implements Initializable {
     @FXML
     private TableColumn<Airport, Void> actionsCol;
 
-    @FXML
     public void refreshTable() {
         List<Airport> list = AirportController.getInstance().getAll();
         table.setItems(FXCollections.observableList(list));

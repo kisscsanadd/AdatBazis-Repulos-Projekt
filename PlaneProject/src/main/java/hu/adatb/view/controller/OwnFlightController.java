@@ -6,7 +6,9 @@ import hu.adatb.controller.FlightController;
 import hu.adatb.model.Airport;
 import hu.adatb.model.Booking;
 import hu.adatb.model.Flight;
+import hu.adatb.model.Ticket;
 import hu.adatb.utils.DistanceCalculator;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -40,6 +42,9 @@ public class OwnFlightController implements Initializable {
 
     @FXML
     private TableColumn<Flight, String> withCol;
+
+    @FXML
+    private TableColumn<Booking, Integer> ticketCol;
 
     @FXML
     private TableColumn<Flight, Void> actionCol;
