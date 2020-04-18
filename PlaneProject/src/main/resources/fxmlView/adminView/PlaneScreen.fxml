@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.PlaneWindowController">
+<AnchorPane style="-fx-background-color: rgba(116,163,193,0.51);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.PlaneWindowController">
    <children>
-      <HBox prefHeight="20.0" prefWidth="160.0">
+      <HBox prefHeight="20.0" prefWidth="160.0" >
          <children>
             <Button mnemonicParsing="false" onAction="#addPlane" text="Repülőgép hozzáadás" />
          </children>
       </HBox>
-      <TableView fx:id="table" layoutY="27.0" prefHeight="317.0" prefWidth="730.0">
+      <TableView fx:id="table" layoutY="22.0" prefHeight="642.0" prefWidth="1142.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
          <columns>
             <TableColumn fx:id="nameCol" prefWidth="182.0" text="Név" />
             <TableColumn fx:id="speedCol" prefWidth="186.0" text="Sebesség" />
@@ -20,7 +19,4 @@
          </columns>
       </TableView>
    </children>
-   <padding>
-      <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
-   </padding>
 </AnchorPane>
