@@ -31,9 +31,10 @@ public class AddTicketController implements Initializable {
         ObservableList<Category> obsCategoryList = FXCollections.observableList(categories);
         ObservableList<TravelClass> obsTravelClassList = FXCollections.observableList(travelClasses);
 
-        var tickets = AddBookingController.getCountOfTicket();
+        var countOfTicket = AddBookingController.getCountOfTicket();
+
         int i = 0;
-        for (i = 0; i < tickets; i++) {
+        for (i = 0; i < countOfTicket; i++) {
             var label = new Label((i+1)+".jegy");
             var categoryComboBox = new ComboBox<Category>();
             var travelClassComboBox = new ComboBox<TravelClass>();

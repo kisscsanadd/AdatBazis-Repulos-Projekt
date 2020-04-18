@@ -19,6 +19,9 @@ public class Ticket {
         this.booking = booking;
     }
 
+    public Ticket() {
+    }
+
     public int getId() {
         return id.get();
     }

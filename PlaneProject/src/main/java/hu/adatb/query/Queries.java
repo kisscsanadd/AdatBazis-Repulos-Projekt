@@ -5,7 +5,7 @@ public class Queries {
     public static final String SELECT_CITY_BY_ID = "SELECT * FROM VAROS WHERE ID = ?";
     public static final String SELECT_AIRPORT = "SELECT * FROM REPULOTER";
     public static final String SELECT_FLIGHT = "SELECT JARAT.ID, JARAT.FELSZALLAS_DATUM, p1.NEV as from_airport, p2.NEV as to_airport, repulogep_id, JARAT.SZABAD_HELYEK FROM JARAT LEFT JOIN REPULOTER p1 ON JARAT.REPULOTER_ID_FEL = p1.ID LEFT JOIN REPULOTER p2 ON JARAT.REPULOTER_ID_LE = p2.ID";
-    public static final String SELECT_FLIGHT_BY_ID = "SELECT JARAT.ID, JARAT.FELSZALLAS_DATUM, p1.NEV as from_airport, p2.NEV as to_airport, repulogep_id, JARAT.SZABAD_HELYEK FROM JARAT LEFT JOIN REPULOTER p1 ON JARAT.REPULOTER_ID_FEL = p1.ID LEFT JOIN REPULOTER p2 ON JARAT.REPULOTER_ID_LE = p2.ID WHERE JARAT.ID = ";
+    public static final String SELECT_FLIGHT_BY_ID = "SELECT JARAT.ID, JARAT.FELSZALLAS_DATUM, p1.NEV as from_airport, p2.NEV as to_airport, repulogep_id, JARAT.SZABAD_HELYEK FROM JARAT LEFT JOIN REPULOTER p1 ON JARAT.REPULOTER_ID_FEL = p1.ID LEFT JOIN REPULOTER p2 ON JARAT.REPULOTER_ID_LE = p2.ID WHERE JARAT.ID = ?";
     public static final String SELECT_USER = "SELECT * FROM FELHASZNALO";
     public static final String SELECT_USER_BY_ID = "SELECT * FROM FELHASZNALO WHERE ID = ?";
     public static final String SELECT_PLANE = "SELECT * FROM REPULOGEP";
@@ -38,5 +38,7 @@ public class Queries {
     public static final String INSERT_FLIGHT = "INSERT INTO JARAT (felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values(?, ?, ?, ?, ?)";
 
     public static final String INSERT_BOOKING = "INSERT INTO FOGLALAS (felh_id, jarat_id, fizetesi_mod_id) values(?, ?, ?)";
+
+    public static final String INSERT_TICKET = "INSERT INTO JEGY (kategoria_id, utazasi_osztaly_id, foglalasi_id) values(?, ?, ?)";
 
 }

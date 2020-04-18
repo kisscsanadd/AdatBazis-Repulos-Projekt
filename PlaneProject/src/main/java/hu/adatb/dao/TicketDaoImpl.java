@@ -1,5 +1,6 @@
 package hu.adatb.dao;
 
+import hu.adatb.App;
 import hu.adatb.model.Airport;
 import hu.adatb.model.City;
 import hu.adatb.model.Ticket;
@@ -8,18 +9,33 @@ import hu.adatb.utils.GetById;
 import hu.adatb.utils.GetByIdException;
 import hu.adatb.utils.Utils;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static hu.adatb.query.Queries.SELECT_TICKET;
+import static hu.adatb.query.Queries.*;
 
 public class TicketDaoImpl implements TicketDao {
     @Override
     public boolean add(Ticket ticket) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(INSERT_TICKET)){
+
+            st.setInt(1, ticket.getCategory().getId());
+            st.setInt(2, ticket.getTravelClass().getId());
+            st.setInt(3, ticket.getBooking().getId());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Successful ticket saving");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed ticket saving");
+        }
+
+        Utils.showWarning("Nem sikerült a jegyfoglalás");
         return false;
     }
 

@@ -3,6 +3,7 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.*;
 import hu.adatb.model.*;
+import hu.adatb.utils.GetById;
 import hu.adatb.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,6 +44,8 @@ public class AddBookingController implements Initializable {
     CheckBox sameTickets;
 
     private Booking booking = new Booking();
+    private Ticket ticket = new Ticket();
+
     private static int countOfTicket = 1;
 
     @Override
@@ -64,10 +67,6 @@ public class AddBookingController implements Initializable {
         paymentComboBox.setButtonCell(factory.call(null));
 
         ticketSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10));
-
-        ticketSelector.disableProperty().addListener((observableValue, oldValue, newValue) -> {
-            paymentComboBox.valueProperty().isNull();
-        });
 
         // ----------------------
 
@@ -101,13 +100,8 @@ public class AddBookingController implements Initializable {
 
         // -------------------------
 
+        FieldValidator();
         CheckCheckBox();
-    }
-
-    private void PopulateBooking() {
-        booking.setUser(LoginUserController.getUser());
-        booking.setPayment(paymentComboBox.getSelectionModel().getSelectedItem());
-        booking.setFlight(FlightListing.getBookedFlight());
     }
 
     private void CheckCheckBox() {
@@ -140,10 +134,49 @@ public class AddBookingController implements Initializable {
         return countOfTicket;
     }
 
+    private void PopulateBooking() {
+        var bookings = BookingController.getInstance().getAll();
+        var maxId = 0;
+        for (var booking: bookings) {
+            if(booking.getId() > maxId) {
+                maxId = booking.getId();
+            }
+        }
+        maxId++;
+
+        booking.setId(maxId);
+        booking.setUser(LoginUserController.getUser());
+        booking.setPayment(paymentComboBox.getSelectionModel().getSelectedItem());
+        booking.setFlight(FlightListing.getBookedFlight());
+
+    }
+
+    private void PopulateTicket() {
+        ticket.setCategory(categoryComboBox.getSelectionModel().getSelectedItem());
+        ticket.setBooking(booking);
+        ticket.setTravelClass(travelClassComboBox.getSelectionModel().getSelectedItem());
+    }
+
+    private void FieldValidator() {
+        ticketSelector.disableProperty().bind(paymentComboBox.valueProperty().isNull());
+
+        bookingButton.disableProperty().bind(paymentComboBox.valueProperty().isNull()
+                .or(categoryComboBox.valueProperty().isNull())
+                .or(travelClassComboBox.valueProperty().isNull()));
+    }
+
     public void saveBooking(ActionEvent event) {
+        countOfTicket = ticketSpinner.getValue();
+
         PopulateBooking();
+        PopulateTicket();
 
         if (BookingController.getInstance().add(booking)) {
+            for(int i = 0; i < countOfTicket; i++) {
+                TicketController.getInstance().add(ticket);
+            }
+
+            Utils.showInformation("Sikeres foglalás");
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.close();
         } else {
