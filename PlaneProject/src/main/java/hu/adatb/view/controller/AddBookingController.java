@@ -43,7 +43,7 @@ public class AddBookingController implements Initializable {
     @FXML
     CheckBox sameTickets;
 
-    private Booking booking = new Booking();
+    private static Booking booking = new Booking();
     private Ticket ticket = new Ticket();
 
     private static int countOfTicket = 1;
@@ -122,6 +122,7 @@ public class AddBookingController implements Initializable {
 
     public void addTicket(ActionEvent actionEvent) {
         countOfTicket = ticketSpinner.getValue();
+        PopulateBooking();
 
         try {
             App.DialogDeliver("add_ticket.fxml","Foglalás", false);
@@ -148,7 +149,6 @@ public class AddBookingController implements Initializable {
         booking.setUser(LoginUserController.getUser());
         booking.setPayment(paymentComboBox.getSelectionModel().getSelectedItem());
         booking.setFlight(FlightListing.getBookedFlight());
-
     }
 
     private void PopulateTicket() {
@@ -182,5 +182,9 @@ public class AddBookingController implements Initializable {
         } else {
             Utils.showWarning("Nem sikerült menteni az új repülőgépet");
         }
+    }
+
+    public static Booking getBooking() {
+        return booking;
     }
 }
