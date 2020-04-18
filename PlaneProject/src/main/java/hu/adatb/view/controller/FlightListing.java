@@ -73,7 +73,7 @@ public class FlightListing implements Initializable {
 
     private List<Flight> flights;
     private List<Airport> airports;
-    private static Flight bookedFlight;
+    public static Flight bookedFlight;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
