@@ -54,7 +54,8 @@ public class UserWindowController implements Initializable {
     @FXML
     public void listingFlights(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened flights");
-        listButton.setDisable(true);    // TODO - maybe somewhere have to set it false
+        listButton.setDisable(true);
+        ownButton.setDisable(false);
         Pane view = MainFxmlLoader.getPage("flights_list.fxml", false);
         mainPane.setCenter(view);
     }
@@ -62,7 +63,8 @@ public class UserWindowController implements Initializable {
     @FXML
     public void listOwnFlights(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened own flights");
-        ownButton.setDisable(true);    // TODO - maybe somewhere have to set it false
+        ownButton.setDisable(true);
+        listButton.setDisable(false);
         Pane view = MainFxmlLoader.getPage("own_flights.fxml", false);
         mainPane.setCenter(view);
     }

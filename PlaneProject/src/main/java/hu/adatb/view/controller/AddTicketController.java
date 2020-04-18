@@ -2,12 +2,15 @@ package hu.adatb.view.controller;
 
 import hu.adatb.controller.*;
 import hu.adatb.model.*;
+import hu.adatb.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -95,7 +98,12 @@ public class AddTicketController implements Initializable {
 
                     TicketController.getInstance().add(ticket);
                 }
+
+                Utils.showInformation("Sikeres foglalás");
             }
+
+            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+            stage.close();
         });
     }
 }

@@ -7,6 +7,7 @@ import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Airport;
 import hu.adatb.model.Flight;
 import hu.adatb.model.Plane;
+import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -90,20 +91,6 @@ public class FlightListing implements Initializable {
                 .or(dateEnd.valueProperty().isNull()));
     }
 
-    private double GetLatitudeByName(String airportName) {
-        var airport = airports.stream()
-                .filter(airport1 -> airport1.getName().equals(airportName)).collect(Collectors.toList()).get(0);
-
-        return airport.getLatitude();
-    }
-
-    private double GetLongitudeByName(String airportName) {
-        var airport = airports.stream()
-                .filter(airport1 -> airport1.getName().equals(airportName)).collect(Collectors.toList()).get(0);
-
-        return airport.getLongitude();
-    }
-
     @FXML
     public void search(ActionEvent actionEvent) {
         var selectedFromAirport = fromAirport.getSelectionModel().getSelectedItem();
@@ -129,10 +116,10 @@ public class FlightListing implements Initializable {
         whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getDateTimeInRightFormat()));
         timeCol.setCellValueFactory(
                 __-> new SimpleStringProperty(__.getValue()
-                        .getTravelTime(GetLatitudeByName(selectedFromAirport),
-                                        GetLongitudeByName(selectedFromAirport),
-                                        GetLatitudeByName(selectedToAirport),
-                                        GetLongitudeByName(selectedToAirport),
+                        .getTravelTime(DistanceCalculator.GetLatitudeByName(airports, selectedFromAirport),
+                                DistanceCalculator.GetLongitudeByName(airports, selectedFromAirport),
+                                DistanceCalculator.GetLatitudeByName(airports, selectedToAirport),
+                                DistanceCalculator.GetLongitudeByName(airports, selectedToAirport),
                                         __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
