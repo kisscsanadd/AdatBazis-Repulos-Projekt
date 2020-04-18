@@ -81,4 +81,18 @@ public class AdminWindowController implements Initializable {
         Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
         mainPane.setCenter(view);
     }
+
+    @FXML
+    public void logout(ActionEvent event) {
+        try {
+            Stage stage = App.StageDeliver("login_user.fxml", "Bejelentkezés");
+            stage.setMaximized(false);
+            stage.setWidth(600);
+            stage.setHeight(400);
+            System.out.println(App.CurrentTime() + "Destroyed admin page");
+        } catch (IOException e) {
+            Utils.showWarning("Nem sikerült a kijelentkezés");
+            e.printStackTrace();
+        }
+    }
 }
