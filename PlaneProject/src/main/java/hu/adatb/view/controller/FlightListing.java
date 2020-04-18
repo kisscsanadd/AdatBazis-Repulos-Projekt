@@ -75,7 +75,7 @@ public class FlightListing implements Initializable {
     private List<Flight> flights;
     private List<Flight> filteredFlights;
     private List<Airport> airports;
-    private static Flight bookedFlight;
+    public static Flight bookedFlight;
 
     String selectedFromAirport;
     String selectedToAirport;
