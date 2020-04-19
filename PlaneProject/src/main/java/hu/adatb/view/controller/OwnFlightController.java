@@ -80,15 +80,15 @@ public class OwnFlightController implements Initializable {
 
     private void PopulateTable(){
 
-        fromCol.setCellValueFactory(new PropertyValueFactory<>("fromAirport"));
-        toCol.setCellValueFactory(new PropertyValueFactory<>("toAirport"));
+        fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFromAirport().getName()));
+        toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getToAirport().getName()));
         whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getDateTimeInRightFormat()));
         timeCol.setCellValueFactory(
                 __-> new SimpleStringProperty(__.getValue()
-                        .getTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFromAirport()),
-                                DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFromAirport()),
-                                DistanceCalculator.GetLatitudeByName(airports, __.getValue().getToAirport()),
-                                DistanceCalculator.GetLongitudeByName(airports, __.getValue().getToAirport()),
+                        .getTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFromAirport().getName()),
+                                DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFromAirport().getName()),
+                                DistanceCalculator.GetLatitudeByName(airports, __.getValue().getToAirport().getName()),
+                                DistanceCalculator.GetLongitudeByName(airports, __.getValue().getToAirport().getName()),
                                 __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
     }

@@ -47,11 +47,17 @@ public class FlightDaoImpl implements FlightDao {
                 var planeId = rs.getInt("repulogep_id");
                 var plane = GetById.GetPlaneById(planeId);
 
+                var fromAirportId = rs.getInt("repuloter_id_fel");
+                var fromAirport = GetById.GetAirportById(fromAirportId);
+
+                var toAirportId = rs.getInt("repuloter_id_le");
+                var toAirport = GetById.GetAirportById(toAirportId);
+
                 Flight flight = new Flight(
                         rs.getInt("id"),
                         dateTime,
-                        rs.getString("from_airport"),
-                        rs.getString("to_airport"),
+                        fromAirport,
+                        toAirport,
                         plane,
                         rs.getInt("szabad_helyek")
                 );
@@ -61,6 +67,7 @@ public class FlightDaoImpl implements FlightDao {
 
         } catch (SQLException | ClassNotFoundException e) {
             Utils.showWarning("Nem sikerült lekérni a járatokat");
+            e.printStackTrace();
         }
 
         return result;

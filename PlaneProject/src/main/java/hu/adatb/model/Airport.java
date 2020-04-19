@@ -5,13 +5,15 @@ import javafx.beans.property.*;
 
 public class Airport {
 
+    private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
     private DoubleProperty latitude = new SimpleDoubleProperty();
     private DoubleProperty longitude = new SimpleDoubleProperty();
     private City city;
 
-    public Airport(String name, double lat, double lon, City city)
+    public Airport(int id ,String name, double lat, double lon, City city)
     {
+        this.id.set(id);
         this.name.set(name);
         this.latitude.set(lat);
         this.longitude.set(lon);
@@ -20,6 +22,18 @@ public class Airport {
 
     public Airport() {
 
+    }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
     }
 
     public String getName() {

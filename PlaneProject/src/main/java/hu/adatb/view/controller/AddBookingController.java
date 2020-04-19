@@ -3,8 +3,9 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.*;
 import hu.adatb.model.*;
-import hu.adatb.utils.GetById;
+import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.Utils;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -43,68 +43,134 @@ public class AddBookingController implements Initializable {
     @FXML
     CheckBox sameTickets;
 
+    @FXML
+    Label totalSumLabel;
+
     private static Booking booking = new Booking();
     private Ticket ticket = new Ticket();
 
     private Flight bookedFlight;
 
     private static int countOfTicket = 1;
+    private int totalSum;
+    private static double distance;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bookedFlight = FlightListing.getBookedFlight();
+
+        ticketSpinner.setValueFactory(
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1,(Math.min(10, bookedFlight.getFreeSeats()))));
+
+        PopulateComboBoxes();
+
+        distance = DistanceCalculator.Distance(bookedFlight.getFromAirport().getLatitude(),
+                bookedFlight.getFromAirport().getLongitude(),
+                bookedFlight.getToAirport().getLatitude(),
+                bookedFlight.getToAirport().getLongitude());
+
+        totalSum = (int) distance * 80 + 4999;
+        totalSumLabel.setText(totalSum + " Ft");
+
+        ticketSpinner.valueProperty().addListener(observable -> {
+            CalculateBookingPrice();
+        });
+
+        categoryComboBox.valueProperty().addListener(observableValue -> {
+            CalculateBookingPrice();
+        });
+
+        travelClassComboBox.valueProperty().addListener(observable -> {
+            CalculateBookingPrice();
+        });
+
+        FieldValidator();
+        CheckCheckBox();
+    }
+
+    private void PopulateComboBoxes() {
+        // region GetAll
         var payments = PaymentController.getInstance().getAll();
-        ObservableList<Payment> obsPaymentList = FXCollections.observableList(payments);
-
-        paymentComboBox.getItems().addAll(obsPaymentList);
-
-        Callback<ListView<Payment>, ListCell<Payment>> factory = lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(Payment item, boolean empty){
-                super.updateItem(item, empty);
-                setText(empty ? "" : item.getName());
-            }
-        };
-
-        paymentComboBox.setCellFactory(factory);
-        paymentComboBox.setButtonCell(factory.call(null));
-
-        ticketSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,(Math.min(10, bookedFlight.getFreeSeats())) ));
-
-        // ----------------------
-
         var categories = CategoryController.getInstance().getAll();
         var travelClasses = TravelClassController.getInstance().getAll();
+        // endregion
 
+        //region ObservableList
+        ObservableList<Payment> obsPaymentList = FXCollections.observableList(payments);
         ObservableList<Category> obsCategoryList = FXCollections.observableList(categories);
         ObservableList<TravelClass> obsTravelClassList = FXCollections.observableList(travelClasses);
+        // endregion
 
+        // region AddAll
         categoryComboBox.getItems().addAll(obsCategoryList);
-        Callback<ListView<Category>, ListCell<Category>> factoryr = lv -> new ListCell<>() {
+        travelClassComboBox.getItems().addAll(obsTravelClassList);
+        paymentComboBox.getItems().addAll(obsPaymentList);
+        // endregion
+
+        // region Callback
+        Callback<ListView<Category>, ListCell<Category>> categoryFactory = lv -> new ListCell<>() {
             @Override
             protected void updateItem(Category item, boolean empty){
                 super.updateItem(item, empty);
                 setText(empty ? "" : item.getName());
             }
         };
-        categoryComboBox.setCellFactory(factoryr);
-        categoryComboBox.setButtonCell(factoryr.call(null));
 
-        travelClassComboBox.getItems().addAll(obsTravelClassList);
-        Callback<ListView<TravelClass>, ListCell<TravelClass>> factoryy = lv -> new ListCell<>() {
+        Callback<ListView<TravelClass>, ListCell<TravelClass>> travelClassFactory = lv -> new ListCell<>() {
             @Override
             protected void updateItem(TravelClass item, boolean empty){
                 super.updateItem(item, empty);
                 setText(empty ? "" : item.getName());
             }
         };
-        travelClassComboBox.setCellFactory(factoryy);
-        travelClassComboBox.setButtonCell(factoryy.call(null));
 
-        // -------------------------
+        Callback<ListView<Payment>, ListCell<Payment>> paymentFactory = lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Payment item, boolean empty){
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getName());
+            }
+        };
+        // endregion
 
-        FieldValidator();
-        CheckCheckBox();
+        //region Display
+        categoryComboBox.setCellFactory(categoryFactory);
+        categoryComboBox.setButtonCell(categoryFactory.call(null));
+
+        travelClassComboBox.setCellFactory(travelClassFactory);
+        travelClassComboBox.setButtonCell(travelClassFactory.call(null));
+
+        paymentComboBox.setCellFactory(paymentFactory);
+        paymentComboBox.setButtonCell(paymentFactory.call(null));
+        //endregion
+    }
+
+    private void CalculateBookingPrice() {
+        var category = categoryComboBox.getSelectionModel().getSelectedItem();
+        var travelClass = travelClassComboBox.getSelectionModel().getSelectedItem();
+
+        var discount = 0.0;
+        var luxury = 1.0;
+
+
+        if (category != null) {
+            discount = (double) category.getDiscount() / 100;
+        }
+
+        if (travelClass != null){
+            if (travelClass.getName().equals("First")) {
+                luxury = 1.4;
+            } else if (travelClass.getName().equals("Business")) {
+                luxury = 1.7;
+            }
+        }
+
+        var ticketPrice = 4999 * (1 - discount);
+
+        totalSum = (int) (distance * 80
+                + (ticketSpinner.getValue() * ticketPrice * luxury));
+
+        totalSumLabel.textProperty().bind(new SimpleStringProperty(totalSum + " Ft"));
     }
 
     private void CheckCheckBox() {
@@ -123,19 +189,12 @@ public class AddBookingController implements Initializable {
         });
     }
 
-    public void addTicket(ActionEvent actionEvent) {
-        countOfTicket = ticketSpinner.getValue();
-        PopulateBooking();
-
-        try {
-            App.DialogDeliver("add_ticket.fxml","Foglalás", false);
-        } catch (IOException e) {
-            Utils.showWarning("Nem sikerült megnyitni a jegyfoglalás ablakot");
-        }
-    }
-
     public static int getCountOfTicket() {
         return countOfTicket;
+    }
+
+    public static double getDistance() {
+        return distance;
     }
 
     private void PopulateBooking() {
@@ -166,6 +225,17 @@ public class AddBookingController implements Initializable {
         bookingButton.disableProperty().bind(paymentComboBox.valueProperty().isNull()
                 .or(categoryComboBox.valueProperty().isNull())
                 .or(travelClassComboBox.valueProperty().isNull()));
+    }
+
+    public void addTicket(ActionEvent actionEvent) {
+        countOfTicket = ticketSpinner.getValue();
+        PopulateBooking();
+
+        try {
+            App.DialogDeliver("add_ticket.fxml","Foglalás", false);
+        } catch (IOException e) {
+            Utils.showWarning("Nem sikerült megnyitni a jegyfoglalás ablakot");
+        }
     }
 
     public void saveBooking(ActionEvent event) {

@@ -82,6 +82,34 @@ public class GetById {
         return null;
     }
 
+    public static Airport GetAirportById(int id) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_AIRPORT_BY_ID)){
+
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                var cityId = rs.getInt("varos_id");
+                var city = GetById.GetCityById(cityId);
+
+                return new Airport (
+                        rs.getInt("id"),
+                        rs.getString("nev"),
+                        rs.getDouble("szelesseg"),
+                        rs.getDouble("hosszusag"),
+                        city
+                );
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static Flight GetFlightById(int id) {
         try (Connection conn = Database.ConnectionToDatabase();
              PreparedStatement st = conn.prepareStatement(SELECT_FLIGHT_BY_ID)){
@@ -99,11 +127,17 @@ public class GetById {
                 var planeId = rs.getInt("repulogep_id");
                 var plane = GetById.GetPlaneById(planeId);
 
+                var fromAirportId = rs.getInt("repuloter_id_fel");
+                var fromAirport = GetById.GetAirportById(fromAirportId);
+
+                var toAirportId = rs.getInt("repuloter_id_le");
+                var toAirport = GetById.GetAirportById(toAirportId);
+
                 return new Flight(
                         rs.getInt("id"),
                         dateTime,
-                        rs.getString("from_airport"),
-                        rs.getString("to_airport"),
+                        fromAirport,
+                        toAirport,
                         plane,
                         rs.getInt("szabad_helyek")
                 );

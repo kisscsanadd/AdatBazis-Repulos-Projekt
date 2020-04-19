@@ -84,8 +84,8 @@ public class FlightListing implements Initializable {
 
     public void refreshTable() {
         filteredFlights = flights.stream()
-                .filter(flight-> flight.getFromAirport().equals(selectedFromAirport)
-                        && flight.getToAirport().equals(selectedToAirport)
+                .filter(flight-> flight.getFromAirport().getName().equals(selectedFromAirport)
+                        && flight.getToAirport().getName().equals(selectedToAirport)
                         && ((flight.getDateTime().toLocalDate()).isAfter(selectedDateBegin)
                         || (flight.getDateTime().toLocalDate()).isEqual(selectedDateBegin))
                         && ((flight.getDateTime().toLocalDate()).isBefore(selectedDateEnd)
@@ -121,8 +121,8 @@ public class FlightListing implements Initializable {
 
         refreshTable();
 
-        fromCol.setCellValueFactory(new PropertyValueFactory<>("fromAirport"));
-        toCol.setCellValueFactory(new PropertyValueFactory<>("toAirport"));
+        fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFromAirport().getName()));
+        toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getToAirport().getName()));
         whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getDateTimeInRightFormat()));
         timeCol.setCellValueFactory(
                 __-> new SimpleStringProperty(__.getValue()
@@ -137,7 +137,7 @@ public class FlightListing implements Initializable {
         actionCol.setCellFactory(param ->
                 new TableCell<>(){
 
-                    Button bookingButton = new Button("Foglalás");
+                    final Button bookingButton = new Button("Foglalás");
 
                     {
                         bookingButton.setOnAction(event -> {

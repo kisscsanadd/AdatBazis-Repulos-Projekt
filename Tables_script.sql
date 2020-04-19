@@ -102,7 +102,7 @@ insert into Felhasznalo(felh_nev,jelszo,isAdmin, email) values('user', 'userr', 
 CREATE TABLE Kategoria 
     (id              	NUMBER(10) NOT NULL,
      nev                VARCHAR2(30) NOT NULL,
-     kedvezmeny         NUMBER(2) NOT NULL,
+     kedvezmeny         NUMBER(3) NOT NULL,
   CONSTRAINT Kategoria_PRIMARY_KEY PRIMARY KEY (id));
 
 create sequence Kategoria_sequence;
@@ -120,6 +120,7 @@ insert into Kategoria(nev, kedvezmeny) values('Gyerek', 15);
 insert into Kategoria(nev, kedvezmeny) values('Diák', 20);
 insert into Kategoria(nev, kedvezmeny) values('Nyugdíjas', 20);
 insert into Kategoria(nev, kedvezmeny) values('Mozgáskorlátozott', 50);
+insert into Kategoria(nev, kedvezmeny) values('Felnőtt', 0);
 
 
 
@@ -323,6 +324,9 @@ create trigger Jarat_trigger
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('1998-DEC-25 17:30' ,1 ,2 ,1 ,999);
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2014-AUG-18 14:30' ,3 ,1 ,4 ,81);
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-JUN-11 11:00' ,1 ,2 ,2 ,9);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-14 08:00' ,1 ,2 ,2 ,32);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-19 10:00' ,1 ,2 ,2 ,912);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-24 19:00' ,1 ,2 ,2 ,53);
 
 
 

@@ -10,16 +10,16 @@ public class Flight {
 
     private IntegerProperty id = new SimpleIntegerProperty();
     private LocalDateTime dateTime;
-    private StringProperty fromAirport = new SimpleStringProperty();
-    private StringProperty toAirport = new SimpleStringProperty();
+    private Airport fromAirport;
+    private Airport toAirport;
     private Plane plane;
     private IntegerProperty freeSeats = new SimpleIntegerProperty();
 
-    public Flight(int id, LocalDateTime dateTime, String fromAirport, String toAirport, Plane plane, Integer freeSeats) {
+    public Flight(int id, LocalDateTime dateTime, Airport fromAirport, Airport toAirport, Plane plane, Integer freeSeats) {
         this.id.set(id);
         this.dateTime = dateTime;
-        this.fromAirport.set(fromAirport);
-        this.toAirport.set(toAirport);
+        this.fromAirport = fromAirport;
+        this.toAirport = toAirport;
         this.plane = plane;
         this.freeSeats.set(freeSeats);
     }
@@ -73,28 +73,20 @@ public class Flight {
         this.dateTime = dateTime;
     }
 
-    public String getFromAirport() {
-        return fromAirport.get();
-    }
-
-    public StringProperty fromAirportProperty() {
+    public Airport getFromAirport() {
         return fromAirport;
     }
 
-    public void setFromAirport(String fromAirport) {
-        this.fromAirport.set(fromAirport);
+    public void setFromAirport(Airport fromAirport) {
+        this.fromAirport = fromAirport;
     }
 
-    public String getToAirport() {
-        return toAirport.get();
-    }
-
-    public StringProperty toAirportProperty() {
+    public Airport getToAirport() {
         return toAirport;
     }
 
-    public void setToAirport(String toAirport) {
-        this.toAirport.set(toAirport);
+    public void setToAirport(Airport toAirport) {
+        this.toAirport = toAirport;
     }
 
     public int getFreeSeats() {

@@ -78,8 +78,6 @@ public class BookingDaoImpl implements BookingDao {
             Utils.showWarning("Nem sikerült lekérni a foglalásokat");
         }
 
-        System.out.println("Booking count: " + result.size());
-
         return result;
     }
 }
