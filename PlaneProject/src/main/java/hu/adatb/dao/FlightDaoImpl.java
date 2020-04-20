@@ -50,6 +50,12 @@ public class FlightDaoImpl implements FlightDao {
                 var fromAirportId = rs.getInt("repuloter_id_fel");
                 var fromAirport = GetById.GetAirportById(fromAirportId);
 
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 var toAirportId = rs.getInt("repuloter_id_le");
                 var toAirport = GetById.GetAirportById(toAirportId);
 
