@@ -49,16 +49,9 @@ public class AddTicketController implements Initializable {
         totalSum = (int) (distance * 80 + (countOfTicket * 4999));
         totalSumLabel.setText("Végösszeg: " + totalSum + " Ft");
 
-        for (var categoryComboBox : categoryComboBoxes) {
-            categoryComboBox.valueProperty().addListener(observableValue -> {
-                CalculateBookingPrice();
-            });
-        }
-
-        for (var travelClassComboBox : travelClassComboBoxes) {
-            travelClassComboBox.valueProperty().addListener(observableValue -> {
-                CalculateBookingPrice();
-            });
+        for(int i = 0; i < countOfTicket; i++) {
+            categoryComboBoxes.get(i).valueProperty().addListener(observable -> CalculateBookingPrice());
+            travelClassComboBoxes.get(i).valueProperty().addListener(observable -> CalculateBookingPrice());
         }
 
         bookingButton.setDefaultButton(true);
@@ -66,8 +59,11 @@ public class AddTicketController implements Initializable {
 
         grid.add(bookingButton, 2, ++i);
         grid.add(totalSumLabel, 1, i);
+        grid.setVgap(20);
 
-        addBooking();
+        FieldValidator();
+
+        AddBooking();
     }
 
     private void CalculateBookingPrice() {
@@ -93,9 +89,9 @@ public class AddTicketController implements Initializable {
             }
 
             var ticketPrice = 4999 * (1 - discount);
-
-            totalSum += ticketPrice;
-            totalSum *= luxury;
+            System.out.println("Total sum before: " + totalSum);
+            totalSum += (ticketPrice * luxury);
+            System.out.println("Total sum after: " + totalSum);
 
             totalSumLabel.textProperty().bind(new SimpleStringProperty("Végösszeg: " + totalSum + " Ft"));
         }
@@ -146,7 +142,15 @@ public class AddTicketController implements Initializable {
         }
     }
 
-    private void addBooking(){
+    private void FieldValidator() {
+        for (int i = 0; i < countOfTicket; i++) {
+            bookingButton.disableProperty().bind(categoryComboBoxes.get(i).valueProperty().isNull().or(
+                travelClassComboBoxes.get(i).valueProperty().isNull()
+            ));
+        }
+    }
+
+    private void AddBooking(){
         bookingButton.setOnAction(actionEvent -> {
             if (BookingController.getInstance().add(booking)) {
                 for(int i = 0; i < countOfTicket; i++) {

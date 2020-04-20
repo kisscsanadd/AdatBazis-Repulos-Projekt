@@ -68,4 +68,17 @@ public class UserWindowController implements Initializable {
         Pane view = MainFxmlLoader.getPage("own_flights.fxml", false);
         mainPane.setCenter(view);
     }
+
+    public void logout(ActionEvent actionEvent) {
+        try {
+            Stage stage = App.StageDeliver("login_user.fxml", "Bejelentkezés");
+            stage.setMaximized(false);
+            stage.setWidth(600);
+            stage.setHeight(400);
+            System.out.println(App.CurrentTime() + "Destroyed user page");
+        } catch (IOException e) {
+            Utils.showWarning("Nem sikerült a kijelentkezés");
+            e.printStackTrace();
+        }
+    }
 }
