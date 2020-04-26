@@ -38,6 +38,32 @@ public class PlaneDaoImpl implements PlaneDao {
     }
 
     @Override
+    public boolean update(Plane plane) {
+        try(Connection conn = Database.ConnectionToDatabase();
+            PreparedStatement st = conn.prepareStatement(UPDATE_PLANE)) {
+
+            st.setString(1, plane.getName());
+            st.setInt(2, plane.getSpeed());
+            st.setInt(3, plane.getSeats());
+            st.setInt(4, plane.getId());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Successful update");
+                Utils.showInformation("Sikeres módosítás");
+                return true;
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed update plane");
+        }
+
+        Utils.showWarning("Nem sikerült a módosítás");
+        return false;
+    }
+
+    @Override
     public boolean delete(int id) {
         return false;
     }

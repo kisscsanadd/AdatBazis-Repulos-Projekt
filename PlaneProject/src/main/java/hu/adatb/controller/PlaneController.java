@@ -22,6 +22,10 @@ public class PlaneController {
         return dao.add(plane);
     }
 
+    public boolean update(Plane plane) {
+        return dao.update( plane);
+    }
+
     public boolean delete(int id) {
         return dao.delete(id);
     }

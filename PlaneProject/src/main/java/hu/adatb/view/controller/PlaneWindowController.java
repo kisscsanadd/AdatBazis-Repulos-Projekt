@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -43,6 +44,8 @@ public class PlaneWindowController implements Initializable {
 
     @FXML
     public void addPlane() {
+        AddPlaneController.setIsAdd(true);
+
         try {
             App.DialogDeliver("add_plane.fxml", "Repülőgép hozzáadás");
         } catch (IOException e) {
@@ -64,6 +67,10 @@ public class PlaneWindowController implements Initializable {
         List<Plane> list = PlaneController.getInstance().getAll();
         table.setItems(FXCollections.observableList(list));
 
+        InitTable();
+    }
+
+    private void InitTable() {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         speedCol.setCellValueFactory(new PropertyValueFactory<>("speed"));
         seatsCol.setCellValueFactory(new PropertyValueFactory<>("seats"));
@@ -75,13 +82,20 @@ public class PlaneWindowController implements Initializable {
                 {
                     deleteBtn.setOnAction(event -> {
                         Plane p = getTableView().getItems().get(getIndex());
-                        deletePlane(p);
                         refreshTable();
                     });
 
                     editBtn.setOnAction(event -> {
-                        Plane p = getTableView().getItems().get(getIndex());
-                        editPlane(p);
+                        var selectedPlane = getTableView().getItems().get(getIndex());
+
+                        AddPlaneController.setSelectedPlane(selectedPlane);
+                        AddPlaneController.setIsAdd(false);
+
+                        try {
+                            App.DialogDeliver("add_plane.fxml", "Repülőgép módosítás");
+                        } catch (IOException e) {
+                            Utils.showWarning("Nem sikerült megnyitni a repülőgép módosító ablakot");
+                        }
                         refreshTable();
                     });
                 }
@@ -100,14 +114,5 @@ public class PlaneWindowController implements Initializable {
             };
 
         });
-    }
-
-    private void editPlane(Plane p) {
-
-        // TODO - create edit
-    }
-
-    private void deletePlane(Plane p){
-        // TODO - create delete
     }
 }

@@ -32,14 +32,18 @@ public class AddPlaneController implements Initializable {
     Label errorMsgName;
 
     @FXML
-    Button saveButton;
+    Button addButton;
 
+    @FXML
+    Button editButton;
+
+    private Plane plane = new Plane();
     private List<Plane> planes;
+    private static Plane selectedPlane;
+    private static boolean isAdd;
 
     public AddPlaneController() {
     }
-
-    private Plane plane = new Plane();
 
     @FXML
     private void save(ActionEvent event) {
@@ -52,6 +56,16 @@ public class AddPlaneController implements Initializable {
     }
 
     @FXML
+    public void edit(ActionEvent event) {
+        if (PlaneController.getInstance().update(plane)) {
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            stage.close();
+        } else {
+            Utils.showWarning("Nem sikerült menteni a módosított repülőgépet");
+        }
+    }
+
+    @FXML
     private void cancel(ActionEvent event){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
@@ -59,20 +73,22 @@ public class AddPlaneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        seatsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
-                10, 1000, 10, 10));
-        speedSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
-                100, 2000, 100, 10));
         planes = PlaneController.getInstance().getAll();
 
-        plane.nameProperty().bind(nameField.textProperty());
-        plane.seatsProperty().bind(seatsSpinner.valueProperty());
-        plane.speedProperty().bind(speedSpinner.valueProperty());
+        if(isAdd) {
+            addButton.setVisible(true);
+            editButton.setVisible(false);
+        } else {
+            addButton.setVisible(false);
+            editButton.setVisible(true);
+        }
 
-        //speedSpinner.getValueFactory().valueProperty().bindBidirectional(plane.speedProperty().asObject());
-        //seatsSpinner.getValueFactory().valueProperty().bindBidirectional(plane.seatsProperty().asObject());
-
+        InitTable();
         FieldValidator();
+    }
+
+    private void FieldValidator() {
+        addButton.disableProperty().bind(nameField.textProperty().isEmpty());
 
         nameField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             var match = false;
@@ -87,19 +103,30 @@ public class AddPlaneController implements Initializable {
                 FieldValidator();
             } else {
                 errorMsgName.setText("Ilyen név már létezik");
-                saveButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
+                addButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
             }
         });
     }
 
-    private void FieldValidator() {
-        saveButton.disableProperty().bind(nameField.textProperty().isEmpty());
-        //TODO better logic for these:
-        /*if(plane.speedProperty().get()<100){
-            plane.speedProperty().set(100);
-        }
-        if(plane.seatsProperty().get()<10){
-            plane.seatsProperty().set(10);
-        }*/
+    private void InitTable() {
+        nameField.setText(isAdd ? "" : selectedPlane.getName());
+        speedSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                100, 2000, isAdd ? 100 : selectedPlane.getSpeed(), 10));
+        seatsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                10, 1000, isAdd ? 10 : selectedPlane.getSeats(), 10));
+
+        plane.nameProperty().bind(nameField.textProperty());
+        plane.seatsProperty().bind(seatsSpinner.valueProperty());
+        plane.speedProperty().bind(speedSpinner.valueProperty());
+        plane.setId(selectedPlane.getId());
     }
+
+    public static void setIsAdd(boolean isAdd) {
+        AddPlaneController.isAdd = isAdd;
+    }
+
+    public static void setSelectedPlane(Plane plane) {
+        selectedPlane = plane;
+    }
+
 }

@@ -29,8 +29,9 @@
                 <Insets />
             </opaqueInsets>
         </Button>
-        <Button fx:id="saveButton" defaultButton="true" mnemonicParsing="false" onAction="#save" text="OK" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-        <Label styleClass="warning" fx:id="errorMsgName" prefHeight="17.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#save" text="Hozzáadás" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+        <Label fx:id="errorMsgName" prefHeight="17.0" prefWidth="219.0" styleClass="warning" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Button fx:id="editButton" defaultButton="true" mnemonicParsing="false" onAction="#edit" text="Módosítás" GridPane.columnIndex="1" GridPane.rowIndex="4" />
     </children>
     <opaqueInsets>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
