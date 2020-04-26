@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.FlightListing">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.FlightListController">
    <children>
       <GridPane layoutX="41.0" layoutY="16.0" prefHeight="34.0" prefWidth="1000.0">
         <columnConstraints>
@@ -42,7 +42,7 @@
             </DatePicker>
          </children>
       </GridPane>
-      <TableView fx:id="table" layoutX="421.0" layoutY="65.0" prefHeight="335.0" prefWidth="1041.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+      <TableView fx:id="table" layoutX="421.0" layoutY="65.0" prefHeight="335.0" prefWidth="1040.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
         <columns>
           <TableColumn fx:id="fromCol" prefWidth="235.0" text="Honnan" />
           <TableColumn fx:id="toCol" prefWidth="235.0" text="Hova" />
@@ -50,6 +50,7 @@
           <TableColumn fx:id="timeCol" prefWidth="120.0" text="Menetidő" />
           <TableColumn fx:id="withCol" prefWidth="170.0" text="Repülőgép" />
           <TableColumn fx:id="seatCol" prefWidth="100.0" text="Szabad helyek" />
+          <TableColumn fx:id="hotelCol" prefWidth="200.0" text="Szállodák" />
           <TableColumn fx:id="actionCol" prefWidth="100.0" sortable="false" text="Foglalás" />
         </columns>
       </TableView>

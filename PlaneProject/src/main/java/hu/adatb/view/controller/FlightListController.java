@@ -3,9 +3,11 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.AirportController;
 import hu.adatb.controller.FlightController;
+import hu.adatb.controller.HotelController;
 import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Airport;
 import hu.adatb.model.Flight;
+import hu.adatb.model.Hotel;
 import hu.adatb.model.Plane;
 import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.Utils;
@@ -28,7 +30,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class FlightListing implements Initializable {
+public class FlightListController implements Initializable {
 
     @FXML
     ComboBox<String> fromAirport;
@@ -64,6 +66,9 @@ public class FlightListing implements Initializable {
     private TableColumn<Flight, Integer> seatCol;
 
     @FXML
+    private TableColumn<Flight, String> hotelCol;
+
+    @FXML
     private TableColumn<Flight, Void> actionCol;
 
     @FXML
@@ -75,7 +80,9 @@ public class FlightListing implements Initializable {
     private List<Flight> flights;
     private List<Flight> filteredFlights;
     private List<Airport> airports;
+    private List<Hotel> hotels;
     public static Flight bookedFlight;
+    public static String toAirportHotelNames;
 
     String selectedFromAirport;
     String selectedToAirport;
@@ -100,6 +107,7 @@ public class FlightListing implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         flights = FlightController.getInstance().getAll();
         airports = AirportController.getInstance().getAll();
+        hotels = HotelController.getInstance().getAll();
 
         for (var airport: airports) {
             fromAirport.getItems().addAll(airport.getName());
@@ -133,6 +141,8 @@ public class FlightListing implements Initializable {
                                         __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
+        hotelCol.setCellValueFactory(__-> new SimpleStringProperty(
+                __.getValue().getHotels(__.getValue().getToAirport().getCity().getName())));
 
         actionCol.setCellFactory(param ->
                 new TableCell<>(){
@@ -142,6 +152,7 @@ public class FlightListing implements Initializable {
                     {
                         bookingButton.setOnAction(event -> {
                             bookedFlight = table.getItems().get(getIndex());
+                            toAirportHotelNames = bookedFlight.getHotels(bookedFlight.getToAirport().getCity().getName());
 
                             try {
                                 App.DialogDeliver("add_booking.fxml","Foglalás", false);
@@ -178,5 +189,9 @@ public class FlightListing implements Initializable {
 
     public static Flight getBookedFlight() {
         return bookedFlight;
+    }
+
+    public static String getToAirportHotelNames() {
+        return toAirportHotelNames;
     }
 }

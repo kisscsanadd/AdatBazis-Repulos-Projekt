@@ -10,9 +10,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -57,7 +61,7 @@ public class AddBookingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bookedFlight = FlightListing.getBookedFlight();
+        bookedFlight = FlightListController.getBookedFlight();
 
         ticketSpinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1,(Math.min(10, bookedFlight.getFreeSeats()))));
@@ -255,6 +259,25 @@ public class AddBookingController implements Initializable {
         } else {
             Utils.showWarning("Nem sikerült menteni az új repülőgépet");
         }
+    }
+
+    public void showHotels(ActionEvent actionEvent) {
+        Stage hotelStage = new Stage();
+        Parent root = null;
+
+        try {
+            root = FXMLLoader.load(App.class.getResource("/fxmlView/userView/hotel_list.fxml"));
+        } catch (IOException e) {
+            Utils.showWarning("Nem sikerült megnyitni a szállodák listáját");
+            e.printStackTrace();
+        }
+
+        var scene = new Scene(root);
+
+        hotelStage.getIcons().add(new Image(App.class.getResourceAsStream("/pictures/icon.jpg")));
+        hotelStage.setScene(scene);
+        hotelStage.setTitle("Szállodák");
+        hotelStage.show();
     }
 
     public static Booking getBooking() {
