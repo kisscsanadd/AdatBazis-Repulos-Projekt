@@ -16,7 +16,7 @@ public class MainFxmlLoader {
         }
 
         try {
-            view = new FXMLLoader().load(MainFxmlLoader.class.getResource(filePath + fileName));
+            view = FXMLLoader.load(MainFxmlLoader.class.getResource(filePath + fileName));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -21,6 +21,7 @@ public class RegOrLoginController implements Initializable {
     public void registration() {
         try {
             System.out.println("\n" + App.CurrentTime() + "Destroyed first page");
+            AddUserController.setIsAdmin(false);
             App.StageDeliver("add_user.fxml", "Regisztráció", "style.css");
             System.out.println(App.CurrentTime() + "Opened registration page");
         } catch (IOException e) {

@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 
             st.setString(1, user.getName());
             st.setString(2, user.getPassword());
-            st.setInt(3, 0);
+            st.setInt(3, user.isAdmin() ? 1 : 0);
             st.setString(4, user.getEmail());
 
             int res = st.executeUpdate();
@@ -72,7 +72,7 @@ public class UserDaoImpl implements UserDao {
                         rs.getInt("id"),
                         rs.getString("felh_nev"),
                         rs.getString("jelszo"),
-                        rs.getInt("isAdmin"),
+                        rs.getInt("isAdmin") == 1,
                         rs.getString("email")
                 );
 

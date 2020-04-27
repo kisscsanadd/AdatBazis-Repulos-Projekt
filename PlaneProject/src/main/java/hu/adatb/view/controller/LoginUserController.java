@@ -41,9 +41,9 @@ public class LoginUserController implements Initializable {
         for (var user: users) {
             if (nameField.getText().equals(user.getName()) && passwordField.getText().equals(user.getPassword())) {
                 valid = true;
-                isAdmin = user.getIsAdmin() == 1;
+                isAdmin = user.isAdmin();
 
-                LoginUserController.user = new User(user.getId(), user.getName(), user.getPassword(), user.getIsAdmin(), user.getEmail());
+                LoginUserController.user = new User(user.getId(), user.getName(), user.getPassword(), user.isAdmin(), user.getEmail());
 
                 break;
             }

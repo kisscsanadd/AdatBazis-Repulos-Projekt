@@ -95,4 +95,12 @@ public class AdminWindowController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void regAdmin(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + "Opened admin sign-up");
+        AddUserController.setIsAdmin(true);
+        Pane view = MainFxmlLoader.getPage("SignUpScreen.fxml", true);
+        mainPane.setCenter(view);
+    }
 }

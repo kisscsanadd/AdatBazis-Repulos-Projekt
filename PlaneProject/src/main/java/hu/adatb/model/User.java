@@ -8,13 +8,13 @@ public class User {
     private StringProperty name = new SimpleStringProperty();
     private StringProperty password = new SimpleStringProperty();
     private StringProperty email = new SimpleStringProperty();
-    private IntegerProperty isAdmin = new SimpleIntegerProperty();
+    private boolean isAdmin;
 
-    public User(int id, String name, String password, Integer isAdmin, String email) {
+    public User(int id, String name, String password, boolean isAdmin, String email) {
         this.id.set(id);
         this.name.set(name);
         this.password.set(password);
-        this.isAdmin.set(isAdmin);
+        this.isAdmin = isAdmin;
         this.email.set(email);
     }
 
@@ -33,16 +33,12 @@ public class User {
         this.id.set(id);
     }
 
-    public int getIsAdmin() {
-        return isAdmin.get();
-    }
-
-    public IntegerProperty isAdminProperty() {
+    public boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(int isAdmin) {
-        this.isAdmin.set(isAdmin);
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public String getEmail() {

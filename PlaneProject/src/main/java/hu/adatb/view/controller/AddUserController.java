@@ -43,6 +43,7 @@ public class AddUserController implements Initializable {
     Label errorMsgPassword;
 
     private List<User> users;
+    public static boolean isAdmin;
 
     public AddUserController() {
     }
@@ -51,7 +52,7 @@ public class AddUserController implements Initializable {
 
     @FXML
     private void save (MouseEvent mouseEvent) {
-        if (UserController.getInstance().add(user)) {
+        if (UserController.getInstance().add(user) && !isAdmin) {
             RegOrLoginController.back("registration");
         } else {
             return;
@@ -70,8 +71,18 @@ public class AddUserController implements Initializable {
         user.nameProperty().bind(nameField.textProperty());
         user.passwordProperty().bind(passwordField.textProperty());
         user.emailProperty().bind(emailField.textProperty());
+        user.setAdmin(isAdmin);
 
         FieldValidator();
+    }
+
+    private void FieldValidator() {
+        saveButton.disableProperty().bind(nameField.textProperty().isEmpty()
+                .or(emailField.textProperty().isEmpty())
+                .or(passwordField.textProperty().isEmpty()
+                .or(errorMsgName.textProperty().isNotEmpty())
+                .or(errorMsgEmail.textProperty().isNotEmpty())
+                .or(errorMsgPassword.textProperty().isNotEmpty())));
 
         nameField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             var match = false;
@@ -86,7 +97,6 @@ public class AddUserController implements Initializable {
                 FieldValidator();
             } else {
                 errorMsgName.setText("Ilyen név már létezik");
-                saveButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
             }
         });
 
@@ -98,7 +108,6 @@ public class AddUserController implements Initializable {
                 FieldValidator();
             } else {
                 errorMsgEmail.setText("Érvénytelen email cím");
-                saveButton.disableProperty().bind(errorMsgEmail.textProperty().isNotEmpty());
             }
         });
 
@@ -109,13 +118,11 @@ public class AddUserController implements Initializable {
                 FieldValidator();
             } else {
                 errorMsgPassword.setText("Túl rövid a jelszó");
-                saveButton.disableProperty().bind(errorMsgPassword.textProperty().isNotEmpty());
             }
         });
     }
 
-    private void FieldValidator() {
-        saveButton.disableProperty().bind(nameField.textProperty().isEmpty().
-                or(emailField.textProperty().isEmpty()).or(passwordField.textProperty().isEmpty()));
+    public static void setIsAdmin(boolean isAdmin) {
+        AddUserController.isAdmin = isAdmin;
     }
 }

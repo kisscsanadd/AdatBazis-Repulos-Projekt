@@ -46,7 +46,7 @@ public class GetById {
                         rs.getInt("id"),
                         rs.getString("felh_nev"),
                         rs.getString("jelszo"),
-                        rs.getInt("isAdmin"),
+                        rs.getInt("isAdmin") == 1,
                         rs.getString("email")
                 );
             }

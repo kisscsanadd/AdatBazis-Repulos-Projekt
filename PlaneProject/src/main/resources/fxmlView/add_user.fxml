@@ -39,11 +39,11 @@
          <font>
             <Font size="13.0" />
          </font></TextField>
-        <TextField fx:id="emailField" promptText="Adj meg egy jelszót" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <TextField fx:id="emailField" promptText="Add meg az email címed" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <font>
             <Font size="13.0" />
          </font></TextField>
-        <PasswordField fx:id="passwordField" promptText="Add meg az email címed" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <PasswordField fx:id="passwordField" promptText="Adj meg egy jelszót" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <font>
             <Font size="13.0" />
          </font></PasswordField>
