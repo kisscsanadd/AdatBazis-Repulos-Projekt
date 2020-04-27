@@ -62,13 +62,6 @@ public class AdminWindowController implements Initializable {
         mainPane.setCenter(view);
     }
 
-
-    @FXML
-    public void buttonAction3(ActionEvent actionEvent) {
-        System.out.println(App.CurrentTime() + "Opened Screen2");
-        Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
-        mainPane.setCenter(view);
-    }
     @FXML
     public void buttonAction4(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen2");

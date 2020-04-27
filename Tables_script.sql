@@ -293,8 +293,8 @@ create trigger Repulogep_trigger
          from dual;
     end;
 	/
-insert into repulogep(nev, sebesseg, ferohely) values ('Airbus A300', 913, 300);
-insert into repulogep(nev, sebesseg, ferohely) values ('Air Force One', 1015, 400);
+insert into repulogep(nev, sebesseg, ferohely) values ('Airbus A300', 913, 320);
+insert into repulogep(nev, sebesseg, ferohely) values ('Air Force One', 1015, 420);
 insert into repulogep(nev, sebesseg, ferohely) values ('Airbus A350 XWB', 975, 150);
 insert into repulogep(nev, sebesseg, ferohely) values ('ANT–20', 220, 40);
 insert into repulogep(nev, sebesseg, ferohely) values ('Boeing 720', 1009, 425);
@@ -321,13 +321,22 @@ create trigger Jarat_trigger
          from dual;
     end;
 	/
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('1998-DEC-25 17:30' ,1 ,2 ,1 ,999);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2014-AUG-18 14:30' ,3 ,1 ,4 ,81);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-JUN-11 11:00' ,1 ,2 ,2 ,9);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-14 08:00' ,1 ,2 ,2 ,32);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-19 10:00' ,1 ,2 ,2 ,912);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-24 19:00' ,1 ,2 ,2 ,53);
-
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('1998-DEC-25 17:30' ,1 ,2 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2014-AUG-18 14:30' ,3 ,1 ,4 ,40);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-JUN-11 11:00' ,1 ,2 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-14 08:00' ,1 ,2 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-19 10:00' ,1 ,2 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-24 19:00' ,1 ,2 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-10 18:00' ,1 ,2 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-12 20:00' ,1 ,3 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-30 12:30' ,1 ,4 ,3 ,150);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-25 20:30' ,1 ,5 ,4 ,40);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-21 09:00' ,1 ,9 ,3 ,150);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-17 10:30' ,1 ,3 ,5 ,425);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-29 11:15' ,1 ,5 ,5 ,425);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-01 22:45' ,1 ,6 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-06 06:15' ,1 ,7 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-09 14:30' ,1 ,8 ,3 ,150);
 
 
 CREATE TABLE Foglalas
@@ -404,3 +413,13 @@ FOR EACH ROW
 BEGIN    
     UPDATE jarat SET szabad_helyek = szabad_helyek - 1 WHERE id = (SELECT jarat_id FROM FOGLALAS WHERE id = :NEW.foglalasi_id);
 END;
+/
+
+CREATE OR REPLACE TRIGGER szabad_helyek_valtozasa
+AFTER UPDATE OF ferohely
+ON repulogep
+FOR EACH ROW
+BEGIN
+    UPDATE jarat akt SET szabad_helyek = :NEW.ferohely WHERE repulogep_id = :NEW.id AND (SELECT COUNT(*) FROM FOGLALAS WHERE akt.id = foglalas.jarat_id) = 0;
+END;
+/
