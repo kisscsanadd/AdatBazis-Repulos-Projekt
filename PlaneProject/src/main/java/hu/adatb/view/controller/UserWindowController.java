@@ -9,10 +9,13 @@ import hu.adatb.utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,11 +34,20 @@ public class UserWindowController implements Initializable {
     @FXML
     private Button ownButton;
 
+    @FXML
+    Button adminViewButton;
+
     public UserWindowController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        var user = LoginUserController.getUser();
+
+        if(!user.isAdmin()) {
+            adminViewButton.setVisible(false);
+            VBox.setMargin(adminViewButton, new Insets(0,0,-25,0));
+        }
     }
 
     public static void goToMainForUser() {
@@ -80,5 +92,11 @@ public class UserWindowController implements Initializable {
             Utils.showWarning("Nem sikerült a kijelentkezés");
             e.printStackTrace();
         }
+    }
+
+    public void navigateAdminPage(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+        AdminWindowController.goToMainForAdmin();
     }
 }

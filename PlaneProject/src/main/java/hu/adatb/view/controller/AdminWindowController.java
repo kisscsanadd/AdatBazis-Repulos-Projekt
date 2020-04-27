@@ -6,6 +6,7 @@ import hu.adatb.utils.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -95,5 +96,11 @@ public class AdminWindowController implements Initializable {
         AddUserController.setIsAdmin(true);
         Pane view = MainFxmlLoader.getPage("SignUpScreen.fxml", true);
         mainPane.setCenter(view);
+    }
+
+    public void navigateUserPage(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+        UserWindowController.goToMainForUser();
     }
 }

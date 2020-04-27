@@ -10,6 +10,11 @@
          <left>
             <VBox prefHeight="432.0" prefWidth="116.0" style="-fx-background-color: rgba(2,29,47,0.51);" BorderPane.alignment="CENTER">
                <children>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#navigateUserPage" text="Felhasználói felület" textAlignment="CENTER" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#buttonAction1" prefHeight="50.0" prefWidth="100.0" text="Repülőjárat">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />
