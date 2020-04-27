@@ -1,6 +1,5 @@
 package hu.adatb.view.controller;
 
-import hu.adatb.App;
 import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Plane;
 import hu.adatb.utils.Utils;
@@ -11,13 +10,12 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class AddPlaneController implements Initializable {
+public class DialogPlaneController implements Initializable {
 
     @FXML
     TextField nameField;
@@ -42,7 +40,7 @@ public class AddPlaneController implements Initializable {
     private static Plane selectedPlane;
     private static boolean isAdd;
 
-    public AddPlaneController() {
+    public DialogPlaneController() {
     }
 
     @FXML
@@ -122,7 +120,7 @@ public class AddPlaneController implements Initializable {
     }
 
     public static void setIsAdd(boolean isAdd) {
-        AddPlaneController.isAdd = isAdd;
+        DialogPlaneController.isAdd = isAdd;
     }
 
     public static void setSelectedPlane(Plane plane) {

@@ -4,21 +4,12 @@ import hu.adatb.App;
 import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Plane;
 import hu.adatb.utils.Utils;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,10 +35,10 @@ public class PlaneWindowController implements Initializable {
 
     @FXML
     public void addPlane() {
-        AddPlaneController.setIsAdd(true);
+        DialogPlaneController.setIsAdd(true);
 
         try {
-            App.DialogDeliver("add_plane.fxml", "Repülőgép hozzáadás");
+            App.DialogDeliver("dialog_plane.fxml", "Repülőgép hozzáadás");
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
@@ -88,11 +79,11 @@ public class PlaneWindowController implements Initializable {
                     editBtn.setOnAction(event -> {
                         var selectedPlane = getTableView().getItems().get(getIndex());
 
-                        AddPlaneController.setSelectedPlane(selectedPlane);
-                        AddPlaneController.setIsAdd(false);
+                        DialogPlaneController.setSelectedPlane(selectedPlane);
+                        DialogPlaneController.setIsAdd(false);
 
                         try {
-                            App.DialogDeliver("add_plane.fxml", "Repülőgép módosítás");
+                            App.DialogDeliver("dialog_plane.fxml", "Repülőgép módosítás");
                         } catch (IOException e) {
                             Utils.showWarning("Nem sikerült megnyitni a repülőgép módosító ablakot");
                         }
