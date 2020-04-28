@@ -3,10 +3,8 @@ package hu.adatb.view.controller;
 import hu.adatb.controller.AirportController;
 import hu.adatb.controller.BookingController;
 import hu.adatb.controller.FlightController;
-import hu.adatb.model.Airport;
-import hu.adatb.model.Booking;
-import hu.adatb.model.Flight;
-import hu.adatb.model.Ticket;
+import hu.adatb.controller.TicketController;
+import hu.adatb.model.*;
 import hu.adatb.utils.DistanceCalculator;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -44,7 +43,7 @@ public class OwnFlightController implements Initializable {
     private TableColumn<Flight, String> withCol;
 
     @FXML
-    private TableColumn<Booking, Integer> ticketCol;
+    private TableColumn<Flight, String> ticketCol;
 
     @FXML
     private TableColumn<Flight, Void> actionCol;
@@ -79,7 +78,6 @@ public class OwnFlightController implements Initializable {
     }
 
     private void PopulateTable(){
-
         fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFromAirport().getName()));
         toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getToAirport().getName()));
         whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getDateTimeInRightFormat()));
@@ -91,5 +89,18 @@ public class OwnFlightController implements Initializable {
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getToAirport().getName()),
                                 __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
+        ticketCol.setCellValueFactory(__-> new SimpleStringProperty(GetTicketNumber(__.getValue())));
+    }
+
+    private String GetTicketNumber(Flight flight) {
+        var tickets = TicketController.getInstance().getAll();
+        List<Ticket> filteredTickets = new ArrayList<>();
+        var filteredBookings = bookings.stream().filter(booking -> booking.getFlight().getId() == flight.getId()).collect(Collectors.toList());
+
+        for (var booking: filteredBookings) {
+            filteredTickets.addAll(tickets.stream().filter(ticket -> ticket.getBooking().getId() == booking.getId()).collect(Collectors.toList()));
+        }
+
+        return Integer.toString(filteredTickets.size());
     }
 }

@@ -11,9 +11,8 @@ import static hu.adatb.query.Queries.*;
 
 public class GetById {
 
-    public static City GetCityById(int id) {
-        try(Connection conn = Database.ConnectionToDatabase();
-            PreparedStatement st = conn.prepareStatement(SELECT_CITY_BY_ID);) {
+    public static City GetCityById(Connection conn, int id) {
+        try(PreparedStatement st = conn.prepareStatement(SELECT_CITY_BY_ID);) {
 
             st.setInt(1, id);
 
@@ -26,16 +25,15 @@ public class GetById {
                 );
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static User GetUserById(int id) {
-        try (Connection conn = Database.ConnectionToDatabase();
-             PreparedStatement st = conn.prepareStatement(SELECT_USER_BY_ID)){
+    public static User GetUserById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_USER_BY_ID)){
 
             st.setInt(1, id);
 
@@ -51,16 +49,15 @@ public class GetById {
                 );
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static Plane GetPlaneById(int id) {
-        try (Connection conn = Database.ConnectionToDatabase();
-             PreparedStatement st = conn.prepareStatement(SELECT_PLANE_BY_ID)){
+    public static Plane GetPlaneById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_PLANE_BY_ID)){
 
             st.setInt(1, id);
 
@@ -75,16 +72,15 @@ public class GetById {
                 );
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static Airport GetAirportById(int id) {
-        try (Connection conn = Database.ConnectionToDatabase();
-             PreparedStatement st = conn.prepareStatement(SELECT_AIRPORT_BY_ID)){
+    public static Airport GetAirportById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_AIRPORT_BY_ID)){
 
             st.setInt(1, id);
 
@@ -92,7 +88,7 @@ public class GetById {
 
             while(rs.next()) {
                 var cityId = rs.getInt("varos_id");
-                var city = GetById.GetCityById(cityId);
+                var city = GetById.GetCityById(conn, cityId);
 
                 return new Airport (
                         rs.getInt("id"),
@@ -103,16 +99,15 @@ public class GetById {
                 );
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static Flight GetFlightById(int id) {
-        try (Connection conn = Database.ConnectionToDatabase();
-             PreparedStatement st = conn.prepareStatement(SELECT_FLIGHT_BY_ID)){
+    public static Flight GetFlightById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_FLIGHT_BY_ID)){
 
             st.setInt(1, id);
 
@@ -125,13 +120,13 @@ public class GetById {
                 LocalDateTime dateTime = LocalDateTime.of(date, time);
 
                 var planeId = rs.getInt("repulogep_id");
-                var plane = GetById.GetPlaneById(planeId);
+                var plane = GetById.GetPlaneById(conn, planeId);
 
                 var fromAirportId = rs.getInt("repuloter_id_fel");
-                var fromAirport = GetById.GetAirportById(fromAirportId);
+                var fromAirport = GetById.GetAirportById(conn, fromAirportId);
 
                 var toAirportId = rs.getInt("repuloter_id_le");
-                var toAirport = GetById.GetAirportById(toAirportId);
+                var toAirport = GetById.GetAirportById(conn, toAirportId);
 
                 return new Flight(
                         rs.getInt("id"),
@@ -143,16 +138,15 @@ public class GetById {
                 );
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static Payment GetPaymentById(int id) {
-        try (Connection conn = Database.ConnectionToDatabase();
-             PreparedStatement st = conn.prepareStatement(SELECT_PAYMENT_BY_ID)){
+    public static Payment GetPaymentById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_PAYMENT_BY_ID)){
 
             st.setInt(1, id);
 
@@ -165,16 +159,15 @@ public class GetById {
                 );
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static Category GetCategoryById(int id) {
-        try (Connection conn = Database.ConnectionToDatabase();
-             PreparedStatement st = conn.prepareStatement(SELECT_CATEGORY_BY_ID)){
+    public static Category GetCategoryById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_CATEGORY_BY_ID)){
 
             st.setInt(1, id);
 
@@ -188,16 +181,15 @@ public class GetById {
                 );
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static TravelClass GetTravelClassById(int id) {
-        try (Connection conn = Database.ConnectionToDatabase();
-             PreparedStatement st = conn.prepareStatement(SELECT_TRAVEL_CLASS_BY_ID)){
+    public static TravelClass GetTravelClassById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_TRAVEL_CLASS_BY_ID)){
 
             st.setInt(1, id);
 
@@ -210,25 +202,24 @@ public class GetById {
                 );
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static Booking GetBookingById(int id) {
-        try (Connection conn = Database.ConnectionToDatabase();
-             PreparedStatement st = conn.prepareStatement(SELECT_BOOKING_BY_ID)){
+    public static Booking GetBookingById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_BOOKING_BY_ID)){
 
             st.setInt(1, id);
 
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                var user = GetById.GetUserById(rs.getInt("felh_id"));
-                var flight = GetById.GetFlightById(rs.getInt("jarat_id"));
-                var payment = GetById.GetPaymentById(rs.getInt("fizetesi_mod_id"));
+                var user = GetById.GetUserById(conn, rs.getInt("felh_id"));
+                var flight = GetById.GetFlightById(conn, rs.getInt("jarat_id"));
+                var payment = GetById.GetPaymentById(conn, rs.getInt("fizetesi_mod_id"));
 
                 return new Booking(
                         id,
@@ -237,7 +228,7 @@ public class GetById {
                         payment
                 );
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

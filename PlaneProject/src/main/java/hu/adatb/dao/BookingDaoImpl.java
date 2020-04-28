@@ -56,9 +56,9 @@ public class BookingDaoImpl implements BookingDao {
                 var flightId = rs.getInt("jarat_id");
                 var paymentId = rs.getInt("fizetesi_mod_id");
 
-                User user = GetById.GetUserById(userId);
-                Flight flight = GetById.GetFlightById(flightId);
-                Payment payment = GetById.GetPaymentById(paymentId);
+                User user = GetById.GetUserById(conn, userId);
+                Flight flight = GetById.GetFlightById(conn, flightId);
+                Payment payment = GetById.GetPaymentById(conn, paymentId);
 
                 if (user == null || flight == null || payment == null) {
                     throw new GetByIdException("Cannot get booking (because of user, flight or payment listing by id)");

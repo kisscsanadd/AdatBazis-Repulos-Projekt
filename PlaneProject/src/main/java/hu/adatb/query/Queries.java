@@ -21,7 +21,7 @@ public class Queries {
     public static final String SELECT_TRAVEL_CLASS = "SELECT * FROM UTAZASIOSZTALY";
     public static final String SELECT_TRAVEL_CLASS_BY_ID = "SELECT * FROM UTAZASIOSZTALY WHERE ID = ?";
     public static final String SELECT_BOOKING = "SELECT * FROM FOGLALAS";
-    public static final String SELECT_BOOKING_BY_ID = "SELECT * FROM FOGLALAS WHERE ID = ";
+    public static final String SELECT_BOOKING_BY_ID = "SELECT * FROM FOGLALAS WHERE ID = ?";
     public static final String SELECT_TICKET = "SELECT * FROM JEGY";
 
     public static final String UPDATE_PLANE = "UPDATE REPULOGEP SET nev = ?, sebesseg = ?, ferohely = ? WHERE id = ?";
