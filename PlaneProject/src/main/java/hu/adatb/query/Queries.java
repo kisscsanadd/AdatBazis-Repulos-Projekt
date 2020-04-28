@@ -26,6 +26,8 @@ public class Queries {
 
     public static final String UPDATE_PLANE = "UPDATE REPULOGEP SET nev = ?, sebesseg = ?, ferohely = ? WHERE id = ?";
 
+    public static final String UPDATE_ALERT = "UPDATE FIGYELMEZTETES SET uzenet = ?, WHERE id = ?";
+
     public static final String DELETE_USER = "DELETE FROM FELHASZNALO WHERE ID = ?";
 
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";

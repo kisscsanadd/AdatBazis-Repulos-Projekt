@@ -15,6 +15,21 @@ public class Alert {
         this.message.set(message);
     }
 
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id.set(id);
+    }
+
+    public Alert() {
+    }
+
     public String getMessage() {
         return message.get();
     }

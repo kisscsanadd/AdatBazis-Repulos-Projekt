@@ -64,6 +64,13 @@ public class AdminWindowController implements Initializable {
     }
 
     @FXML
+    public void getAlertScreen(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + " Opened alert screen");
+        Pane view = MainFxmlLoader.getPage("AlertScreen.fxml", true);
+        mainPane.setCenter(view);
+    }
+
+    @FXML
     public void buttonAction4(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + "Opened Screen2");
         Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
@@ -102,5 +109,11 @@ public class AdminWindowController implements Initializable {
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
         UserWindowController.goToMainForUser();
+    }
+
+    public void getHotelScreen(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + " Opened hotel screen");
+        Pane view = MainFxmlLoader.getPage("HotelScreen.fxml", true);
+        mainPane.setCenter(view);
     }
 }

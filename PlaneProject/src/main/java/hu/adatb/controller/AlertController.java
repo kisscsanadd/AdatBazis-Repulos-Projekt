@@ -3,6 +3,7 @@ package hu.adatb.controller;
 import hu.adatb.dao.AlertDao;
 import hu.adatb.dao.AlertDaoImpl;
 import hu.adatb.model.Alert;
+import hu.adatb.model.Plane;
 
 import java.util.List;
 
@@ -20,6 +21,10 @@ public class AlertController {
 
     public boolean add(Alert alert) {
         return dao.add(alert);
+    }
+
+    public boolean update(Alert alert) {
+        return dao.update( alert);
     }
 
     public boolean delete(int id) {

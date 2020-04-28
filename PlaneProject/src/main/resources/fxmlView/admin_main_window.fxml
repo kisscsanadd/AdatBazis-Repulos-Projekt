@@ -30,12 +30,12 @@
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction4" prefHeight="50.0" prefWidth="100.0" text="Figyelmeztetés">
+                  <Button mnemonicParsing="false" onAction="#getAlertScreen" prefHeight="50.0" prefWidth="100.0" text="Figyelmeztetés">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#buttonAction5" prefHeight="50.0" prefWidth="100.0" text="Szálloda">
+                  <Button mnemonicParsing="false" onAction="#getHotelScreen" prefHeight="50.0" prefWidth="100.0" text="Szálloda">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
