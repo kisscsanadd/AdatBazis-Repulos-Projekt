@@ -43,6 +43,12 @@ public class OwnFlightController implements Initializable {
     private TableColumn<Flight, String> withCol;
 
     @FXML
+    private TableColumn<Flight, String> maxSeatCol;
+
+    @FXML
+    private TableColumn<Flight, String> seatCol;
+
+    @FXML
     private TableColumn<Flight, String> ticketCol;
 
     @FXML
@@ -89,6 +95,8 @@ public class OwnFlightController implements Initializable {
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getToAirport().getName()),
                                 __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
+        maxSeatCol.setCellValueFactory(__ -> new SimpleStringProperty(Integer.toString(__.getValue().getPlane().getSeats())));
+        seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
         ticketCol.setCellValueFactory(__-> new SimpleStringProperty(GetTicketNumber(__.getValue())));
     }
 
