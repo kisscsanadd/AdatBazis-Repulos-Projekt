@@ -19,6 +19,10 @@ public class Hotel {
         this.city = city;
     }
 
+    public Hotel() {
+
+    }
+
     public int getId() {
         return id.get();
     }

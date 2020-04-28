@@ -3,6 +3,7 @@ package hu.adatb.dao;
 import hu.adatb.App;
 import hu.adatb.model.Airport;
 import hu.adatb.model.City;
+import hu.adatb.model.Plane;
 import hu.adatb.query.Database;
 import hu.adatb.utils.GetById;
 import hu.adatb.utils.GetByIdException;
@@ -38,6 +39,33 @@ public class AirportDaoImpl implements AirportDao {
         }
 
         Utils.showWarning("Nem sikerült a hozzáadás");
+        return false;
+    }
+
+    @Override
+    public boolean update(Airport airport) {
+        try(Connection conn = Database.ConnectionToDatabase();
+            PreparedStatement st = conn.prepareStatement(UPDATE_AIRPORT)) {
+
+            st.setString(1, airport.getName());
+            st.setDouble(2, airport.getLatitude());
+            st.setDouble(3, airport.getLongitude());
+            st.setInt(4, airport.getCity().getId());
+            st.setInt(5, airport.getId());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Successful update");
+                Utils.showInformation("Sikeres módosítás");
+                return true;
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed update airport");
+        }
+
+        Utils.showWarning("Nem sikerült a módosítás");
         return false;
     }
 

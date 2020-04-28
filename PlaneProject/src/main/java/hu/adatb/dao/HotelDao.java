@@ -8,6 +8,8 @@ public interface HotelDao {
 
     public boolean add(Hotel hotel);
 
+    public boolean update(Hotel hotel);
+
     public boolean delete(int id);
 
     public List<Hotel> getAll();

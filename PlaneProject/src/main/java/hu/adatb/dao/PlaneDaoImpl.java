@@ -27,7 +27,6 @@ public class PlaneDaoImpl implements PlaneDao {
             if (res == 1) {
                 System.out.println(App.CurrentTime() + "Successful addition");
                 Utils.showInformation("Sikeres hozzáadás");
-                conn.close();
                 return true;
             }
         } catch (SQLException | ClassNotFoundException e) {

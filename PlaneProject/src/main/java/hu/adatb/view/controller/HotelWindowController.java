@@ -1,8 +1,8 @@
 package hu.adatb.view.controller;
 
 import hu.adatb.App;
-import hu.adatb.controller.AirportController;
-import hu.adatb.model.Airport;
+import hu.adatb.controller.HotelController;
+import hu.adatb.model.Hotel;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -17,61 +17,75 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AirportWindowController implements Initializable {
+public class HotelWindowController implements Initializable {
 
     @FXML
-    private TableView<Airport> table;
+    private TableView<Hotel> table;
 
     @FXML
-    private TableColumn<Airport, String> nameCol;
+    private TableColumn<Hotel, String> nameCol;
 
     @FXML
-    private TableColumn<Airport, Double> longitudeCol;
+    private TableColumn<Hotel, Integer> starsCol;
 
     @FXML
-    private TableColumn<Airport, Double> latitudeCol;
+    private TableColumn<Hotel, String> cityCol;
 
     @FXML
-    private TableColumn<Airport, String> cityCol;
+    private TableColumn<Hotel, Void> actionsCol;
 
     @FXML
-    private TableColumn<Airport, Void> actionsCol;
-
-    public void refreshTable() {
-        List<Airport> list = AirportController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
-    }
-
-    @FXML
-    public void addAirport() {
+    public void addHotel() {
         try {
-            App.DialogDeliver("add_airport.fxml","Repülőtér hozzáadása");
+            App.DialogDeliver("dialog_hotel.fxml", "Szálloda hozzáadás");
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
         refreshTable();
     }
 
-    public AirportWindowController() {
+    public HotelWindowController() {
+    }
+
+    public void refreshTable() {
+        List<Hotel> list = HotelController.getInstance().getAll();
+        table.setItems(FXCollections.observableList(list));
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Airport> list = AirportController.getInstance().getAll();
+        List<Hotel> list = HotelController.getInstance().getAll();
         table.setItems(FXCollections.observableList(list));
 
+        InitTable();
+    }
+
+    private void InitTable() {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        longitudeCol.setCellValueFactory(new PropertyValueFactory<>("longitude"));
-        latitudeCol.setCellValueFactory(new PropertyValueFactory<>("latitude"));
+        starsCol.setCellValueFactory(new PropertyValueFactory<>("stars"));
         cityCol.setCellValueFactory(cityName -> new SimpleStringProperty(cityName.getValue().getCity().getName()));
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
                 private final Button deleteBtn = new Button("Törlés");
+                private final Button editBtn = new Button("Módosítás");
 
                 {
                     deleteBtn.setOnAction(event -> {
-                        Airport a = getTableView().getItems().get(getIndex());
-                        deleteAirport(a);
+                        Hotel h = getTableView().getItems().get(getIndex());
+                        refreshTable();
+                    });
+
+                    editBtn.setOnAction(event -> {
+                        var selectedHotel = getTableView().getItems().get(getIndex());
+
+                        DialogHotelController.setSelectedHotel(selectedHotel);
+                        DialogHotelController.setIsAdd(false);
+
+                        try {
+                            App.DialogDeliver("dialog_hotel.fxml", "Szálloda módosítás");
+                        } catch (IOException e) {
+                            Utils.showWarning("Nem sikerült megnyitni a szálloda módosító ablakot");
+                        }
                         refreshTable();
                     });
                 }
@@ -83,21 +97,12 @@ public class AirportWindowController implements Initializable {
                         setGraphic(null);
                     } else {
                         HBox container = new HBox();
-                        container.getChildren().addAll(deleteBtn);
+                        container.getChildren().addAll(deleteBtn, editBtn);
                         setGraphic(container);
                     }
                 }
             };
 
         });
-    }
-
-    private void editAirport(Airport a) {
-
-        // TODO - create edit
-    }
-
-    private void deleteAirport(Airport a){
-        // TODO - create delete
     }
 }

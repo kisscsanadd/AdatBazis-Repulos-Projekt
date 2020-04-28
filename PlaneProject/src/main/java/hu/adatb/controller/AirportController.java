@@ -3,6 +3,7 @@ package hu.adatb.controller;
 import hu.adatb.dao.AirportDao;
 import hu.adatb.dao.AirportDaoImpl;
 import hu.adatb.model.Airport;
+import hu.adatb.model.Plane;
 
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class AirportController {
 
     public boolean add(Airport airport) {
         return dao.add(airport);
+    }
+    public boolean update(Airport airport) {
+        return dao.update( airport);
     }
 
     public boolean delete(int id) {
