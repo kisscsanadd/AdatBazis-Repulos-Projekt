@@ -6,6 +6,8 @@ import hu.adatb.query.Database;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static hu.adatb.query.Queries.*;
 
@@ -234,5 +236,24 @@ public class GetById {
         }
 
         return null;
+    }
+
+    public static int GetTicketNumberByBookingId(Connection conn, int booking_id) {
+        int ticketNumber = 0;
+        try (PreparedStatement st = conn.prepareStatement(SELECT_TICKET_BY_BOOKING_ID)){
+
+            st.setInt(1, booking_id);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                ticketNumber++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ticketNumber;
     }
 }

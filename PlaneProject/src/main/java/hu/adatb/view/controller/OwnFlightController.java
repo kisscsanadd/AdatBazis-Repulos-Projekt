@@ -57,7 +57,6 @@ public class OwnFlightController implements Initializable {
     @FXML
     private TableColumn<Booking, Void> actionCol;
 
-    private List<Flight> flights;
     private List<Booking> bookings;
     private List<Airport> airports;
 
@@ -67,23 +66,24 @@ public class OwnFlightController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bookings = BookingController.getInstance().getAll();
-        flights = FlightController.getInstance().getAll();
         airports = AirportController.getInstance().getAll();
 
-        var filteredBookingsByUser = bookings.stream().filter(booking -> booking.getUser().getId() == LoginUserController.getUser().getId()).collect(Collectors.toList());
-        List<Flight> filteredFlights = new ArrayList<>();
+        var filteredBookingsByUser = bookings.stream().filter(booking ->
+                booking.getUser().getId() == LoginUserController.getUser().getId()
+                    && Integer.parseInt(GetTicketNumber(booking.getFlight())) > 0)
+                .collect(Collectors.toList());
 
-        ArrayList<Integer> flightIds = new ArrayList<>();
+        List<Integer> flightIds = new ArrayList<>();
+        List<Booking> filteredBookings = new ArrayList<>();
 
         for (var booking: filteredBookingsByUser) {
             if(!flightIds.contains(booking.getFlight().getId())) {
-                filteredFlights.add(flights.stream().filter(flight -> flight.getId() == booking.getFlight().getId()).collect(Collectors.toList()).get(0));
+                filteredBookings.add(booking);
                 flightIds.add(booking.getFlight().getId());
             }
-
         }
 
-        table.setItems(FXCollections.observableList(filteredBookingsByUser));
+        table.setItems(FXCollections.observableList(filteredBookings));
 
         PopulateTable();
     }
@@ -124,13 +124,15 @@ public class OwnFlightController implements Initializable {
                         });
 
                         deleteButton.setOnAction(actionEvent -> {
-
+                            Booking booking = table.getItems().get(getIndex());
 
                             var type = Utils.showConfirmation();
 
                             type.ifPresent(buttonType -> {
                                 if(buttonType == ButtonType.YES) {
-
+                                    if(BookingController.getInstance().delete(booking)) {
+                                        Utils.showInformation("Sikeres törlés");
+                                    }
                                 }
                             });
                         });

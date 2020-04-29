@@ -30,18 +30,16 @@ public class FlightDaoImpl implements FlightDao {
     }
 
     @Override
-    public boolean updateVogue(Flight flight) {
+    public boolean update(Flight flight) {
         try(Connection conn = Database.ConnectionToDatabase();
-            PreparedStatement st = conn.prepareStatement(UPDATE_FLIGHT_VOGUE)) {
+            PreparedStatement st = conn.prepareStatement(UPDATE_FLIGHT)) {
 
-            var updatedFlight = GetById.GetFlightById(conn, flight.getId());
-
-            if (updatedFlight == null) {
-                throw new GetByIdException("Nem sikerült aktualizálni a járatot");
-            }
-
-            st.setInt(1, (updatedFlight.getVogue() + 1));
-            st.setInt(2, updatedFlight.getId());
+            st.setInt(1, flight.getFromAirport().getId());
+            st.setInt(2, flight.getToAirport().getId());
+            st.setInt(3, flight.getPlane().getId());
+            st.setInt(4, flight.getFreeSeats());
+            st.setInt(5, flight.getVogue());
+            st.setInt(6, flight.getId());
 
             int res = st.executeUpdate();
 
@@ -49,8 +47,9 @@ public class FlightDaoImpl implements FlightDao {
                 return true;
             }
 
-        } catch (SQLException | ClassNotFoundException | GetByIdException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println(App.CurrentTime() + "Failed update vogue");
+            e.printStackTrace();
         }
 
         Utils.showWarning("Nem sikerült frissíteni a népszerűséget");

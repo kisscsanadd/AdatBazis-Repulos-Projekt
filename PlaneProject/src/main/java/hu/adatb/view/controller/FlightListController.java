@@ -162,7 +162,8 @@ public class FlightListController implements Initializable {
                             toAirportHotelNames = bookedFlight.getHotels(bookedFlight.getToAirport().getCity().getName());
                             HotelListController.setIsOwnFlight(false);
 
-                            FlightController.getInstance().updateVogue(bookedFlight);
+                            bookedFlight.setVogue(bookedFlight.getVogue() + 1);
+                            FlightController.getInstance().update(bookedFlight);
 
                             try {
                                 App.DialogDeliver("add_booking.fxml","Foglalás", false);
