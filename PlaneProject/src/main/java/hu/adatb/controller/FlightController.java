@@ -27,6 +27,10 @@ public class FlightController {
         return dao.delete(id);
     }
 
+    public boolean update(Flight flight) {
+        return dao.update(flight);
+    }
+
     public List<Flight> getAll() {
         return dao.getAll();
     }

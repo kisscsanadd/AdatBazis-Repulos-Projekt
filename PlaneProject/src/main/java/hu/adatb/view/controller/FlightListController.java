@@ -61,6 +61,9 @@ public class FlightListController implements Initializable {
     private TableColumn<Flight, String> withCol;
 
     @FXML
+    private TableColumn<Flight, Integer> vogueCol;
+
+    @FXML
     private TableColumn<Flight, Integer> seatCol;
 
     @FXML
@@ -68,6 +71,9 @@ public class FlightListController implements Initializable {
 
     @FXML
     private TableColumn<Flight, Void> actionCol;
+
+    @FXML
+    private CheckBox vogueCheckBox;
 
     @FXML
     private Button searchButton;
@@ -138,6 +144,7 @@ public class FlightListController implements Initializable {
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getToAirport().getName()),
                                         __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
+        vogueCol.setCellValueFactory(new PropertyValueFactory<>("vogue"));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
         hotelCol.setCellValueFactory(__-> new SimpleStringProperty(
                 __.getValue().getHotels(__.getValue().getToAirport().getCity().getName())));
@@ -152,6 +159,9 @@ public class FlightListController implements Initializable {
                             bookedFlight = table.getItems().get(getIndex());
                             toAirportHotelNames = bookedFlight.getHotels(bookedFlight.getToAirport().getCity().getName());
                             HotelListController.setIsOwnFlight(false);
+
+                            bookedFlight.setVogue(bookedFlight.getVogue() + 1);
+                            FlightController.getInstance().update(bookedFlight);
 
                             try {
                                 App.DialogDeliver("add_booking.fxml","Foglalás", false);
@@ -183,6 +193,11 @@ public class FlightListController implements Initializable {
             table.setVisible(false);
             infoText.setVisible(true);
             infoText.setText("Nincs a szűrőknek megfelelő járat");
+        }
+
+        if(vogueCheckBox.isSelected()) {
+            vogueCol.setComparator(vogueCol.getComparator().reversed());
+            table.getSortOrder().add(vogueCol);
         }
     }
 

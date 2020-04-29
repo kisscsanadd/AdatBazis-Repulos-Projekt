@@ -1,9 +1,9 @@
 DROP TABLE felhasznalo;
 DROP TABLE fizetesimod;
 DROP TABLE szalloda;
-DROP TABLE foglalas;
 DROP TABLE jaratfigyrel;
 DROP TABLE jegy;
+DROP TABLE foglalas;
 DROP TABLE kategoria;
 DROP TABLE repulogep;
 DROP TABLE repuloter;
@@ -28,8 +28,7 @@ DROP SEQUENCE Orszag_sequence;
 DROP SEQUENCE Figyelmeztetes_sequence;
 DROP SEQUENCE szalloda_sequence;
 
-ALTER SESSION SET NLS_DATE_LANGUAGE = ENGLISH;
-ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MON-DD HH24:MI';
+ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI';
 
 CREATE TABLE UtazasiOsztaly 
     (id              	NUMBER(10) NOT NULL,
@@ -38,7 +37,7 @@ CREATE TABLE UtazasiOsztaly
 
 create sequence UtazasiOsztaly_sequence;
 
-create trigger UtazasiOsztaly_trigger
+create or replace trigger UtazasiOsztaly_trigger
     before insert on UtazasiOsztaly
     for each row
     begin
@@ -60,7 +59,7 @@ CREATE TABLE FizetesiMod
 
 create sequence FizetesiMod_sequence;
 
-create trigger FizetesiMod_trigger
+create or replace trigger FizetesiMod_trigger
     before insert on FizetesiMod
     for each row
     begin
@@ -85,7 +84,7 @@ CREATE TABLE Felhasznalo
 
 create sequence Felhasznalo_sequence;
 
-create trigger Felhasznalo_trigger
+create or replace trigger Felhasznalo_trigger
     before insert on Felhasznalo
     for each row
     begin
@@ -107,7 +106,7 @@ CREATE TABLE Kategoria
 
 create sequence Kategoria_sequence;
 
-create trigger Kategoria_trigger
+create or replace trigger Kategoria_trigger
     before insert on Kategoria
     for each row
     begin
@@ -121,29 +120,6 @@ insert into Kategoria(nev, kedvezmeny) values('Diák', 20);
 insert into Kategoria(nev, kedvezmeny) values('Nyugdíjas', 20);
 insert into Kategoria(nev, kedvezmeny) values('Mozgáskorlátozott', 50);
 insert into Kategoria(nev, kedvezmeny) values('Felnőtt', 0);
-
-
-
-CREATE TABLE Jegy 
-    (id              	NUMBER(10) NOT NULL,
-     kategoria_id       NUMBER(5),
-	 utazasi_osztaly_id	NUMBER(10),
-	 foglalasi_id		NUMBER(10),
-  CONSTRAINT Jegy_FOREIGN_KEY FOREIGN KEY (utazasi_osztaly_id) REFERENCES UtazasiOsztaly (id),
-  CONSTRAINT Jegy_FOREIGN_KEY_2 FOREIGN KEY (kategoria_id) REFERENCES Kategoria (id),
-  CONSTRAINT Jegy_PRIMARY_KEY PRIMARY KEY (id) );
-
-create sequence Jegy_sequence;
-
-create trigger Jegy_trigger
-    before insert on Jegy
-    for each row
-    begin
-      select Jegy_sequence.nextval
-         into:new.id
-         from dual;
-    end;
-	/
 	
 	
 
@@ -154,7 +130,7 @@ CREATE TABLE Figyelmeztetes
 
 create sequence Figyelmeztetes_sequence;
 
-create trigger Figyelmeztetes_trigger
+create or replace trigger Figyelmeztetes_trigger
     before insert on Figyelmeztetes
     for each row
     begin
@@ -174,7 +150,7 @@ CREATE TABLE Orszag
 
 create sequence Orszag_sequence;
 
-create trigger Orszag_trigger
+create or replace trigger Orszag_trigger
     before insert on Orszag
     for each row
     begin
@@ -206,7 +182,7 @@ CREATE TABLE Varos
 
 create sequence Varos_sequence;
 
-create trigger Varos_trigger
+create or replace trigger Varos_trigger
     before insert on Varos
     for each row
     begin
@@ -246,7 +222,7 @@ CREATE TABLE Repuloter
 
 create sequence Repuloter_sequence;
 
-create trigger Repuloter_trigger
+create or replace trigger Repuloter_trigger
     before insert on Repuloter
     for each row
     begin
@@ -284,7 +260,7 @@ CREATE TABLE Repulogep
 
 create sequence Repulogep_sequence;
 
-create trigger Repulogep_trigger
+create or replace trigger Repulogep_trigger
     before insert on Repulogep
     for each row
     begin
@@ -307,12 +283,13 @@ CREATE TABLE Jarat
      repuloter_id_fel		NUMBER(10) NOT NULL,
      repuloter_id_le		NUMBER(10) NOT NULL,
      repulogep_id			NUMBER(10) NOT NULL,
+     nepszeruseg            NUMBER(5) DEFAULT 0,
      szabad_helyek			NUMBER(3) NOT NULL,
   CONSTRAINT Jarat_PRIMARY_KEY PRIMARY KEY (id));
 
 create sequence Jarat_sequence;
 
-create trigger Jarat_trigger
+create or replace trigger Jarat_trigger
     before insert on Jarat
     for each row
     begin
@@ -348,7 +325,7 @@ CREATE TABLE Foglalas
 
 create sequence Foglalas_sequence;
 
-create trigger Foglalas_trigger
+create or replace trigger Foglalas_trigger
     before insert on Foglalas
     for each row
     begin
@@ -358,6 +335,30 @@ create trigger Foglalas_trigger
     end;
 	/
 
+
+
+CREATE TABLE Jegy 
+    (id              	NUMBER(10) NOT NULL,
+     kategoria_id       NUMBER(5),
+	 utazasi_osztaly_id	NUMBER(10),
+	 foglalasi_id		NUMBER(10),
+  CONSTRAINT Jegy_FOREIGN_KEY FOREIGN KEY (utazasi_osztaly_id) REFERENCES UtazasiOsztaly (id),
+  CONSTRAINT Jegy_FOREIGN_KEY_2 FOREIGN KEY (kategoria_id) REFERENCES Kategoria (id),
+  CONSTRAINT Jegy_FOREIGN_KEY_3 FOREIGN KEY (foglalasi_id) REFERENCES Foglalas (id),
+  CONSTRAINT Jegy_PRIMARY_KEY PRIMARY KEY (id) );
+
+create sequence Jegy_sequence;
+
+create or replace trigger Jegy_trigger
+    before insert on Jegy
+    for each row
+    begin
+      select Jegy_sequence.nextval
+         into:new.id
+         from dual;
+    end;
+	/
+    
 
 
 CREATE TABLE JaratFigyRel
@@ -370,7 +371,7 @@ CREATE TABLE JaratFigyRel
 
 create sequence JaratFigyRel_sequence;
 
-create trigger JaratFigyRel_trigger
+create or replace trigger JaratFigyRel_trigger
     before insert on JaratFigyRel
     for each row
     begin
@@ -391,7 +392,7 @@ CREATE TABLE Szalloda
 
 create sequence Szalloda_sequence;
 
-create trigger Szalloda_trigger
+create or replace trigger Szalloda_trigger
     before insert on Szalloda
     for each row
     begin
@@ -410,7 +411,7 @@ CREATE OR REPLACE TRIGGER jarat_szabadhely_csokkentes
 AFTER INSERT
 ON jegy
 FOR EACH ROW
-BEGIN    
+BEGIN
     UPDATE jarat SET szabad_helyek = szabad_helyek - 1 WHERE id = (SELECT jarat_id FROM FOGLALAS WHERE id = :NEW.foglalasi_id);
 END;
 /
@@ -421,5 +422,15 @@ ON repulogep
 FOR EACH ROW
 BEGIN
     UPDATE jarat akt SET szabad_helyek = :NEW.ferohely WHERE repulogep_id = :NEW.id AND (SELECT COUNT(*) FROM FOGLALAS WHERE akt.id = foglalas.jarat_id) = 0;
+END;
+/
+
+CREATE OR REPLACE TRIGGER foglalas_torles
+BEFORE DELETE
+ON FOGLALAS
+FOR EACH ROW
+BEGIN
+
+    DELETE FROM JEGY WHERE foglalasi_id = :OLD.id;
 END;
 /

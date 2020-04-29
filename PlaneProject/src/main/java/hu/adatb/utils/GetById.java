@@ -6,6 +6,8 @@ import hu.adatb.query.Database;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static hu.adatb.query.Queries.*;
 
@@ -18,7 +20,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new City (
                         rs.getInt("id"),
                         rs.getString("nev")
@@ -39,7 +41,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new User(
                         rs.getInt("id"),
                         rs.getString("felh_nev"),
@@ -63,8 +65,8 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
-                return new Plane (
+            if(rs.next()) {
+                return new Plane(
                         rs.getInt("id"),
                         rs.getString("nev"),
                         rs.getInt("sebesseg"),
@@ -86,7 +88,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 var cityId = rs.getInt("varos_id");
                 var city = GetById.GetCityById(conn, cityId);
 
@@ -113,7 +115,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 var date = rs.getDate("felszallas_datum").toLocalDate();
                 var time = rs.getTime("felszallas_datum").toLocalTime();
 
@@ -134,6 +136,7 @@ public class GetById {
                         fromAirport,
                         toAirport,
                         plane,
+                        rs.getInt("nepszeruseg"),
                         rs.getInt("szabad_helyek")
                 );
             }
@@ -152,7 +155,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new Payment(
                         rs.getInt("id"),
                         rs.getString("nev")
@@ -173,7 +176,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new Category(
                         rs.getInt("id"),
                         rs.getString("nev"),
@@ -195,7 +198,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new TravelClass(
                         rs.getInt("id"),
                         rs.getString("nev")
@@ -216,7 +219,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while (rs.next()) {
+            if(rs.next()) {
                 var user = GetById.GetUserById(conn, rs.getInt("felh_id"));
                 var flight = GetById.GetFlightById(conn, rs.getInt("jarat_id"));
                 var payment = GetById.GetPaymentById(conn, rs.getInt("fizetesi_mod_id"));
@@ -233,5 +236,24 @@ public class GetById {
         }
 
         return null;
+    }
+
+    public static int GetTicketNumberByBookingId(Connection conn, int booking_id) {
+        int ticketNumber = 0;
+        try (PreparedStatement st = conn.prepareStatement(SELECT_TICKET_BY_BOOKING_ID)){
+
+            st.setInt(1, booking_id);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                ticketNumber++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ticketNumber;
     }
 }
