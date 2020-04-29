@@ -45,19 +45,13 @@ public class FlightDaoImpl implements FlightDao {
                 LocalDateTime dateTime = LocalDateTime.of(date, time);
 
                 var planeId = rs.getInt("repulogep_id");
-                var plane = GetById.GetPlaneById(planeId);
+                var plane = GetById.GetPlaneById(conn, planeId);
 
                 var fromAirportId = rs.getInt("repuloter_id_fel");
-                var fromAirport = GetById.GetAirportById(fromAirportId);
-
-                try {
-                    Thread.sleep(250);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                var fromAirport = GetById.GetAirportById(conn, fromAirportId);
 
                 var toAirportId = rs.getInt("repuloter_id_le");
-                var toAirport = GetById.GetAirportById(toAirportId);
+                var toAirport = GetById.GetAirportById(conn, toAirportId);
 
                 Flight flight = new Flight(
                         rs.getInt("id"),

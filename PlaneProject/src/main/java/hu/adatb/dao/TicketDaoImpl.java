@@ -58,9 +58,9 @@ public class TicketDaoImpl implements TicketDao {
                 var travelClassId = rs.getInt("utazasi_osztaly_id");
                 var bookingId = rs.getInt("foglalasi_id");
 
-                var category = GetById.GetCategoryById(categoryId);
-                var travelClass = GetById.GetTravelClassById(travelClassId);
-                var booking = GetById.GetBookingById(bookingId);
+                var category = GetById.GetCategoryById(conn, categoryId);
+                var travelClass = GetById.GetTravelClassById(conn, travelClassId);
+                var booking = GetById.GetBookingById(conn, bookingId);
 
                 if (category == null || travelClass == null || booking == null) {
                     throw new GetByIdException("Cannot get ticket (because of category, travelClass or booking listing failed)");
@@ -79,8 +79,6 @@ public class TicketDaoImpl implements TicketDao {
         } catch (SQLException | ClassNotFoundException | GetByIdException e) {
             Utils.showWarning("Nem sikerült lekérni a jegyeket");
         }
-
-        System.out.println("Ticket count: " + result.size());
 
         return result;
     }

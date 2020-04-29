@@ -61,7 +61,7 @@ public class HotelDaoImpl implements HotelDao{
 
             while (rs.next()) {
                 var cityId = rs.getInt("varos_id");
-                var city = GetById.GetCityById(cityId);
+                var city = GetById.GetCityById(conn, cityId);
 
                 if (city == null) {
                     throw new GetByIdException("Cannot get city name by id");

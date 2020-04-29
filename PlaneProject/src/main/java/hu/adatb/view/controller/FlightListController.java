@@ -153,6 +153,7 @@ public class FlightListController implements Initializable {
                         bookingButton.setOnAction(event -> {
                             bookedFlight = table.getItems().get(getIndex());
                             toAirportHotelNames = bookedFlight.getHotels(bookedFlight.getToAirport().getCity().getName());
+                            HotelListController.setIsOwnFlight(false);
 
                             try {
                                 App.DialogDeliver("add_booking.fxml","Foglalás", false);
