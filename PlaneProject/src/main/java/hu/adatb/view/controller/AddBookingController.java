@@ -202,16 +202,6 @@ public class AddBookingController implements Initializable {
     }
 
     private void PopulateBooking() {
-        var bookings = BookingController.getInstance().getAll();
-        var maxId = 0;
-        for (var booking: bookings) {
-            if(booking.getId() > maxId) {
-                maxId = booking.getId();
-            }
-        }
-        maxId++;
-
-        booking.setId(maxId);
         booking.setUser(LoginUserController.getUser());
         booking.setPayment(paymentComboBox.getSelectionModel().getSelectedItem());
         booking.setFlight(bookedFlight);
@@ -249,6 +239,15 @@ public class AddBookingController implements Initializable {
         PopulateTicket();
 
         if (BookingController.getInstance().add(booking)) {
+            var bookings = BookingController.getInstance().getAll();
+            var maxId = 0;
+            for (var booking: bookings) {
+                if(booking.getId() > maxId) {
+                    maxId = booking.getId();
+                }
+            }
+
+            booking.setId(maxId);
             for(int i = 0; i < countOfTicket; i++) {
                 TicketController.getInstance().add(ticket);
             }
