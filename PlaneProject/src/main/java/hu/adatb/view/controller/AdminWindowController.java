@@ -127,7 +127,7 @@ public class AdminWindowController {
     @FXML
     public void listingFlights (ActionEvent actionEvent){
         System.out.println(App.CurrentTime() + "Opened flights");
-        Pane view = MainFxmlLoader.getPage("flights_list.fxml", false);
+        Pane view = MainFxmlLoader.getPage("FlightScreen.fxml", true);
         mainPane.setCenter(view);
     }
 }
