@@ -34,11 +34,19 @@ public class HotelListController implements Initializable {
     @FXML
     private Label infoText;
 
+    public static boolean isOwnFlight;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         var hotels = HotelController.getInstance().getAll();
-        var toAirportHotelNames = FlightListController.getToAirportHotelNames();
+        String toAirportHotelNames;
+
+        if (isOwnFlight) {
+            toAirportHotelNames = OwnFlightController.getToAirportHotelNames();
+        } else {
+            toAirportHotelNames = FlightListController.getToAirportHotelNames();
+        }
 
         if (toAirportHotelNames.equals("-")) {
             table.setVisible(false);
@@ -65,5 +73,10 @@ public class HotelListController implements Initializable {
             nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
             starCol.setCellValueFactory(new PropertyValueFactory<>("stars"));
         }
+    }
+
+
+    public static void setIsOwnFlight(boolean isOwnFlight) {
+        HotelListController.isOwnFlight = isOwnFlight;
     }
 }

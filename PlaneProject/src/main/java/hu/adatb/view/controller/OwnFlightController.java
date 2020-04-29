@@ -1,20 +1,25 @@
 package hu.adatb.view.controller;
 
+import hu.adatb.App;
 import hu.adatb.controller.AirportController;
 import hu.adatb.controller.BookingController;
 import hu.adatb.controller.FlightController;
 import hu.adatb.controller.TicketController;
 import hu.adatb.model.*;
 import hu.adatb.utils.DistanceCalculator;
+import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,6 +63,8 @@ public class OwnFlightController implements Initializable {
     private List<Booking> bookings;
     private List<Airport> airports;
 
+    public static String toAirportHotelNames;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -98,6 +105,38 @@ public class OwnFlightController implements Initializable {
         maxSeatCol.setCellValueFactory(__ -> new SimpleStringProperty(Integer.toString(__.getValue().getPlane().getSeats())));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
         ticketCol.setCellValueFactory(__-> new SimpleStringProperty(GetTicketNumber(__.getValue())));
+
+        actionCol.setCellFactory(param ->
+                new TableCell<>(){
+
+                    final Button hotelButton = new Button("Szállodák");
+
+                    {
+                        hotelButton.setOnAction(event -> {
+                            var flight = table.getItems().get(getIndex());
+                            toAirportHotelNames = flight.getHotels(flight.getToAirport().getCity().getName());
+                            HotelListController.setIsOwnFlight(true);
+
+                            try {
+                                App.DialogDeliver("hotel_list.fxml","Szállodák", false);
+                            } catch (IOException e) {
+                                Utils.showWarning("Nem sikerült megnyitni a szállodákat kilistázó ablakot");
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(hotelButton);
+                        }
+                    }
+                }
+        );
     }
 
     private String GetTicketNumber(Flight flight) {
@@ -110,5 +149,9 @@ public class OwnFlightController implements Initializable {
         }
 
         return Integer.toString(filteredTickets.size());
+    }
+
+    public static String getToAirportHotelNames() {
+        return toAirportHotelNames;
     }
 }
