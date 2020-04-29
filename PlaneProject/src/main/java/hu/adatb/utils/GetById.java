@@ -18,7 +18,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new City (
                         rs.getInt("id"),
                         rs.getString("nev")
@@ -39,7 +39,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new User(
                         rs.getInt("id"),
                         rs.getString("felh_nev"),
@@ -63,8 +63,8 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
-                return new Plane (
+            if(rs.next()) {
+                return new Plane(
                         rs.getInt("id"),
                         rs.getString("nev"),
                         rs.getInt("sebesseg"),
@@ -86,7 +86,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 var cityId = rs.getInt("varos_id");
                 var city = GetById.GetCityById(conn, cityId);
 
@@ -113,7 +113,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 var date = rs.getDate("felszallas_datum").toLocalDate();
                 var time = rs.getTime("felszallas_datum").toLocalTime();
 
@@ -152,7 +152,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new Payment(
                         rs.getInt("id"),
                         rs.getString("nev")
@@ -173,7 +173,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new Category(
                         rs.getInt("id"),
                         rs.getString("nev"),
@@ -195,7 +195,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
+            if(rs.next()) {
                 return new TravelClass(
                         rs.getInt("id"),
                         rs.getString("nev")
@@ -216,7 +216,7 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while (rs.next()) {
+            if(rs.next()) {
                 var user = GetById.GetUserById(conn, rs.getInt("felh_id"));
                 var flight = GetById.GetFlightById(conn, rs.getInt("jarat_id"));
                 var payment = GetById.GetPaymentById(conn, rs.getInt("fizetesi_mod_id"));
