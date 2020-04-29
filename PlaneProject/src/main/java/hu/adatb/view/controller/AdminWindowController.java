@@ -117,8 +117,17 @@ public class AdminWindowController {
         mainPane.setCenter(view);
     }
 
+
     private void SetTitle(ActionEvent event, String viewName) {
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Főoldal - " + viewName);
+
+
+    }
+    @FXML
+    public void listingFlights (ActionEvent actionEvent){
+        System.out.println(App.CurrentTime() + "Opened flights");
+        Pane view = MainFxmlLoader.getPage("flights_list.fxml", false);
+        mainPane.setCenter(view);
     }
 }

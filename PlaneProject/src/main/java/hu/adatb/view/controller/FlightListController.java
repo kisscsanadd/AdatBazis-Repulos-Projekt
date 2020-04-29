@@ -188,6 +188,74 @@ public class FlightListController implements Initializable {
         }
     }
 
+    @FXML
+    public void listAll(ActionEvent actionEvent) {
+        selectedFromAirport = fromAirport.getSelectionModel().getSelectedItem();
+        selectedToAirport = toAirport.getSelectionModel().getSelectedItem();
+        selectedDateBegin = dateBegin.getValue();
+        selectedDateEnd = dateEnd.getValue();
+
+        refreshTable();
+
+        fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFromAirport().getName()));
+        toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getToAirport().getName()));
+        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getDateTimeInRightFormat()));
+        timeCol.setCellValueFactory(
+                __-> new SimpleStringProperty(__.getValue()
+                        .getTravelTime(DistanceCalculator.GetLatitudeByName(airports, selectedFromAirport),
+                                DistanceCalculator.GetLongitudeByName(airports, selectedFromAirport),
+                                DistanceCalculator.GetLatitudeByName(airports, selectedToAirport),
+                                DistanceCalculator.GetLongitudeByName(airports, selectedToAirport),
+                                __.getValue().getPlane())));
+        withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
+        seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
+        hotelCol.setCellValueFactory(__-> new SimpleStringProperty(
+                __.getValue().getHotels(__.getValue().getToAirport().getCity().getName())));
+
+        actionCol.setCellFactory(param ->
+                new TableCell<>(){
+
+                    final Button bookingButton = new Button("Foglalás");
+
+                    {
+                        bookingButton.setOnAction(event -> {
+                            bookedFlight = table.getItems().get(getIndex());
+                            toAirportHotelNames = bookedFlight.getHotels(bookedFlight.getToAirport().getCity().getName());
+                            HotelListController.setIsOwnFlight(false);
+
+                            try {
+                                App.DialogDeliver("add_booking.fxml","Foglalás", false);
+                            } catch (IOException e) {
+                                Utils.showWarning("Nem sikerült megnyitni a foglalás ablakot");
+                            }
+
+                            refreshTable();     // TODO - here its not working
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(bookingButton);
+                        }
+                    }
+                }
+        );
+
+        if (filteredFlights.size() > 0) {
+            table.setVisible(true);
+            infoText.setVisible(false);
+        } else {
+            table.setVisible(false);
+            infoText.setVisible(true);
+            infoText.setText("Nincs a szűrőknek megfelelő járat");
+        }
+    }
+
     public static Flight getBookedFlight() {
         return bookedFlight;
     }

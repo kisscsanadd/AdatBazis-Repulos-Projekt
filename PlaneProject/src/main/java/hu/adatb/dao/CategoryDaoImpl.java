@@ -35,6 +35,7 @@ public class CategoryDaoImpl implements  CategoryDao{
             }
 
         } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
             Utils.showWarning("Nem sikerült lekérni a jegy kategóriákat");
         }
 
