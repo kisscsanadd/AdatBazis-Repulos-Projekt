@@ -298,22 +298,22 @@ create or replace trigger Jarat_trigger
          from dual;
     end;
 	/
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('1998-DEC-25 17:30' ,1 ,2 ,1 ,320);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2014-AUG-18 14:30' ,3 ,1 ,4 ,40);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-JUN-11 11:00' ,1 ,2 ,2 ,420);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-14 08:00' ,1 ,2 ,2 ,420);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-19 10:00' ,1 ,2 ,2 ,420);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-24 19:00' ,1 ,2 ,2 ,420);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-10 18:00' ,1 ,2 ,1 ,320);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-12 20:00' ,1 ,3 ,2 ,420);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-30 12:30' ,1 ,4 ,3 ,150);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-25 20:30' ,1 ,5 ,4 ,40);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-21 09:00' ,1 ,9 ,3 ,150);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-17 10:30' ,1 ,3 ,5 ,425);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-29 11:15' ,1 ,5 ,5 ,425);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-01 22:45' ,1 ,6 ,2 ,420);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-06 06:15' ,1 ,7 ,1 ,320);
-insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-APR-09 14:30' ,1 ,8 ,3 ,150);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('1998-12-25 17:30' ,1 ,2 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2014-08-18 14:30' ,3 ,1 ,4 ,40);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-06-11 11:00' ,1 ,2 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-14 08:00' ,1 ,2 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-19 10:00' ,1 ,2 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-24 19:00' ,1 ,2 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-10 18:00' ,1 ,2 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-12 20:00' ,1 ,3 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-30 12:30' ,1 ,4 ,3 ,150);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-25 20:30' ,1 ,5 ,4 ,40);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-21 09:00' ,1 ,9 ,3 ,150);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-17 10:30' ,1 ,3 ,5 ,425);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-29 11:15' ,1 ,5 ,5 ,425);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-01 22:45' ,1 ,6 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-06 06:15' ,1 ,7 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-04-09 14:30' ,1 ,8 ,3 ,150);
 
 
 CREATE TABLE Foglalas

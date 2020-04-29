@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class OwnFlightController implements Initializable {
@@ -57,7 +58,7 @@ public class OwnFlightController implements Initializable {
     @FXML
     private TableColumn<Booking, Void> actionCol;
 
-    private List<Booking> bookings;
+    public List<Booking> bookings;
     private List<Airport> airports;
 
     public static String toAirportHotelNames;
@@ -68,23 +69,7 @@ public class OwnFlightController implements Initializable {
         bookings = BookingController.getInstance().getAll();
         airports = AirportController.getInstance().getAll();
 
-        var filteredBookingsByUser = bookings.stream().filter(booking ->
-                booking.getUser().getId() == LoginUserController.getUser().getId()
-                    && Integer.parseInt(GetTicketNumber(booking.getFlight())) > 0)
-                .collect(Collectors.toList());
-
-        List<Integer> flightIds = new ArrayList<>();
-        List<Booking> filteredBookings = new ArrayList<>();
-
-        for (var booking: filteredBookingsByUser) {
-            if(!flightIds.contains(booking.getFlight().getId())) {
-                filteredBookings.add(booking);
-                flightIds.add(booking.getFlight().getId());
-            }
-        }
-
-        table.setItems(FXCollections.observableList(filteredBookings));
-
+        refreshTable();
         PopulateTable();
     }
 
@@ -124,14 +109,18 @@ public class OwnFlightController implements Initializable {
                         });
 
                         deleteButton.setOnAction(actionEvent -> {
-                            Booking booking = table.getItems().get(getIndex());
+                            Booking selectedBooking = table.getItems().get(getIndex());
+
+                            var deletedBookings = bookings.stream().filter(b -> b.getFlight().getId() == selectedBooking.getFlight().getId()).collect(Collectors.toList());
 
                             var type = Utils.showConfirmation();
 
                             type.ifPresent(buttonType -> {
                                 if(buttonType == ButtonType.YES) {
-                                    if(BookingController.getInstance().delete(booking)) {
-                                        Utils.showInformation("Sikeres törlés");
+                                    for (var booking : deletedBookings) {
+                                        if(BookingController.getInstance().delete(booking)) {
+                                            refreshTable();
+                                        }
                                     }
                                 }
                             });
@@ -153,6 +142,25 @@ public class OwnFlightController implements Initializable {
                     }
                 }
         );
+    }
+
+    public void refreshTable() {
+        var filteredBookingsByUser = bookings.stream().filter(booking ->
+                booking.getUser().getId() == LoginUserController.getUser().getId()
+                        && Integer.parseInt(GetTicketNumber(booking.getFlight())) > 0)
+                .collect(Collectors.toList());
+
+        List<Integer> flightIds = new ArrayList<>();
+        List<Booking> filteredBookings = new ArrayList<>();
+
+        for (var booking: filteredBookingsByUser) {
+            if(!flightIds.contains(booking.getFlight().getId())) {
+                filteredBookings.add(booking);
+                flightIds.add(booking.getFlight().getId());
+            }
+        }
+
+        table.setItems(FXCollections.observableList(filteredBookings));
     }
 
     private String GetTicketNumber(Flight flight) {
