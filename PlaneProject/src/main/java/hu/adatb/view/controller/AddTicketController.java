@@ -89,9 +89,7 @@ public class AddTicketController implements Initializable {
             }
 
             var ticketPrice = 4999 * (1 - discount);
-            System.out.println("Total sum before: " + totalSum);
             totalSum += (ticketPrice * luxury);
-            System.out.println("Total sum after: " + totalSum);
 
             totalSumLabel.textProperty().bind(new SimpleStringProperty("Végösszeg: " + totalSum + " Ft"));
         }

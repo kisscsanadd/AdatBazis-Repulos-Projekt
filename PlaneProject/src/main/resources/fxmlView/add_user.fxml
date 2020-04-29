@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.AddUserController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="94.0" />
@@ -20,7 +19,7 @@
       <RowConstraints maxHeight="91.0" minHeight="5.0" prefHeight="46.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="72.0" valignment="CENTER" />
     </rowConstraints>
     <children>
         <Label text="Felhasználónév">
@@ -55,14 +54,17 @@
             <Font size="15.0" />
          </font>
         </Button>
-        <ImageView fx:id="saveButton" styleClass="button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6" onMouseClicked="#save">
-            <image>
-                <Image url="@../pictures/regButton.png" />
-            </image>
-        </ImageView>
         <Label fx:id="errorMsgName" styleClass="errorMsg_reg" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <Label fx:id="errorMsgEmail" styleClass="errorMsg_reg" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Label fx:id="errorMsgPassword" styleClass="errorMsg_reg" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Button fx:id="saveButton" defaultButton="true" mnemonicParsing="false" onAction="#save" prefHeight="44.0" prefWidth="52.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+         <effect>
+            <ImageInput>
+               <source>
+                  <Image url="@../pictures/regButton.png" />
+               </source></ImageInput>
+         </effect>
+      </Button>
     </children>
     <opaqueInsets>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

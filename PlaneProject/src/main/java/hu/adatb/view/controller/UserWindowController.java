@@ -69,6 +69,7 @@ public class UserWindowController implements Initializable {
         listButton.setDisable(true);
         ownButton.setDisable(false);
         Pane view = MainFxmlLoader.getPage("flights_list.fxml", false);
+        SetTitle(actionEvent, "Járatok");
         mainPane.setCenter(view);
     }
 
@@ -78,6 +79,7 @@ public class UserWindowController implements Initializable {
         ownButton.setDisable(true);
         listButton.setDisable(false);
         Pane view = MainFxmlLoader.getPage("own_flights.fxml", false);
+        SetTitle(actionEvent, "Saját járatok");
         mainPane.setCenter(view);
     }
 
@@ -98,5 +100,10 @@ public class UserWindowController implements Initializable {
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
         AdminWindowController.goToMainForAdmin();
+    }
+
+    private void SetTitle(ActionEvent event, String viewName) {
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.setTitle("Főoldal - " + viewName);
     }
 }

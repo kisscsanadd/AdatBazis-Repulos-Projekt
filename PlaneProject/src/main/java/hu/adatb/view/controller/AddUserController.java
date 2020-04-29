@@ -31,7 +31,7 @@ public class AddUserController implements Initializable {
     PasswordField passwordField;
 
     @FXML
-    ImageView saveButton;
+    Button saveButton;
 
     @FXML
     Label errorMsgName;
@@ -51,11 +51,9 @@ public class AddUserController implements Initializable {
     private User user = new User();
 
     @FXML
-    private void save (MouseEvent mouseEvent) {
+    private void save (ActionEvent event) {
         if (UserController.getInstance().add(user) && !isAdmin) {
             RegOrLoginController.back("registration");
-        } else {
-            return;
         }
     }
 

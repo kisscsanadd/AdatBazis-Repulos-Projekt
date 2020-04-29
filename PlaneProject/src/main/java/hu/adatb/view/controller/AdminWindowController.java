@@ -15,17 +15,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminWindowController implements Initializable {
+public class AdminWindowController {
 
     @FXML
     private BorderPane mainPane;
 
     public AdminWindowController() {
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     public static void goToMainForAdmin() {
@@ -53,6 +48,7 @@ public class AdminWindowController implements Initializable {
     public void getPlaneScreen(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + " Opened plane screen");
         Pane view = MainFxmlLoader.getPage("PlaneScreen.fxml", true);
+        SetTitle(actionEvent, "Repülőgép");
         mainPane.setCenter(view);
     }
 
@@ -60,6 +56,7 @@ public class AdminWindowController implements Initializable {
     public void getAirportScreen(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + " Opened airport screen");
         Pane view = MainFxmlLoader.getPage("AirportScreen.fxml", true);
+        SetTitle(actionEvent, "Repülőtér");
         mainPane.setCenter(view);
     }
 
@@ -67,6 +64,7 @@ public class AdminWindowController implements Initializable {
     public void getAlertScreen(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + " Opened alert screen");
         Pane view = MainFxmlLoader.getPage("AlertScreen.fxml", true);
+        SetTitle(actionEvent, "Figyelmeztetés");
         mainPane.setCenter(view);
     }
 
@@ -102,6 +100,7 @@ public class AdminWindowController implements Initializable {
         System.out.println(App.CurrentTime() + "Opened admin sign-up");
         AddUserController.setIsAdmin(true);
         Pane view = MainFxmlLoader.getPage("SignUpScreen.fxml", true);
+        SetTitle(actionEvent, "Admin regisztráció");
         mainPane.setCenter(view);
     }
 
@@ -114,6 +113,12 @@ public class AdminWindowController implements Initializable {
     public void getHotelScreen(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + " Opened hotel screen");
         Pane view = MainFxmlLoader.getPage("HotelScreen.fxml", true);
+        SetTitle(actionEvent, "Szálloda");
         mainPane.setCenter(view);
+    }
+
+    private void SetTitle(ActionEvent event, String viewName) {
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.setTitle("Főoldal - " + viewName);
     }
 }

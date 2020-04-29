@@ -13,7 +13,7 @@ public class Utils {
         alert.setHeaderText(null);
         alert.setContentText(message);
 
-        alert.show();
+        alert.showAndWait();
     }
 
     public static void showInformation(String message) {
@@ -22,7 +22,7 @@ public class Utils {
         alert.setHeaderText(null);
         alert.setContentText(message);
 
-        alert.show();
+        alert.showAndWait();
     }
 
     public static Optional<ButtonType> showConfirmation() {
