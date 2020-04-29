@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -98,6 +99,10 @@ public class DialogAlertController implements Initializable {
     }
 
     private void InitTable() {
+        messageField.setText(isAdd ? "" : selectedAlert.getMessage());
+
+        alert.messageProperty().bind(messageField.textProperty());
+        alert.setId(selectedAlert.getId());
     }
 
     public static void setIsAdd(boolean isAdd) {
