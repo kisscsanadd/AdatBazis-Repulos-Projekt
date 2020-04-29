@@ -134,6 +134,7 @@ public class GetById {
                         fromAirport,
                         toAirport,
                         plane,
+                        rs.getInt("nepszeruseg"),
                         rs.getInt("szabad_helyek")
                 );
             }

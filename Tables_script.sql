@@ -307,6 +307,7 @@ CREATE TABLE Jarat
      repuloter_id_fel		NUMBER(10) NOT NULL,
      repuloter_id_le		NUMBER(10) NOT NULL,
      repulogep_id			NUMBER(10) NOT NULL,
+     nepszeruseg            NUMBER(5) DEFAULT 0,
      szabad_helyek			NUMBER(3) NOT NULL,
   CONSTRAINT Jarat_PRIMARY_KEY PRIMARY KEY (id));
 

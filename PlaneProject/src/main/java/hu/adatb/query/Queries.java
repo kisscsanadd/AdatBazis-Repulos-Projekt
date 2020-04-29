@@ -30,6 +30,8 @@ public class Queries {
 
     public static final String UPDATE_ALERT = "UPDATE FIGYELMEZTETES SET uzenet = ?, WHERE id = ?";
 
+    public static final String UPDATE_FLIGHT_VOGUE = "UPDATE JARAT SET nepszeruseg = ? WHERE id = ?";
+
     public static final String DELETE_USER = "DELETE FROM FELHASZNALO WHERE ID = ?";
 
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";

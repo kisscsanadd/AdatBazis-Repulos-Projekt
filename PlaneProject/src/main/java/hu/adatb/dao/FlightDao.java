@@ -10,5 +10,7 @@ public interface FlightDao {
 
     public boolean delete (int id);
 
+    public boolean updateVogue(Flight flight);
+
     public List<Flight> getAll();
 }

@@ -1,14 +1,14 @@
 package hu.adatb.dao;
 
+import hu.adatb.App;
 import hu.adatb.model.Flight;
+import hu.adatb.model.Plane;
 import hu.adatb.query.Database;
 import hu.adatb.utils.GetById;
+import hu.adatb.utils.GetByIdException;
 import hu.adatb.utils.Utils;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +26,34 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public boolean delete(int id) {
+        return false;
+    }
+
+    @Override
+    public boolean updateVogue(Flight flight) {
+        try(Connection conn = Database.ConnectionToDatabase();
+            PreparedStatement st = conn.prepareStatement(UPDATE_FLIGHT_VOGUE)) {
+
+            var updatedFlight = GetById.GetFlightById(conn, flight.getId());
+
+            if (updatedFlight == null) {
+                throw new GetByIdException("Nem sikerült aktualizálni a járatot");
+            }
+
+            st.setInt(1, (updatedFlight.getVogue() + 1));
+            st.setInt(2, updatedFlight.getId());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                return true;
+            }
+
+        } catch (SQLException | ClassNotFoundException | GetByIdException e) {
+            System.out.println(App.CurrentTime() + "Failed update vogue");
+        }
+
+        Utils.showWarning("Nem sikerült frissíteni a népszerűséget");
         return false;
     }
 
@@ -59,6 +87,7 @@ public class FlightDaoImpl implements FlightDao {
                         fromAirport,
                         toAirport,
                         plane,
+                        rs.getInt("nepszeruseg"),
                         rs.getInt("szabad_helyek")
                 );
 

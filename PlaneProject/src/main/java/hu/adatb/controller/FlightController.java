@@ -27,6 +27,10 @@ public class FlightController {
         return dao.delete(id);
     }
 
+    public boolean updateVogue(Flight flight) {
+        return dao.updateVogue(flight);
+    }
+
     public List<Flight> getAll() {
         return dao.getAll();
     }

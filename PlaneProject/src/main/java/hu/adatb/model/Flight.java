@@ -16,14 +16,16 @@ public class Flight {
     private Airport fromAirport;
     private Airport toAirport;
     private Plane plane;
+    private  IntegerProperty vogue = new SimpleIntegerProperty();
     private IntegerProperty freeSeats = new SimpleIntegerProperty();
 
-    public Flight(int id, LocalDateTime dateTime, Airport fromAirport, Airport toAirport, Plane plane, Integer freeSeats) {
+    public Flight(int id, LocalDateTime dateTime, Airport fromAirport, Airport toAirport, Plane plane, Integer vogue, Integer freeSeats) {
         this.id.set(id);
         this.dateTime = dateTime;
         this.fromAirport = fromAirport;
         this.toAirport = toAirport;
         this.plane = plane;
+        this.vogue.set(vogue);
         this.freeSeats.set(freeSeats);
     }
 
@@ -111,6 +113,18 @@ public class Flight {
 
     public void setToAirport(Airport toAirport) {
         this.toAirport = toAirport;
+    }
+
+    public int getVogue() {
+        return vogue.get();
+    }
+
+    public IntegerProperty vogueProperty() {
+        return vogue;
+    }
+
+    public void setVogue(int vogue) {
+        this.vogue.set(vogue);
     }
 
     public int getFreeSeats() {
