@@ -30,8 +30,6 @@ public class Utils {
                 "Biztos törölni akarsz?", ButtonType.YES, ButtonType.NO);
         alert.initStyle(StageStyle.UNDECORATED);
 
-        Optional<ButtonType> type = alert.showAndWait();
-
-        return type;
+        return alert.showAndWait();
     }
 }

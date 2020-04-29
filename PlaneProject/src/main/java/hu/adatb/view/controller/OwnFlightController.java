@@ -13,11 +13,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,34 +28,34 @@ import java.util.stream.Collectors;
 public class OwnFlightController implements Initializable {
 
     @FXML
-    public TableView<Flight> table;
+    public TableView<Booking> table;
 
     @FXML
-    private TableColumn<Flight, String> fromCol;
+    private TableColumn<Booking, String> fromCol;
 
     @FXML
-    private TableColumn<Flight, String> toCol;
+    private TableColumn<Booking, String> toCol;
 
     @FXML
-    private TableColumn<Flight, String> whenCol;
+    private TableColumn<Booking, String> whenCol;
 
     @FXML
-    private TableColumn<Flight, String> timeCol;
+    private TableColumn<Booking, String> timeCol;
 
     @FXML
-    private TableColumn<Flight, String> withCol;
+    private TableColumn<Booking, String> withCol;
 
     @FXML
-    private TableColumn<Flight, String> maxSeatCol;
+    private TableColumn<Booking, String> maxSeatCol;
 
     @FXML
-    private TableColumn<Flight, String> seatCol;
+    private TableColumn<Booking, String> seatCol;
 
     @FXML
-    private TableColumn<Flight, String> ticketCol;
+    private TableColumn<Booking, String> ticketCol;
 
     @FXML
-    private TableColumn<Flight, Void> actionCol;
+    private TableColumn<Booking, Void> actionCol;
 
     private List<Flight> flights;
     private List<Booking> bookings;
@@ -85,35 +83,36 @@ public class OwnFlightController implements Initializable {
 
         }
 
-        table.setItems(FXCollections.observableList(filteredFlights));
+        table.setItems(FXCollections.observableList(filteredBookingsByUser));
 
         PopulateTable();
     }
 
     private void PopulateTable(){
-        fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFromAirport().getName()));
-        toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getToAirport().getName()));
-        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getDateTimeInRightFormat()));
+        fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getFromAirport().getName()));
+        toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getToAirport().getName()));
+        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getDateTimeInRightFormat()));
         timeCol.setCellValueFactory(
-                __-> new SimpleStringProperty(__.getValue()
-                        .getTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFromAirport().getName()),
-                                DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFromAirport().getName()),
-                                DistanceCalculator.GetLatitudeByName(airports, __.getValue().getToAirport().getName()),
-                                DistanceCalculator.GetLongitudeByName(airports, __.getValue().getToAirport().getName()),
-                                __.getValue().getPlane())));
-        withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
-        maxSeatCol.setCellValueFactory(__ -> new SimpleStringProperty(Integer.toString(__.getValue().getPlane().getSeats())));
-        seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
-        ticketCol.setCellValueFactory(__-> new SimpleStringProperty(GetTicketNumber(__.getValue())));
+                __-> new SimpleStringProperty(__.getValue().getFlight()
+                        .getTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFlight().getFromAirport().getName()),
+                                DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFlight().getFromAirport().getName()),
+                                DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFlight().getToAirport().getName()),
+                                DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFlight().getToAirport().getName()),
+                                __.getValue().getFlight().getPlane())));
+        withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getPlane().getName()));
+        maxSeatCol.setCellValueFactory(__ -> new SimpleStringProperty(Integer.toString(__.getValue().getFlight().getPlane().getSeats())));
+        seatCol.setCellValueFactory(__ -> new SimpleStringProperty(Integer.toString(__.getValue().getFlight().getFreeSeats())));
+        ticketCol.setCellValueFactory(__-> new SimpleStringProperty(GetTicketNumber(__.getValue().getFlight())));
 
         actionCol.setCellFactory(param ->
                 new TableCell<>(){
 
                     final Button hotelButton = new Button("Szállodák");
+                    final Button deleteButton = new Button("Törlés");
 
                     {
                         hotelButton.setOnAction(event -> {
-                            var flight = table.getItems().get(getIndex());
+                            var flight = table.getItems().get(getIndex()).getFlight();
                             toAirportHotelNames = flight.getHotels(flight.getToAirport().getCity().getName());
                             HotelListController.setIsOwnFlight(true);
 
@@ -122,6 +121,18 @@ public class OwnFlightController implements Initializable {
                             } catch (IOException e) {
                                 Utils.showWarning("Nem sikerült megnyitni a szállodákat kilistázó ablakot");
                             }
+                        });
+
+                        deleteButton.setOnAction(actionEvent -> {
+
+
+                            var type = Utils.showConfirmation();
+
+                            type.ifPresent(buttonType -> {
+                                if(buttonType == ButtonType.YES) {
+
+                                }
+                            });
                         });
                     }
 
@@ -132,7 +143,10 @@ public class OwnFlightController implements Initializable {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            setGraphic(hotelButton);
+                            HBox container = new HBox();
+                            container.setSpacing(30);
+                            container.getChildren().addAll(hotelButton, deleteButton);
+                            setGraphic(container);
                         }
                     }
                 }
