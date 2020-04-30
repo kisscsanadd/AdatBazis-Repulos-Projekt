@@ -25,7 +25,18 @@ public class FlightDaoImpl implements FlightDao {
         try (Connection conn = Database.ConnectionToDatabase();
              PreparedStatement st = conn.prepareStatement(INSERT_FLIGHT)){
 
-            st.setDate(1, new java.sql.Date(Date.from( flight.getDateTime().atZone( ZoneId.systemDefault()).toInstant()).getTime()));
+            var date = flight.getDateTime().toLocalDate();
+            var time = flight.getDateTime().toLocalTime();
+
+            var dateTimeAsTimestamp = new Timestamp(date.getYear() - 1900,
+                    date.getMonthValue() - 1,
+                    date.getDayOfMonth(),
+                    time.getHour(),
+                    time.getMinute(),
+                    0,0
+            );
+
+            st.setTimestamp(1, dateTimeAsTimestamp);
             st.setInt(2, flight.getFromAirport().getId());
             st.setInt(3, flight.getToAirport().getId());
             st.setInt(4, flight.getPlane().getId());
@@ -40,6 +51,7 @@ public class FlightDaoImpl implements FlightDao {
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(App.CurrentTime() + "Failed addition");
+            e.printStackTrace();
         }
 
         Utils.showWarning("Nem sikerült a hozzáadás");

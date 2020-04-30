@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -39,22 +41,36 @@ public class DialogFlightController implements Initializable {
     Button addButton;
 
     @FXML
+    Spinner<Integer> hourSpinner;
+
+    @FXML
+    Spinner<Integer> minuteSpinner;
+
+    @FXML
     Button editButton;
 
     private Flight flight = new Flight();
-    private List<Flight> flights;
     private static Flight selectedFlight;
     private static boolean isAdd;
 
     public DialogFlightController() {
     }
 
+    private String SetTimeFormat(int time) {
+        return (time < 10 ? ("0" + time) : Integer.toString(time));
+    }
+
     @FXML
     private void save(ActionEvent event) {
+        var time = (SetTimeFormat(hourSpinner.getValue())) + ":"
+                + (SetTimeFormat(minuteSpinner.getValue()));
+
+        LocalDateTime dateTime = LocalDateTime.of(dateBegin.getValue(), LocalTime.parse(time));
+
         flight.setFromAirport(fromAirport.getSelectionModel().getSelectedItem());
         flight.setToAirport(toAirport.getSelectionModel().getSelectedItem());
         flight.setPlane(planes.getSelectionModel().getSelectedItem());
-        flight.setDateTime(dateBegin.getValue().atStartOfDay());
+        flight.setDateTime(dateTime);
         flight.setFreeSeats(planes.getSelectionModel().getSelectedItem().getSeats());
 
         if (FlightController.getInstance().add(flight)) {
@@ -117,9 +133,11 @@ public class DialogFlightController implements Initializable {
         planes.setCellFactory(factoryPlane);
         planes.setButtonCell(factoryPlane.call(null));
 
-        flights = FlightController.getInstance().getAll();
+        hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                1, 24));
 
-        flight.vogueProperty().set(0);
+        minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                1, 60));
     }
 
     private void FieldValidator() {
