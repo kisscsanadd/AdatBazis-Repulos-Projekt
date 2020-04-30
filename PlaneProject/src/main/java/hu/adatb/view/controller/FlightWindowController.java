@@ -95,8 +95,8 @@ public class FlightWindowController implements Initializable {
                                 __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
-        hotelCol.setCellValueFactory(__-> new SimpleStringProperty(
-                __.getValue().getHotels(__.getValue().getToAirport().getCity().getName())));
+        /*hotelCol.setCellValueFactory(__-> new SimpleStringProperty(
+                __.getValue().getHotels(__.getValue().getToAirport().getCity().getName())));*/
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
                 private final Button deleteBtn = new Button("Törlés");

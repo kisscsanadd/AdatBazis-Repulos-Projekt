@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="362.0" vgap="10.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.DialogHotelController">
+<GridPane hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="362.0" vgap="10.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.DialogFlightController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="94.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.0" minWidth="10.0" prefWidth="218.0" />
@@ -20,8 +20,8 @@
     <children>
         <Label text="Honnan" GridPane.rowIndex="0"  />
         <Label text="Hova" GridPane.rowIndex="1" />
-        <Label text="Időpont" GridPane.rowIndex="2" />
-        <Label text="Repülőgép" GridPane.rowIndex="3" />
+        <Label text="Repülőgép" GridPane.rowIndex="2" />
+        <Label text="Időpont" GridPane.rowIndex="3" />
         <Label text="Szabad helyek" GridPane.rowIndex="4" />
         <ComboBox fx:id="fromAirport" prefHeight="25.0" prefWidth="200.0" promptText="Honnan?" GridPane.columnIndex="1" GridPane.rowIndex="0">
             <GridPane.margin>
@@ -33,16 +33,17 @@
                 <Insets right="20.0" />
             </GridPane.margin>
         </ComboBox>
-        <DatePicker fx:id="dateBegin" editable="false" prefHeight="25.0" prefWidth="200.0" promptText="Kezdet" GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <GridPane.margin>
-                <Insets right="20.0" />
-            </GridPane.margin>
-        </DatePicker>
-        <ComboBox fx:id="planes" prefHeight="25.0" prefWidth="200.0" promptText="Repülőgép" GridPane.columnIndex="1" GridPane.rowIndex="3">
+
+        <ComboBox fx:id="planes" prefHeight="25.0" prefWidth="200.0" promptText="Repülőgép" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <GridPane.margin>
                 <Insets right="20.0" />
             </GridPane.margin>
         </ComboBox>
+        <DatePicker fx:id="dateBegin" editable="false" prefHeight="25.0" prefWidth="200.0" promptText="Kezdet" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets right="20.0" />
+            </GridPane.margin>
+        </DatePicker>
         <Spinner fx:id="freeSeatsSpinner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Cancel" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
             <opaqueInsets>

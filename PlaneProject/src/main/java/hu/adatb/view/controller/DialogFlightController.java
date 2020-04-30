@@ -1,17 +1,20 @@
 package hu.adatb.view.controller;
 
-import hu.adatb.controller.FlightController;
-import hu.adatb.controller.PlaneController;
+import hu.adatb.controller.*;
+import hu.adatb.model.Airport;
 import hu.adatb.model.City;
 import hu.adatb.model.Flight;
 import hu.adatb.model.Plane;
 import hu.adatb.utils.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.List;
@@ -21,19 +24,13 @@ import java.util.ResourceBundle;
 public class DialogFlightController implements Initializable {
 
     @FXML
-    ComboBox<String> fromAirport;
+    ComboBox<Airport> fromAirport;
 
     @FXML
-    ComboBox<String> toAirport;
+    ComboBox<Airport> toAirport;
 
     @FXML
     DatePicker dateBegin;
-
-    @FXML
-    DatePicker dateEnd;
-
-    @FXML
-    ComboBox<City> cities;
 
     @FXML
     ComboBox<Plane> planes;
@@ -60,6 +57,10 @@ public class DialogFlightController implements Initializable {
 
     @FXML
     private void save(ActionEvent event) {
+        flight.setFromAirport(fromAirport.getSelectionModel().getSelectedItem());
+        flight.setToAirport(toAirport.getSelectionModel().getSelectedItem());
+        flight.setPlane(planes.getSelectionModel().getSelectedItem());
+        flight.setDateTime(dateBegin.getValue().atStartOfDay());
         if (FlightController.getInstance().add(flight)) {
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.close();
@@ -86,18 +87,51 @@ public class DialogFlightController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        List<Plane> planesList = PlaneController.getInstance().getAll();
+        ObservableList<Plane> obsPlaneList = FXCollections.observableList(planesList);
+
+        List<Airport> airportList = AirportController.getInstance().getAll();
+        ObservableList<Airport> obsAirportList = FXCollections.observableList(airportList);
+
+        freeSeatsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                10, 1000, isAdd ? 10 : selectedFlight.getFreeSeats(), 10));
+
+        planes.getItems().addAll(obsPlaneList);
+        fromAirport.getItems().addAll(obsAirportList);
+        toAirport.getItems().addAll(obsAirportList);
+
+        Callback<ListView<Plane>, ListCell<Plane>> factoryPlane = lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Plane item, boolean empty){
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getName());
+            }
+        };
+
+        Callback<ListView<Airport>, ListCell<Airport>> factoryAirport = lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Airport item, boolean empty){
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getName());
+            }
+        };
+
+        fromAirport.setCellFactory(factoryAirport);
+        fromAirport.setButtonCell(factoryAirport.call(null));
+        toAirport.setCellFactory(factoryAirport);
+        toAirport.setButtonCell(factoryAirport.call(null));
+
+        planes.setCellFactory(factoryPlane);
+        planes.setButtonCell(factoryPlane.call(null));
+
         flights = FlightController.getInstance().getAll();
 
-        if(isAdd) {
-            addButton.setVisible(true);
-            editButton.setVisible(false);
-        } else {
-            addButton.setVisible(false);
-            editButton.setVisible(true);
-        }
+        flight.vogueProperty().set(0);
+        flight.freeSeatsProperty().bind(freeSeatsSpinner.valueProperty());
 
-        InitTable();
-        FieldValidator();
+        //longitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.longitudeProperty().asObject());
+        //latitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.latitudeProperty().asObject());
+
     }
 
     private void FieldValidator() {

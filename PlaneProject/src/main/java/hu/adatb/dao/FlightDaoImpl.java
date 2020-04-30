@@ -11,6 +11,7 @@ import hu.adatb.utils.Utils;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,28 @@ import static hu.adatb.query.Queries.*;
 public class FlightDaoImpl implements FlightDao {
 
     @Override
-    public boolean add(Flight city) {
+    public boolean add(Flight flight) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(INSERT_FLIGHT)){
+
+            st.setDate(1, new java.sql.Date(Date.from( flight.getDateTime().atZone( ZoneId.systemDefault()).toInstant()).getTime()));
+            st.setInt(2, flight.getFromAirport().getId());
+            st.setInt(3, flight.getToAirport().getId());
+            st.setInt(4, flight.getPlane().getId());
+            st.setInt(5, flight.getFreeSeats());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Successful addition");
+                Utils.showInformation("Sikeres hozzáadás");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed addition");
+        }
+
+        Utils.showWarning("Nem sikerült a hozzáadás");
         return false;
     }
 
