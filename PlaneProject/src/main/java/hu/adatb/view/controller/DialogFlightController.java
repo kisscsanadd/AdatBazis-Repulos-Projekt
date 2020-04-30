@@ -36,16 +36,10 @@ public class DialogFlightController implements Initializable {
     ComboBox<Plane> planes;
 
     @FXML
-    Label errorMsgName;
-
-    @FXML
     Button addButton;
 
     @FXML
     Button editButton;
-
-    @FXML
-    Spinner<Integer> freeSeatsSpinner;
 
     private Flight flight = new Flight();
     private List<Flight> flights;
@@ -61,6 +55,8 @@ public class DialogFlightController implements Initializable {
         flight.setToAirport(toAirport.getSelectionModel().getSelectedItem());
         flight.setPlane(planes.getSelectionModel().getSelectedItem());
         flight.setDateTime(dateBegin.getValue().atStartOfDay());
+        flight.setFreeSeats(planes.getSelectionModel().getSelectedItem().getSeats());
+
         if (FlightController.getInstance().add(flight)) {
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.close();
@@ -93,9 +89,6 @@ public class DialogFlightController implements Initializable {
         List<Airport> airportList = AirportController.getInstance().getAll();
         ObservableList<Airport> obsAirportList = FXCollections.observableList(airportList);
 
-        freeSeatsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
-                10, 1000, isAdd ? 10 : selectedFlight.getFreeSeats(), 10));
-
         planes.getItems().addAll(obsPlaneList);
         fromAirport.getItems().addAll(obsAirportList);
         toAirport.getItems().addAll(obsAirportList);
@@ -127,19 +120,12 @@ public class DialogFlightController implements Initializable {
         flights = FlightController.getInstance().getAll();
 
         flight.vogueProperty().set(0);
-        flight.freeSeatsProperty().bind(freeSeatsSpinner.valueProperty());
-
-        //longitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.longitudeProperty().asObject());
-        //latitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.latitudeProperty().asObject());
-
     }
 
     private void FieldValidator() {
     }
 
     private void InitTable() {
-        freeSeatsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
-                10, 1000, isAdd ? 10 : selectedFlight.getFreeSeats(), 10));
 /*
         flight.nameProperty().bind(nameField.textProperty());
         flight.seatsProperty().bind(seatsSpinner.valueProperty());

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -15,14 +14,13 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints />
     </rowConstraints>
     <children>
-        <Label text="Honnan" GridPane.rowIndex="0"  />
+        <Label text="Honnan" GridPane.rowIndex="0" />
         <Label text="Hova" GridPane.rowIndex="1" />
         <Label text="Repülőgép" GridPane.rowIndex="2" />
         <Label text="Időpont" GridPane.rowIndex="3" />
-        <Label text="Szabad helyek" GridPane.rowIndex="4" />
         <ComboBox fx:id="fromAirport" prefHeight="25.0" prefWidth="200.0" promptText="Honnan?" GridPane.columnIndex="1" GridPane.rowIndex="0">
             <GridPane.margin>
                 <Insets right="20.0" />
@@ -44,21 +42,16 @@
                 <Insets right="20.0" />
             </GridPane.margin>
         </DatePicker>
-        <Spinner fx:id="freeSeatsSpinner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-        <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Cancel" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+        <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Cancel" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>
         </Button>
-        <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#save" text="OK" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-        <Label fx:id="errorMsgName" prefHeight="17.0" prefWidth="219.0" styleClass="warning" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#save" text="OK" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
     </children>
     <opaqueInsets>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </opaqueInsets>
-    <cursor>
-        <Cursor fx:constant="CLOSED_HAND" />
-    </cursor>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
