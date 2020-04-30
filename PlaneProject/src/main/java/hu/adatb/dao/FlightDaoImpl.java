@@ -25,18 +25,7 @@ public class FlightDaoImpl implements FlightDao {
         try (Connection conn = Database.ConnectionToDatabase();
              PreparedStatement st = conn.prepareStatement(INSERT_FLIGHT)){
 
-            var date = flight.getDateTime().toLocalDate();
-            var time = flight.getDateTime().toLocalTime();
-
-            var dateTimeAsTimestamp = new Timestamp(date.getYear() - 1900,
-                    date.getMonthValue() - 1,
-                    date.getDayOfMonth(),
-                    time.getHour(),
-                    time.getMinute(),
-                    0,0
-            );
-
-            st.setTimestamp(1, dateTimeAsTimestamp);
+            st.setTimestamp(1, SetDateTimeToSave(flight));
             st.setInt(2, flight.getFromAirport().getId());
             st.setInt(3, flight.getToAirport().getId());
             st.setInt(4, flight.getPlane().getId());
@@ -68,12 +57,13 @@ public class FlightDaoImpl implements FlightDao {
         try(Connection conn = Database.ConnectionToDatabase();
             PreparedStatement st = conn.prepareStatement(UPDATE_FLIGHT)) {
 
-            st.setInt(1, flight.getFromAirport().getId());
-            st.setInt(2, flight.getToAirport().getId());
-            st.setInt(3, flight.getPlane().getId());
-            st.setInt(4, flight.getFreeSeats());
-            st.setInt(5, flight.getVogue());
-            st.setInt(6, flight.getId());
+            st.setTimestamp(1, SetDateTimeToSave(flight));
+            st.setInt(2, flight.getFromAirport().getId());
+            st.setInt(3, flight.getToAirport().getId());
+            st.setInt(4, flight.getPlane().getId());
+            st.setInt(5, flight.getFreeSeats());
+            st.setInt(6, flight.getVogue());
+            st.setInt(7, flight.getId());
 
             int res = st.executeUpdate();
 
@@ -133,5 +123,18 @@ public class FlightDaoImpl implements FlightDao {
         }
 
         return result;
+    }
+
+    private Timestamp SetDateTimeToSave(Flight flight) {
+        var date = flight.getDateTime().toLocalDate();
+        var time = flight.getDateTime().toLocalTime();
+
+        return new Timestamp(date.getYear() - 1900,
+                date.getMonthValue() - 1,
+                date.getDayOfMonth(),
+                time.getHour(),
+                time.getMinute(),
+                0,0
+        );
     }
 }

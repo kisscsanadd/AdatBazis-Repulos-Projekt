@@ -37,7 +37,7 @@ public class Queries {
     public static final String UPDATE_PLANE = "UPDATE REPULOGEP SET nev = ?, sebesseg = ?, ferohely = ? WHERE id = ?";
     public static final String UPDATE_AIRPORT = "UPDATE REPULOTER SET nev = ?, szelesseg = ?, hosszusag = ?, varos_id = ?  WHERE id = ?";
     public static final String UPDATE_ALERT = "UPDATE FIGYELMEZTETES SET uzenet = ?, WHERE id = ?";
-    public static final String UPDATE_FLIGHT = "UPDATE JARAT SET repuloter_id_fel = ?, repuloter_id_le = ?, repulogep_id = ?, szabad_helyek = ?,  nepszeruseg = ? WHERE id = ?";
+    public static final String UPDATE_FLIGHT = "UPDATE JARAT SET felszallas_datum = ?, repuloter_id_fel = ?, repuloter_id_le = ?, repulogep_id = ?, szabad_helyek = ?,  nepszeruseg = ? WHERE id = ?";
 
     public static final String DELETE_USER = "DELETE FROM FELHASZNALO WHERE ID = ?";
     public static final String DELETE_BOOKING = "DELETE FROM FOGLALAS WHERE ID = ?";
