@@ -51,7 +51,12 @@ public class DialogAlertController implements Initializable {
 
     @FXML
     public void edit(ActionEvent event) {
-
+        if (AlertController.getInstance().update(alert)) {
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            stage.close();
+        } else {
+            Utils.showWarning("Nem sikerült módosítani a figyelmeztetést");
+        }
     }
 
     @FXML
@@ -99,9 +104,9 @@ public class DialogAlertController implements Initializable {
 
     private void InitTable() {
         messageField.setText(isAdd ? "" : selectedAlert.getMessage());
-
         alert.messageProperty().bind(messageField.textProperty());
-        alert.setId(selectedAlert.getId());
+
+        if(!isAdd) alert.setId(selectedAlert.getId());
     }
 
     public static void setIsAdd(boolean isAdd) {

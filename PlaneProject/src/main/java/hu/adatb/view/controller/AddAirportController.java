@@ -97,10 +97,12 @@ public class AddAirportController implements Initializable {
         airport.latitudeProperty().bind(latitudeSpinner.valueProperty());
         airport.longitudeProperty().bind(longitudeSpinner.valueProperty());
 
-        //longitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.longitudeProperty().asObject());
-        //latitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.latitudeProperty().asObject());
-
         FieldValidator();
+    }
+
+    private void FieldValidator() {
+        saveButton.disableProperty().bind(nameField.textProperty().isEmpty()
+                .or(cities.valueProperty().isNull()));
 
         nameField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             var match = false;
@@ -118,10 +120,5 @@ public class AddAirportController implements Initializable {
                 saveButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
             }
         });
-    }
-
-    private void FieldValidator() {
-        saveButton.disableProperty().bind(nameField.textProperty().isEmpty()
-                .or(cities.valueProperty().isNull()));
     }
 }
