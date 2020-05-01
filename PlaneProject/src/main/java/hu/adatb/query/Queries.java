@@ -33,6 +33,7 @@ public class Queries {
     public static final String INSERT_FLIGHT = "INSERT INTO JARAT (felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values(?, ?, ?, ?, ?)";
     public static final String INSERT_BOOKING = "INSERT INTO FOGLALAS (felh_id, jarat_id, fizetesi_mod_id) values(?, ?, ?)";
     public static final String INSERT_TICKET = "INSERT INTO JEGY (kategoria_id, utazasi_osztaly_id, foglalasi_id) values(?, ?, ?)";
+    public static final String INSERT_FLIGHT_ALERT_RELATION = "INSERT INTO JARATFIGYREL (jarat_id, figyelmeztetes_id) values(?, ?)";
 
     public static final String UPDATE_PLANE = "UPDATE REPULOGEP SET nev = ?, sebesseg = ?, ferohely = ? WHERE id = ?";
     public static final String UPDATE_AIRPORT = "UPDATE REPULOTER SET nev = ?, szelesseg = ?, hosszusag = ?, varos_id = ?  WHERE id = ?";

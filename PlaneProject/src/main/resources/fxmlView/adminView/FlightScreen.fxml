@@ -17,9 +17,8 @@
                 <TableColumn fx:id="whenCol" prefWidth="155.0" text="Indulási idő" />
                 <TableColumn fx:id="timeCol" prefWidth="120.0" text="Menetidő" />
                 <TableColumn fx:id="withCol" prefWidth="170.0" text="Repülőgép" />
-                <TableColumn fx:id="seatCol" prefWidth="100.0" text="Szabad helyek" />
-                <TableColumn fx:id="hotelCol" prefWidth="200.0" text="Szállodák" />
-                <TableColumn fx:id="actionsCol" prefWidth="186.0" text="Műveletek" />
+                <TableColumn fx:id="seatCol" text="Szabad helyek" />
+                <TableColumn fx:id="actionsCol" prefWidth="320.0" text="Műveletek" />
             </columns>
         </TableView>
     </children>

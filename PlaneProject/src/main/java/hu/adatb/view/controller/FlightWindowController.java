@@ -95,12 +95,11 @@ public class FlightWindowController implements Initializable {
                                 __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
-        /*hotelCol.setCellValueFactory(__-> new SimpleStringProperty(
-                __.getValue().getHotels(__.getValue().getToAirport().getCity().getName())));*/
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
                 private final Button deleteBtn = new Button("Törlés");
                 private final Button editBtn = new Button("Módosítás");
+                private final Button addAlertBtn = new Button("Figyelmeztetés hozzáadása");
 
                 {
                     deleteBtn.setOnAction(event -> {
@@ -112,6 +111,19 @@ public class FlightWindowController implements Initializable {
                         //todo
                         refreshTable();
                     });
+
+                    addAlertBtn.setOnAction(event -> {
+                        Flight flight = getTableView().getItems().get(getIndex());
+                        AddFlightAlertRelationController.setSelectedFlight(flight);
+
+                        try {
+                            App.DialogDeliver("add_flightAlertRel.fxml", "Figyelmeztetés hozzáadása járathoz");
+                        } catch (IOException e) {
+                            Utils.showWarning("Nem sikerült megnyitni a figyelmeztetés hozzáadás járathoz ablakot");
+                            e.printStackTrace();
+                        }
+
+                    });
             }
 
                 @Override
@@ -121,7 +133,8 @@ public class FlightWindowController implements Initializable {
                         setGraphic(null);
                     } else {
                         HBox container = new HBox();
-                        container.getChildren().addAll(deleteBtn, editBtn);
+                        container.setSpacing(10);
+                        container.getChildren().addAll(deleteBtn, editBtn, addAlertBtn);
                         setGraphic(container);
                     }
                 }

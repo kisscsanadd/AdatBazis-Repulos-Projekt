@@ -19,8 +19,8 @@ public class FlightAlertRelationController {
         return single_instance;
     }
 
-    public boolean add(FlightAlertRelation flight) {
-        return dao.add(flight);
+    public boolean add(FlightAlertRelation relation) {
+        return dao.add(relation);
     }
 
     public List<FlightAlertRelation> getAll() {

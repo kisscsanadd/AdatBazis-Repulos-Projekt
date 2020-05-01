@@ -15,6 +15,11 @@ public class FlightAlertRelation {
         this.alert = alert;
     }
 
+    public FlightAlertRelation(Flight flight, Alert alert) {
+        this.flight = flight;
+        this.alert = alert;
+    }
+
     public int getId() {
         return id.get();
     }
