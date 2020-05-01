@@ -83,9 +83,10 @@ public class FlightWindowController implements Initializable {
     private void InitTable() {
         fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFromAirport().getName()));
         toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getToAirport().getName()));
-        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().GetDateTimeInRightFormat()));
+        whenCol.setCellValueFactory(__-> new SimpleStringProperty(
+                FlightController.getInstance().GetDateTimeInRightFormat(__.getValue().getDateTime())));
         timeCol.setCellValueFactory(
-                __-> new SimpleStringProperty(__.getValue()
+                __-> new SimpleStringProperty(FlightController.getInstance()
                         .GetTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFromAirport().getName()),
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFromAirport().getName()),
                                 DistanceCalculator.GetLatitudeByName(airports, __.getValue().getToAirport().getName()),
@@ -101,12 +102,12 @@ public class FlightWindowController implements Initializable {
 
                 {
                     deleteBtn.setOnAction(event -> {
-                        Flight f = getTableView().getItems().get(getIndex());
+                        Flight flight = getTableView().getItems().get(getIndex());
                         refreshTable();
                     });
 
                     editBtn.setOnAction(event -> {
-                        //todo
+                        // TODO
                         refreshTable();
                     });
 

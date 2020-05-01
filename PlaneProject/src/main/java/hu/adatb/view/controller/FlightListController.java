@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -67,7 +68,7 @@ public class FlightListController implements Initializable {
     private TableColumn<Flight, String> hotelCol;
 
     @FXML
-    private TableColumn<Flight, ImageView> alertCol;
+    private TableColumn<Flight, Button> alertCol;
 
     @FXML
     private TableColumn<Flight, Void> actionCol;
@@ -135,9 +136,10 @@ public class FlightListController implements Initializable {
 
         fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFromAirport().getName()));
         toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getToAirport().getName()));
-        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().GetDateTimeInRightFormat()));
+        whenCol.setCellValueFactory(__-> new SimpleStringProperty(
+                FlightController.getInstance().GetDateTimeInRightFormat(__.getValue().getDateTime())));
         timeCol.setCellValueFactory(
-                __-> new SimpleStringProperty(__.getValue()
+                __-> new SimpleStringProperty(FlightController.getInstance()
                         .GetTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFromAirport().getName()),
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFromAirport().getName()),
                                 DistanceCalculator.GetLatitudeByName(airports, __.getValue().getToAirport().getName()),
@@ -147,25 +149,46 @@ public class FlightListController implements Initializable {
         vogueCol.setCellValueFactory(new PropertyValueFactory<>("vogue"));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
         hotelCol.setCellValueFactory(__-> new SimpleStringProperty(
-                __.getValue().GetHotels(hotels, __.getValue().getToAirport().getCity().getName())));
+                FlightController.getInstance().GetHotels(hotels, __.getValue().getToAirport().getCity().getName())));
         alertCol.setCellValueFactory(__ -> new ObservableValue<>() {
             //region
             @Override
-            public void addListener(InvalidationListener invalidationListener) { }
+            public void addListener(InvalidationListener invalidationListener) {
+
+            }
 
             @Override
-            public void removeListener(InvalidationListener invalidationListener) { }
+            public void removeListener(InvalidationListener invalidationListener) {
+
+            }
 
             @Override
-            public void addListener(ChangeListener<? super ImageView> changeListener) { }
+            public void addListener(ChangeListener<? super Button> changeListener) {
+
+            }
 
             @Override
-            public void removeListener(ChangeListener<? super ImageView> changeListener) { }
+            public void removeListener(ChangeListener<? super Button> changeListener) {
+
+            }
             //endregion
             @Override
-            public ImageView getValue() {
-                if (__.getValue().GetAlerts(__.getValue()) > 0) {
-                    return new ImageView(new Image("pictures/alert.png"));
+            public Button getValue() {
+                if(FlightController.getInstance().GetAlerts(__.getValue()).size() > 0) {
+                    var button = new Button();
+                    button.setEffect(new ImageInput(new Image("pictures/alert.png")));
+                    button.setOnAction(event -> {
+                        AlertListController.setFlight(__.getValue());
+
+                        try {
+                            App.DialogDeliver("alert_list.fxml","Figyelmeztetések", false);
+                        } catch (IOException e) {
+                            Utils.showInformation("Nem sikerült megnyitni a figyelmeztetések listáját");
+                            e.printStackTrace();
+                        }
+                    });
+
+                    return button;
                 }
 
                 return null;
@@ -180,7 +203,7 @@ public class FlightListController implements Initializable {
                     {
                         bookingButton.setOnAction(event -> {
                             bookedFlight = table.getItems().get(getIndex());
-                            toAirportHotelNames = bookedFlight.GetHotels(hotels, bookedFlight.getToAirport().getCity().getName());
+                            toAirportHotelNames = FlightController.getInstance().GetHotels(hotels, bookedFlight.getToAirport().getCity().getName());
                             HotelListController.setIsOwnFlight(false);
 
                             bookedFlight.setVogue(bookedFlight.getVogue() + 1);

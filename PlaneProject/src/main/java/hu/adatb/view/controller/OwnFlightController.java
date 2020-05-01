@@ -71,9 +71,10 @@ public class OwnFlightController implements Initializable {
     private void PopulateTable(){
         fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getFromAirport().getName()));
         toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getToAirport().getName()));
-        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().GetDateTimeInRightFormat()));
+        whenCol.setCellValueFactory(__-> new SimpleStringProperty(
+                FlightController.getInstance().GetDateTimeInRightFormat(__.getValue().getFlight().getDateTime())));
         timeCol.setCellValueFactory(
-                __-> new SimpleStringProperty(__.getValue().getFlight()
+                __-> new SimpleStringProperty(FlightController.getInstance()
                         .GetTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFlight().getFromAirport().getName()),
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFlight().getFromAirport().getName()),
                                 DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFlight().getToAirport().getName()),
@@ -93,7 +94,7 @@ public class OwnFlightController implements Initializable {
                     {
                         hotelButton.setOnAction(event -> {
                             var flight = table.getItems().get(getIndex()).getFlight();
-                            toAirportHotelNames = flight.GetHotels(hotels, flight.getToAirport().getCity().getName());
+                            toAirportHotelNames = FlightController.getInstance().GetHotels(hotels, flight.getToAirport().getCity().getName());
                             HotelListController.setIsOwnFlight(true);
 
                             try {
