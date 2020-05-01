@@ -5,13 +5,18 @@ import hu.adatb.controller.*;
 import hu.adatb.model.*;
 import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.Utils;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,7 +67,7 @@ public class FlightListController implements Initializable {
     private TableColumn<Flight, String> hotelCol;
 
     @FXML
-    private TableColumn<Flight, String> alertCol;
+    private TableColumn<Flight, ImageView> alertCol;
 
     @FXML
     private TableColumn<Flight, Void> actionCol;
@@ -143,8 +148,30 @@ public class FlightListController implements Initializable {
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
         hotelCol.setCellValueFactory(__-> new SimpleStringProperty(
                 __.getValue().GetHotels(hotels, __.getValue().getToAirport().getCity().getName())));
-        alertCol.setCellValueFactory(__ -> new SimpleStringProperty(__.getValue().GetAlerts(__.getValue())));
-CustomImage
+        alertCol.setCellValueFactory(__ -> new ObservableValue<>() {
+            //region
+            @Override
+            public void addListener(InvalidationListener invalidationListener) { }
+
+            @Override
+            public void removeListener(InvalidationListener invalidationListener) { }
+
+            @Override
+            public void addListener(ChangeListener<? super ImageView> changeListener) { }
+
+            @Override
+            public void removeListener(ChangeListener<? super ImageView> changeListener) { }
+            //endregion
+            @Override
+            public ImageView getValue() {
+                if (__.getValue().GetAlerts(__.getValue()) > 0) {
+                    return new ImageView(new Image("pictures/alert.png"));
+                }
+
+                return null;
+            }
+        });
+
         actionCol.setCellFactory(param ->
                 new TableCell<>(){
 

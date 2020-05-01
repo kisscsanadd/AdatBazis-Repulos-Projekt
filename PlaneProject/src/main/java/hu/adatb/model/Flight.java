@@ -71,14 +71,13 @@ public class Flight {
         return allHotelsInCity;
     }
 
-    public String GetAlerts(Flight flight) {
+    public int GetAlerts(Flight flight) {
         var relations = FlightAlertRelationController.getInstance().getAll();
 
-        var filteredRelations = relations.stream().filter(relation -> relation.getFlight().getId() == flight.getId()).count();
+        var filteredRelations = relations.stream().filter(
+                relation -> relation.getFlight().getId() == flight.getId()).count();
 
-        System.out.println("COunt: " + filteredRelations);
-
-        return Long.toString(filteredRelations);
+        return (int)filteredRelations;
     }
 
     public int getId() {
