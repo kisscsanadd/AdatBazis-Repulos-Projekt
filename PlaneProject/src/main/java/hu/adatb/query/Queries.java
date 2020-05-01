@@ -18,12 +18,14 @@ public class Queries {
     public static final String SELECT_CATEGORY = "SELECT * FROM KATEGORIA";
     public static final String SELECT_CATEGORY_BY_ID = "SELECT * FROM KATEGORIA WHERE ID = ?";
     public static final String SELECT_ALERT = "SELECT * FROM FIGYELMEZTETES";
+    public static final String SELECT_ALERT_BY_ID = "SELECT * FROM FIGYELMEZTETES WHERE ID = ?";
     public static final String SELECT_TRAVEL_CLASS = "SELECT * FROM UTAZASIOSZTALY";
     public static final String SELECT_TRAVEL_CLASS_BY_ID = "SELECT * FROM UTAZASIOSZTALY WHERE ID = ?";
     public static final String SELECT_BOOKING = "SELECT * FROM FOGLALAS";
     public static final String SELECT_BOOKING_BY_ID = "SELECT * FROM FOGLALAS WHERE ID = ?";
     public static final String SELECT_TICKET = "SELECT * FROM JEGY";
     public static final String SELECT_TICKET_BY_BOOKING_ID = "SELECT * FROM JEGY WHERE FOGLALASI_ID = ?";
+    public static final String SELECT_FLIGHT_ALERT_RELATION = "SELECT * FROM JARATFIGYREL";
 
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
     public static final String INSERT_PLANE = "INSERT INTO REPULOGEP (nev, sebesseg, ferohely) values(?, ?, ?)";

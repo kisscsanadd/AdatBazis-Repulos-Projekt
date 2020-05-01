@@ -2,15 +2,10 @@ package hu.adatb.view.controller;
 
 import hu.adatb.App;
 import hu.adatb.controller.*;
-import hu.adatb.model.Airport;
-import hu.adatb.model.Alert;
-import hu.adatb.model.Flight;
-import hu.adatb.model.Hotel;
-import hu.adatb.model.Plane;
+import hu.adatb.model.*;
 import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,10 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -70,6 +62,9 @@ public class FlightListController implements Initializable {
     private TableColumn<Flight, String> hotelCol;
 
     @FXML
+    private TableColumn<Flight, String> alertCol;
+
+    @FXML
     private TableColumn<Flight, Void> actionCol;
 
     @FXML
@@ -84,7 +79,7 @@ public class FlightListController implements Initializable {
     private List<Flight> flights;
     private List<Flight> filteredFlights;
     private List<Airport> airports;
-    private List<Hotel> hotels;
+    public List<Hotel> hotels;
     public static Flight bookedFlight;
     public static String toAirportHotelNames;
 
@@ -135,10 +130,10 @@ public class FlightListController implements Initializable {
 
         fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFromAirport().getName()));
         toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getToAirport().getName()));
-        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getDateTimeInRightFormat()));
+        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().GetDateTimeInRightFormat()));
         timeCol.setCellValueFactory(
                 __-> new SimpleStringProperty(__.getValue()
-                        .getTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFromAirport().getName()),
+                        .GetTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFromAirport().getName()),
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFromAirport().getName()),
                                 DistanceCalculator.GetLatitudeByName(airports, __.getValue().getToAirport().getName()),
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getToAirport().getName()),
@@ -147,8 +142,9 @@ public class FlightListController implements Initializable {
         vogueCol.setCellValueFactory(new PropertyValueFactory<>("vogue"));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
         hotelCol.setCellValueFactory(__-> new SimpleStringProperty(
-                __.getValue().getHotels(__.getValue().getToAirport().getCity().getName())));
-
+                __.getValue().GetHotels(hotels, __.getValue().getToAirport().getCity().getName())));
+        alertCol.setCellValueFactory(__ -> new SimpleStringProperty(__.getValue().GetAlerts(__.getValue())));
+CustomImage
         actionCol.setCellFactory(param ->
                 new TableCell<>(){
 
@@ -157,7 +153,7 @@ public class FlightListController implements Initializable {
                     {
                         bookingButton.setOnAction(event -> {
                             bookedFlight = table.getItems().get(getIndex());
-                            toAirportHotelNames = bookedFlight.getHotels(bookedFlight.getToAirport().getCity().getName());
+                            toAirportHotelNames = bookedFlight.GetHotels(hotels, bookedFlight.getToAirport().getCity().getName());
                             HotelListController.setIsOwnFlight(false);
 
                             bookedFlight.setVogue(bookedFlight.getVogue() + 1);
@@ -168,8 +164,6 @@ public class FlightListController implements Initializable {
                             } catch (IOException e) {
                                 Utils.showWarning("Nem sikerült megnyitni a foglalás ablakot");
                             }
-
-                            refreshTable();     // TODO - here its not working
                         });
                     }
 

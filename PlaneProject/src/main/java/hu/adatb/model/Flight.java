@@ -1,5 +1,6 @@
 package hu.adatb.model;
 
+import hu.adatb.controller.FlightAlertRelationController;
 import hu.adatb.controller.HotelController;
 import hu.adatb.utils.DistanceCalculator;
 import javafx.beans.property.*;
@@ -32,13 +33,13 @@ public class Flight {
     public Flight() {
     }
 
-    public String getDateTimeInRightFormat() {
+    public String GetDateTimeInRightFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         return dateTime.format(formatter);
     }
 
-    public String getTravelTime(double lat1, double lon1, double lat2, double lon2, Plane plane) {
+    public String GetTravelTime(double lat1, double lon1, double lat2, double lon2, Plane plane) {
         var distance = DistanceCalculator.Distance(lat1, lon1, lat2, lon2);
         var travelTimeInMinutes = (int)((distance/plane.getSpeed()) * 60);
 
@@ -50,8 +51,7 @@ public class Flight {
                 : travelTimeInMinutes + " perc";
     }
 
-    public String getHotels(String toAirportCityName) {
-        var hotels = HotelController.getInstance().getAll();
+    public String GetHotels(List<Hotel> hotels, String toAirportCityName) {
         var filteredHotels = hotels.stream().filter(hotel -> hotel.getCity().getName().equals(toAirportCityName)).collect(Collectors.toList());
         var allHotelsInCity = "";
 
@@ -69,6 +69,16 @@ public class Flight {
         }
 
         return allHotelsInCity;
+    }
+
+    public String GetAlerts(Flight flight) {
+        var relations = FlightAlertRelationController.getInstance().getAll();
+
+        var filteredRelations = relations.stream().filter(relation -> relation.getFlight().getId() == flight.getId()).count();
+
+        System.out.println("COunt: " + filteredRelations);
+
+        return Long.toString(filteredRelations);
     }
 
     public int getId() {

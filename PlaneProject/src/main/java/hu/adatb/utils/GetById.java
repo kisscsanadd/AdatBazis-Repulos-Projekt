@@ -22,8 +22,8 @@ public class GetById {
 
             if(rs.next()) {
                 return new City (
-                        rs.getInt("id"),
-                        rs.getString("nev")
+                    rs.getInt("id"),
+                    rs.getString("nev")
                 );
             }
 
@@ -43,11 +43,11 @@ public class GetById {
 
             if(rs.next()) {
                 return new User(
-                        rs.getInt("id"),
-                        rs.getString("felh_nev"),
-                        rs.getString("jelszo"),
-                        rs.getInt("isAdmin") == 1,
-                        rs.getString("email")
+                    rs.getInt("id"),
+                    rs.getString("felh_nev"),
+                    rs.getString("jelszo"),
+                    rs.getInt("isAdmin") == 1,
+                    rs.getString("email")
                 );
             }
 
@@ -67,10 +67,10 @@ public class GetById {
 
             if(rs.next()) {
                 return new Plane(
-                        rs.getInt("id"),
-                        rs.getString("nev"),
-                        rs.getInt("sebesseg"),
-                        rs.getInt("ferohely")
+                    rs.getInt("id"),
+                    rs.getString("nev"),
+                    rs.getInt("sebesseg"),
+                    rs.getInt("ferohely")
                 );
             }
 
@@ -93,11 +93,11 @@ public class GetById {
                 var city = GetById.GetCityById(conn, cityId);
 
                 return new Airport (
-                        rs.getInt("id"),
-                        rs.getString("nev"),
-                        rs.getDouble("szelesseg"),
-                        rs.getDouble("hosszusag"),
-                        city
+                    rs.getInt("id"),
+                    rs.getString("nev"),
+                    rs.getDouble("szelesseg"),
+                    rs.getDouble("hosszusag"),
+                    city
                 );
             }
 
@@ -131,13 +131,34 @@ public class GetById {
                 var toAirport = GetById.GetAirportById(conn, toAirportId);
 
                 return new Flight(
-                        rs.getInt("id"),
-                        dateTime,
-                        fromAirport,
-                        toAirport,
-                        plane,
-                        rs.getInt("nepszeruseg"),
-                        rs.getInt("szabad_helyek")
+                    rs.getInt("id"),
+                    dateTime,
+                    fromAirport,
+                    toAirport,
+                    plane,
+                    rs.getInt("nepszeruseg"),
+                    rs.getInt("szabad_helyek")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Alert GetAlertById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_ALERT_BY_ID)){
+
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()) {
+                return new Alert(
+                    rs.getInt("id"),
+                    rs.getString("uzenet")
                 );
             }
 
@@ -157,8 +178,8 @@ public class GetById {
 
             if(rs.next()) {
                 return new Payment(
-                        rs.getInt("id"),
-                        rs.getString("nev")
+                    rs.getInt("id"),
+                    rs.getString("nev")
                 );
             }
 
@@ -178,9 +199,9 @@ public class GetById {
 
             if(rs.next()) {
                 return new Category(
-                        rs.getInt("id"),
-                        rs.getString("nev"),
-                        rs.getInt("kedvezmeny")
+                    rs.getInt("id"),
+                    rs.getString("nev"),
+                    rs.getInt("kedvezmeny")
                 );
             }
 
@@ -200,8 +221,8 @@ public class GetById {
 
             if(rs.next()) {
                 return new TravelClass(
-                        rs.getInt("id"),
-                        rs.getString("nev")
+                    rs.getInt("id"),
+                    rs.getString("nev")
                 );
             }
 
@@ -225,10 +246,10 @@ public class GetById {
                 var payment = GetById.GetPaymentById(conn, rs.getInt("fizetesi_mod_id"));
 
                 return new Booking(
-                        id,
-                        user,
-                        flight,
-                        payment
+                    id,
+                    user,
+                    flight,
+                    payment
                 );
             }
         } catch (SQLException e) {

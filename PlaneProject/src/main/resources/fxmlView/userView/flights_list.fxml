@@ -46,14 +46,15 @@
       </GridPane>
       <TableView fx:id="table" focusTraversable="false" layoutX="421.0" layoutY="65.0" prefHeight="335.0" prefWidth="1040.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
         <columns>
-          <TableColumn fx:id="fromCol" editable="false" prefWidth="235.0" sortable="false" text="Honnan" />
-          <TableColumn fx:id="toCol" editable="false" prefWidth="235.0" sortable="false" text="Hova" />
-          <TableColumn fx:id="whenCol" editable="false" prefWidth="155.0" sortable="false" text="Indulási idő" />
-          <TableColumn fx:id="timeCol" editable="false" prefWidth="120.0" sortable="false" text="Menetidő" />
-          <TableColumn fx:id="withCol" editable="false" prefWidth="170.0" sortable="false" text="Repülőgép" />
-          <TableColumn fx:id="vogueCol" editable="false" prefWidth="100.0" visible="false" text="Népszerűség" />
-          <TableColumn fx:id="seatCol" editable="false" prefWidth="100.0" sortable="false" text="Szabad helyek" />
+          <TableColumn fx:id="vogueCol" editable="false" prefWidth="25.0" text="N" />
+          <TableColumn fx:id="fromCol" editable="false" prefWidth="230.0" sortable="false" text="Honnan" />
+          <TableColumn fx:id="toCol" editable="false" prefWidth="230.0" sortable="false" text="Hova" />
+          <TableColumn fx:id="whenCol" editable="false" prefWidth="150.0" sortable="false" text="Indulási idő" />
+          <TableColumn fx:id="timeCol" editable="false" prefWidth="100.0" sortable="false" text="Menetidő" />
+          <TableColumn fx:id="withCol" editable="false" prefWidth="180.0" sortable="false" text="Repülőgép" />
+          <TableColumn fx:id="seatCol" editable="false" sortable="false" text="Szabad helyek" />
           <TableColumn fx:id="hotelCol" editable="false" prefWidth="200.0" sortable="false" text="Szállodák" />
+          <TableColumn fx:id="alertCol" editable="false" prefWidth="30.0" sortable="false" />
           <TableColumn fx:id="actionCol" editable="false" prefWidth="100.0" sortable="false" text="Foglalás" />
         </columns>
       </TableView>

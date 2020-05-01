@@ -1,29 +1,22 @@
 package hu.adatb.view.controller;
 
 import hu.adatb.App;
-import hu.adatb.controller.AirportController;
-import hu.adatb.controller.BookingController;
-import hu.adatb.controller.FlightController;
-import hu.adatb.controller.TicketController;
+import hu.adatb.controller.*;
 import hu.adatb.model.*;
 import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.Utils;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class OwnFlightController implements Initializable {
@@ -60,6 +53,7 @@ public class OwnFlightController implements Initializable {
 
     public List<Booking> bookings;
     private List<Airport> airports;
+    public List<Hotel> hotels;
 
     public static String toAirportHotelNames;
 
@@ -68,6 +62,7 @@ public class OwnFlightController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bookings = BookingController.getInstance().getAll();
         airports = AirportController.getInstance().getAll();
+        hotels = HotelController.getInstance().getAll();
 
         refreshTable();
         PopulateTable();
@@ -76,10 +71,10 @@ public class OwnFlightController implements Initializable {
     private void PopulateTable(){
         fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getFromAirport().getName()));
         toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getToAirport().getName()));
-        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getDateTimeInRightFormat()));
+        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().GetDateTimeInRightFormat()));
         timeCol.setCellValueFactory(
                 __-> new SimpleStringProperty(__.getValue().getFlight()
-                        .getTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFlight().getFromAirport().getName()),
+                        .GetTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFlight().getFromAirport().getName()),
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFlight().getFromAirport().getName()),
                                 DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFlight().getToAirport().getName()),
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFlight().getToAirport().getName()),
@@ -98,7 +93,7 @@ public class OwnFlightController implements Initializable {
                     {
                         hotelButton.setOnAction(event -> {
                             var flight = table.getItems().get(getIndex()).getFlight();
-                            toAirportHotelNames = flight.getHotels(flight.getToAirport().getCity().getName());
+                            toAirportHotelNames = flight.GetHotels(hotels, flight.getToAirport().getCity().getName());
                             HotelListController.setIsOwnFlight(true);
 
                             try {

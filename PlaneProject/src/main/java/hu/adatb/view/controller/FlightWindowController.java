@@ -3,10 +3,8 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.AirportController;
 import hu.adatb.controller.FlightController;
-import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Airport;
 import hu.adatb.model.Flight;
-import hu.adatb.model.Plane;
 import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
@@ -85,10 +83,10 @@ public class FlightWindowController implements Initializable {
     private void InitTable() {
         fromCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFromAirport().getName()));
         toCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getToAirport().getName()));
-        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getDateTimeInRightFormat()));
+        whenCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().GetDateTimeInRightFormat()));
         timeCol.setCellValueFactory(
                 __-> new SimpleStringProperty(__.getValue()
-                        .getTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFromAirport().getName()),
+                        .GetTravelTime(DistanceCalculator.GetLatitudeByName(airports, __.getValue().getFromAirport().getName()),
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getFromAirport().getName()),
                                 DistanceCalculator.GetLatitudeByName(airports, __.getValue().getToAirport().getName()),
                                 DistanceCalculator.GetLongitudeByName(airports, __.getValue().getToAirport().getName()),
