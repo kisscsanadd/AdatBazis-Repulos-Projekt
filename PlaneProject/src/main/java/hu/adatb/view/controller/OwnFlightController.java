@@ -11,6 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.effect.ImageInput;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
@@ -90,9 +92,11 @@ public class OwnFlightController implements Initializable {
                 new TableCell<>(){
 
                     final Button hotelButton = new Button("Szállodák");
-                    final Button deleteButton = new Button("Törlés");
+                    final Button deleteButton = new Button();
 
                     {
+                        deleteButton.setEffect(new ImageInput(new Image("pictures/delete.png")));
+
                         hotelButton.setOnAction(event -> {
                             var flight = table.getItems().get(getIndex()).getFlight();
                             toAirportHotelNames = FlightController.getInstance().GetHotels(hotels, flight.getToAirport().getCity().getName());

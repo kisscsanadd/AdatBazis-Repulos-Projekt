@@ -14,6 +14,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.ImageInput;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
@@ -64,10 +66,12 @@ public class AlertWindowController implements Initializable {
         messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
-                private final Button deleteBtn = new Button("Törlés");
+                private final Button deleteBtn = new Button();
                 private final Button editBtn = new Button("Módosítás");
 
                 {
+                    deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+
                     deleteBtn.setOnAction(event -> {
                         Alert a = getTableView().getItems().get(getIndex());
                         refreshTable();
@@ -95,7 +99,8 @@ public class AlertWindowController implements Initializable {
                         setGraphic(null);
                     } else {
                         HBox container = new HBox();
-                        container.getChildren().addAll(deleteBtn, editBtn);
+                        container.setSpacing(10);
+                        container.getChildren().addAll(editBtn, deleteBtn);
                         setGraphic(container);
                     }
                 }

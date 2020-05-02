@@ -13,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.ImageInput;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
@@ -96,11 +98,13 @@ public class FlightWindowController implements Initializable {
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
-                private final Button deleteBtn = new Button("Törlés");
+                private final Button deleteBtn = new Button();
                 private final Button editBtn = new Button("Módosítás");
                 private final Button addAlertBtn = new Button("Figyelmeztetés hozzáadása");
 
                 {
+                    deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+
                     deleteBtn.setOnAction(event -> {
                         Flight flight = getTableView().getItems().get(getIndex());
                         refreshTable();
@@ -139,7 +143,7 @@ public class FlightWindowController implements Initializable {
                     } else {
                         HBox container = new HBox();
                         container.setSpacing(10);
-                        container.getChildren().addAll(deleteBtn, editBtn, addAlertBtn);
+                        container.getChildren().addAll(editBtn, addAlertBtn, deleteBtn);
                         setGraphic(container);
                     }
                 }

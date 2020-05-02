@@ -106,28 +106,7 @@ public class DialogHotelController implements Initializable {
         hotel.nameProperty().bind(nameField.textProperty());
         hotel.starsProperty().bind(starsSpinner.valueProperty());
 
-        //longitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.longitudeProperty().asObject());
-        //latitudeSpinner.getValueFactory().valueProperty().bindBidirectional(airport.latitudeProperty().asObject());
-
         FieldValidator();
-
-        nameField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            var match = false;
-            for (var hotel: hotels) {
-                if (newValue.equals(hotel.getName())) {
-                    match = true;
-                }
-            }
-
-            if (!match) {
-                errorMsgName.setText("");
-                FieldValidator();
-            } else {
-                errorMsgName.setText("Ilyen név már létezik");
-                addButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
-                editButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
-            }
-        });
     }
 
     private void FieldValidator() {

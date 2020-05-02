@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.ImageInput;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
@@ -66,9 +68,11 @@ public class AirportWindowController implements Initializable {
         cityCol.setCellValueFactory(cityName -> new SimpleStringProperty(cityName.getValue().getCity().getName()));
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
-                private final Button deleteBtn = new Button("Törlés");
+                private final Button deleteBtn = new Button();
 
                 {
+                    deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+
                     deleteBtn.setOnAction(event -> {
                         Airport a = getTableView().getItems().get(getIndex());
                         deleteAirport(a);
@@ -83,6 +87,7 @@ public class AirportWindowController implements Initializable {
                         setGraphic(null);
                     } else {
                         HBox container = new HBox();
+                        container.setSpacing(10);
                         container.getChildren().addAll(deleteBtn);
                         setGraphic(container);
                     }

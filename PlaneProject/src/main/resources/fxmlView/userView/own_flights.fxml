@@ -15,7 +15,7 @@
             <TableColumn fx:id="maxSeatCol" prefWidth="100.0" text="Max helyek" />
             <TableColumn fx:id="seatCol" prefWidth="100.0" text="Szabad helyek" />
             <TableColumn fx:id="ticketCol" prefWidth="90.0" text="Jegyek száma" />
-            <TableColumn fx:id="actionCol" prefWidth="160.0" text="Művelet" />
+            <TableColumn fx:id="actionCol" prefWidth="153.0" text="Művelet" />
         </columns>
       </TableView>
    </children>

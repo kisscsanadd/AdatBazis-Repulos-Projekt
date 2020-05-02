@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.ImageInput;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
@@ -66,10 +68,12 @@ public class HotelWindowController implements Initializable {
         cityCol.setCellValueFactory(cityName -> new SimpleStringProperty(cityName.getValue().getCity().getName()));
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
-                private final Button deleteBtn = new Button("Törlés");
+                private final Button deleteBtn = new Button();
                 private final Button editBtn = new Button("Módosítás");
 
                 {
+                    deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+
                     deleteBtn.setOnAction(event -> {
                         Hotel h = getTableView().getItems().get(getIndex());
                         refreshTable();
@@ -97,7 +101,8 @@ public class HotelWindowController implements Initializable {
                         setGraphic(null);
                     } else {
                         HBox container = new HBox();
-                        container.getChildren().addAll(deleteBtn, editBtn);
+                        container.setSpacing(10);
+                        container.getChildren().addAll(editBtn, deleteBtn);
                         setGraphic(container);
                     }
                 }
