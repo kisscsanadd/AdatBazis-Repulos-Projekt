@@ -113,8 +113,14 @@ public class FlightWindowController implements Initializable {
 
                     addAlertBtn.setOnAction(event -> {
                         Flight flight = getTableView().getItems().get(getIndex());
-                        AddFlightAlertRelationController.setSelectedFlight(flight);
 
+                        var countOfAlerts = FlightController.getInstance().GetAlerts(flight).size();
+                        if(countOfAlerts >= 3) {
+                            Utils.showWarning("Egy járathoz maximum 3 figyelmeztetés adható hozzá!");
+                            return;
+                        }
+
+                        AddFlightAlertRelationController.setSelectedFlight(flight);
                         try {
                             App.DialogDeliver("add_flightAlertRel.fxml", "Figyelmeztetés hozzáadása járathoz");
                         } catch (IOException e) {

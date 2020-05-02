@@ -139,7 +139,7 @@ create or replace trigger Figyelmeztetes_trigger
          from dual;
     end;
 	/
-insert into Figyelmeztetes(uzenet) values('A járat 30 percet késik');
+INSERT INTO FIGYELMEZTETES (uzenet) VALUES ('Már alig van szabad helyen a járaton');
 
 
 
@@ -416,6 +416,7 @@ BEGIN
 END;
 /
 
+
 CREATE OR REPLACE TRIGGER szabad_helyek_valtozasa
 AFTER UPDATE OF ferohely
 ON repulogep
@@ -425,12 +426,24 @@ BEGIN
 END;
 /
 
+
 CREATE OR REPLACE TRIGGER foglalas_torles
 BEFORE DELETE
 ON FOGLALAS
 FOR EACH ROW
 BEGIN
-
     DELETE FROM JEGY WHERE foglalasi_id = :OLD.id;
+END;
+/
+
+
+CREATE OR REPLACE TRIGGER figyelmeztetes_hozzadas
+AFTER UPDATE
+ON JARAT
+FOR EACH ROW
+BEGIN
+    IF :NEW.szabad_helyek = 10 THEN
+        INSERT INTO JARATFIGYREL (jarat_id, figyelmeztetes_id) VALUES (:NEW.id, 23);
+    END IF;
 END;
 /

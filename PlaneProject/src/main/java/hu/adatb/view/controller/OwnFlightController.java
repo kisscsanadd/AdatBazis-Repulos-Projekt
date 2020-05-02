@@ -113,11 +113,24 @@ public class OwnFlightController implements Initializable {
 
                             type.ifPresent(buttonType -> {
                                 if(buttonType == ButtonType.YES) {
+                                    var countOfTickets = 0;
                                     for (var booking : deletedBookings) {
-                                        if(BookingController.getInstance().delete(booking)) {
-                                            refreshTable();
+                                        var tickets = BookingController.getInstance().delete(booking);
+                                        if(tickets == -1) {
+                                            try {
+                                                throw new Exception("Nem sikerült lekérni a foglaláshoz tartozó jegyeket");
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        } else {
+                                            countOfTickets += tickets;
                                         }
                                     }
+                                    refreshTable();
+
+                                    var flight = deletedBookings.get(0).getFlight();
+                                    flight.setFreeSeats(flight.getFreeSeats() + countOfTickets);
+                                    FlightController.getInstance().update(flight);
                                 }
                             });
                         });

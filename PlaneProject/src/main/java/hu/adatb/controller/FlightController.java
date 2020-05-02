@@ -84,9 +84,7 @@ public class FlightController {
     public List<FlightAlertRelation> GetAlerts(Flight flight) {
         var relations = FlightAlertRelationController.getInstance().getAll();
 
-        var filteredRelations = relations.stream().filter(
+        return relations.stream().filter(
                 relation -> relation.getFlight().getId() == flight.getId()).collect(Collectors.toList());
-
-        return filteredRelations;
     }
 }
