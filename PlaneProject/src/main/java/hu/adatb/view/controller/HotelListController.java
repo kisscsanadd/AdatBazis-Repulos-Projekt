@@ -2,8 +2,11 @@ package hu.adatb.view.controller;
 
 import hu.adatb.controller.HotelController;
 import hu.adatb.model.Hotel;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,7 +32,7 @@ public class HotelListController implements Initializable {
     private TableColumn<Hotel, String> nameCol;
 
     @FXML
-    private TableColumn<Hotel, String> starCol;
+    private TableColumn<Hotel, ImageView> starCol;
 
     @FXML
     private Label infoText;
@@ -71,7 +74,32 @@ public class HotelListController implements Initializable {
             table.setItems(FXCollections.observableList(filteredHotels));
 
             nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-            starCol.setCellValueFactory(new PropertyValueFactory<>("stars"));
+            starCol.setCellValueFactory(__ -> new ObservableValue<>() {
+                @Override
+                public void addListener(ChangeListener<? super ImageView> changeListener) {
+
+                }
+
+                @Override
+                public void removeListener(ChangeListener<? super ImageView> changeListener) {
+
+                }
+
+                @Override
+                public ImageView getValue() {
+                    return new ImageView(new Image("pictures/star" + __.getValue().getStars() + ".png"));
+                }
+
+                @Override
+                public void addListener(InvalidationListener invalidationListener) {
+
+                }
+
+                @Override
+                public void removeListener(InvalidationListener invalidationListener) {
+
+                }
+            });
         }
     }
 

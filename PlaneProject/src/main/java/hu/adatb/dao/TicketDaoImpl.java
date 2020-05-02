@@ -21,8 +21,6 @@ public class TicketDaoImpl implements TicketDao {
         try (Connection conn = Database.ConnectionToDatabase();
              PreparedStatement st = conn.prepareStatement(INSERT_TICKET)){
 
-            System.out.println("Booking id: " + ticket.getBooking().getId());
-
             st.setInt(1, ticket.getCategory().getId());
             st.setInt(2, ticket.getTravelClass().getId());
             st.setInt(3, ticket.getBooking().getId());

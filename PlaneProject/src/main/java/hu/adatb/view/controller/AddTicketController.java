@@ -151,6 +151,15 @@ public class AddTicketController implements Initializable {
     private void AddBooking(){
         bookingButton.setOnAction(actionEvent -> {
             if (BookingController.getInstance().add(booking)) {
+                var bookings = BookingController.getInstance().getAll();
+                var maxId = 0;
+                for (var booking: bookings) {
+                    if(booking.getId() > maxId) {
+                        maxId = booking.getId();
+                    }
+                }
+                booking.setId(maxId);
+
                 for(int i = 0; i < countOfTicket; i++) {
                     ticket.setCategory(categoryComboBoxes.get(i).getSelectionModel().getSelectedItem());
                     ticket.setTravelClass(travelClassComboBoxes.get(i).getSelectionModel().getSelectedItem());
