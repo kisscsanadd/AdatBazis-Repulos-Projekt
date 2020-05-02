@@ -3,6 +3,7 @@ package hu.adatb.view.controller;
 import hu.adatb.App;
 import hu.adatb.controller.*;
 import hu.adatb.model.*;
+import hu.adatb.model.Alert;
 import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
@@ -129,8 +130,15 @@ public class OwnFlightController implements Initializable {
                                     refreshTable();
 
                                     var flight = deletedBookings.get(0).getFlight();
-                                    flight.setFreeSeats(flight.getFreeSeats() + countOfTickets);
+                                    var newCountOfFreeSeats = flight.getFreeSeats() + countOfTickets;
+
+                                    flight.setFreeSeats(newCountOfFreeSeats);
                                     FlightController.getInstance().update(flight);
+
+                                    if(newCountOfFreeSeats > 10) {
+                                        var relation = new FlightAlertRelation(flight, new Alert(1));
+                                        FlightAlertRelationController.getInstance().delete(relation);
+                                    }
                                 }
                             });
                         });

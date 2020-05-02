@@ -31,8 +31,11 @@ public class AlertListController implements Initializable {
         var alerts = FlightController.getInstance().GetAlerts(flight);
 
         for(int i = 0; i < alerts.size(); i++) {
+            var alert = new Label(alerts.get(i).getAlert().getMessage());
+            alert.setWrapText(true);
+
             grid.add(new Label((i + 1) + "."), 0, i);
-            grid.add(new Label(alerts.get(i).getAlert().getMessage()), 1,  i);
+            grid.add(alert, 1,  i);
         }
     }
 

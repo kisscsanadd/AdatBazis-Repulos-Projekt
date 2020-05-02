@@ -15,6 +15,13 @@ public class Alert {
         this.message.set(message);
     }
 
+    public Alert(int id) {
+        this.id.set(id);
+    }
+
+    public Alert() {
+    }
+
     public int getId() {
         return id.get();
     }
@@ -25,9 +32,6 @@ public class Alert {
 
     public void setId(int id) {
         this.id.set(id);
-    }
-
-    public Alert() {
     }
 
     public String getMessage() {

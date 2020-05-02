@@ -44,6 +44,7 @@ public class Queries {
 
     public static final String DELETE_USER = "DELETE FROM FELHASZNALO WHERE ID = ?";
     public static final String DELETE_BOOKING = "DELETE FROM FOGLALAS WHERE ID = ?";
+    public static final String DELETE_FLIGHT_ALERT_RELATION = "DELETE FROM JARATFIGYREL WHERE JARAT_ID = ? AND FIGYELMEZTETES_ID = ?";
 
 
 }

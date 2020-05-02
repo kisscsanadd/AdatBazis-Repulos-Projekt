@@ -8,5 +8,7 @@ import java.util.List;
 public interface FlightAlertRelationDao {
     public boolean add (FlightAlertRelation relation);
 
+    public boolean delete(FlightAlertRelation relation);
+
     public List<FlightAlertRelation> getAll();
 }

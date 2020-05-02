@@ -38,6 +38,27 @@ public class FlightAlertRelationDaoImpl implements FlightAlertRelationDao {
     }
 
     @Override
+    public boolean delete(FlightAlertRelation relation) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(DELETE_FLIGHT_ALERT_RELATION)){
+
+            st.setInt(1, relation.getFlight().getId());
+            st.setInt(2, relation.getAlert().getId());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Deleted relation");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed delete relation");
+        }
+
+        return false;
+    }
+
+    @Override
     public List<FlightAlertRelation> getAll() {
         List<FlightAlertRelation> result = new ArrayList<>();
 

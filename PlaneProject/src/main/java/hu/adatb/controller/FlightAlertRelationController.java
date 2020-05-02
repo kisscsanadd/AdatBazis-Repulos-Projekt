@@ -23,6 +23,10 @@ public class FlightAlertRelationController {
         return dao.add(relation);
     }
 
+    public boolean delete(FlightAlertRelation relation) {
+        return dao.delete(relation);
+    }
+
     public List<FlightAlertRelation> getAll() {
         return dao.getAll();
     }
