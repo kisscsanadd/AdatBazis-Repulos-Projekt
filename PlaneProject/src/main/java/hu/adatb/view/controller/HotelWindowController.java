@@ -38,6 +38,8 @@ public class HotelWindowController implements Initializable {
 
     @FXML
     public void addHotel() {
+        DialogHotelController.setIsAdd(true);
+
         try {
             App.DialogDeliver("dialog_hotel.fxml", "Szálloda hozzáadás");
         } catch (IOException e) {
@@ -76,7 +78,16 @@ public class HotelWindowController implements Initializable {
                     editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
 
                     deleteBtn.setOnAction(event -> {
-                        Hotel h = getTableView().getItems().get(getIndex());
+                        Hotel hotel = getTableView().getItems().get(getIndex());
+
+                        var type = Utils.showConfirmation();
+
+                        type.ifPresent(buttonType -> {
+                            if(buttonType == ButtonType.YES) {
+                                HotelController.getInstance().delete(hotel.getId());
+                            }
+                        });
+
                         refreshTable();
                     });
 

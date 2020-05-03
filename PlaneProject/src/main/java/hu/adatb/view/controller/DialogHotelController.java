@@ -34,6 +34,9 @@ public class DialogHotelController implements Initializable {
     Spinner<Integer> starsSpinner;
 
     @FXML
+    Label cityLabel;
+
+    @FXML
     Label errorMsgName;
 
     @FXML
@@ -56,6 +59,7 @@ public class DialogHotelController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         hotel.setCity(cities.getSelectionModel().getSelectedItem());
+
         if (HotelController.getInstance().add(hotel)) {
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.close();
@@ -66,6 +70,8 @@ public class DialogHotelController implements Initializable {
 
     @FXML
     public void edit(ActionEvent event) {
+        hotel.setId(selectedHotel.getId());
+
         if (HotelController.getInstance().update(hotel)) {
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.close();
@@ -86,7 +92,7 @@ public class DialogHotelController implements Initializable {
         ObservableList<City> obsCityList = FXCollections.observableList(cityList);
 
         starsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
-                1, 5, 0, 1));
+                1, 5, isAdd ? 1 : selectedHotel.getStars(), 1));
 
         cities.getItems().addAll(obsCityList);
 
@@ -105,6 +111,14 @@ public class DialogHotelController implements Initializable {
 
         hotel.nameProperty().bind(nameField.textProperty());
         hotel.starsProperty().bind(starsSpinner.valueProperty());
+
+        if(!isAdd) {
+            editButton.setVisible(true);
+            addButton.setVisible(false);
+            cities.setVisible(false);
+            cityLabel.setVisible(false);
+            nameField.setText(selectedHotel.getName());
+        }
 
         FieldValidator();
     }

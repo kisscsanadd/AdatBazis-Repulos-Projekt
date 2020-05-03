@@ -42,11 +42,48 @@ public class HotelDaoImpl implements HotelDao{
 
     @Override
     public boolean update(Hotel hotel) {
-        return false;   // TODO - make it
+        try(Connection conn = Database.ConnectionToDatabase();
+            PreparedStatement st = conn.prepareStatement(UPDATE_HOTEL)) {
+
+            st.setString(1, hotel.getName());
+            st.setInt(2, hotel.getStars());
+            st.setInt(3, hotel.getId());
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Successful hotel update");
+                Utils.showInformation("Sikeres módosítás");
+                return true;
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed update hotel");
+            e.printStackTrace();
+        }
+
+        Utils.showWarning("Nem sikerült a módosítás");
+
+        return false;
     }
 
     @Override
     public boolean delete(int id) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(DELETE_HOTEL)){
+
+            st.setInt(1, id);
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Deleted hotel with " + id + " id");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed delete hotel");
+        }
+
         return false;
     }
 

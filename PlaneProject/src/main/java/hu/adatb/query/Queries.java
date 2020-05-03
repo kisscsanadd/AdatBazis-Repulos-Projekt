@@ -41,10 +41,12 @@ public class Queries {
     public static final String UPDATE_AIRPORT = "UPDATE REPULOTER SET nev = ?, szelesseg = ?, hosszusag = ?, varos_id = ?  WHERE id = ?";
     public static final String UPDATE_ALERT = "UPDATE FIGYELMEZTETES SET uzenet = ? WHERE id = ?";
     public static final String UPDATE_FLIGHT = "UPDATE JARAT SET felszallas_datum = ?, repuloter_id_fel = ?, repuloter_id_le = ?, repulogep_id = ?, szabad_helyek = ?,  nepszeruseg = ? WHERE id = ?";
+    public static final String UPDATE_HOTEL = "UPDATE SZALLODA SET nev = ?, csillagok_szama = ? WHERE id = ?";
 
     public static final String DELETE_USER = "DELETE FROM FELHASZNALO WHERE ID = ?";
     public static final String DELETE_BOOKING = "DELETE FROM FOGLALAS WHERE ID = ?";
     public static final String DELETE_FLIGHT_ALERT_RELATION = "DELETE FROM JARATFIGYREL WHERE JARAT_ID = ? AND FIGYELMEZTETES_ID = ?";
+    public static final String DELETE_HOTEL = "DELETE FROM SZALLODA WHERE ID = ?";
 
 
 }
