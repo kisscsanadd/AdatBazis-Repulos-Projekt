@@ -7,7 +7,10 @@ import hu.adatb.model.Alert;
 import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.GetById;
 import hu.adatb.utils.Utils;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,6 +56,9 @@ public class OwnFlightController implements Initializable {
     private TableColumn<Booking, String> ticketCol;
 
     @FXML
+    private TableColumn<Booking, Button> alertCol;
+
+    @FXML
     private TableColumn<Booking, Void> actionCol;
 
     @FXML
@@ -92,6 +98,50 @@ public class OwnFlightController implements Initializable {
         seatCol.setCellValueFactory(__ -> new SimpleStringProperty(Integer.toString(__.getValue().getFlight().getFreeSeats())));
         ticketCol.setCellValueFactory(__-> new SimpleStringProperty(
                 Integer.toString(FlightController.getInstance().GetTicketNumber(bookings, __.getValue().getFlight()).size())));
+        alertCol.setCellValueFactory(__ -> new ObservableValue<>() {
+            //region
+            @Override
+            public void addListener(InvalidationListener invalidationListener) {
+
+            }
+
+            @Override
+            public void removeListener(InvalidationListener invalidationListener) {
+
+            }
+
+            @Override
+            public void addListener(ChangeListener<? super Button> changeListener) {
+
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super Button> changeListener) {
+
+            }
+            //endregion
+            @Override
+            public Button getValue() {
+                if(FlightController.getInstance().GetAlerts(__.getValue().getFlight()).size() > 0) {
+                    var button = new Button();
+                    button.setEffect(new ImageInput(new Image("pictures/alert.png")));
+                    button.setOnAction(event -> {
+                        AlertListController.setFlight(__.getValue().getFlight());
+
+                        try {
+                            App.DialogDeliver("alert_list.fxml","Figyelmeztetések", false);
+                        } catch (IOException e) {
+                            Utils.showInformation("Nem sikerült megnyitni a figyelmeztetések listáját");
+                            e.printStackTrace();
+                        }
+                    });
+
+                    return button;
+                }
+
+                return null;
+            }
+        });
 
         actionCol.setCellFactory(param ->
                 new TableCell<>(){

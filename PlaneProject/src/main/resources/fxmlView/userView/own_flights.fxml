@@ -8,15 +8,16 @@
    <children>
       <TableView fx:id="table" layoutX="200.0" layoutY="91.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
-            <TableColumn fx:id="fromCol" prefWidth="235.0" text="Honnan" />
-            <TableColumn fx:id="toCol" prefWidth="235.0" text="Hova" />
+            <TableColumn fx:id="fromCol" editable="false" sortable="false" prefWidth="235.0" text="Honnan" />
+            <TableColumn fx:id="toCol" editable="false" sortable="false" prefWidth="235.0" text="Hova" />
             <TableColumn fx:id="whenCol" prefWidth="155.0" text="Indulási idő" />
             <TableColumn fx:id="timeCol" prefWidth="120.0" text="Menetidő" />
-            <TableColumn fx:id="withCol" prefWidth="170.0" text="Repülőgép" />
-            <TableColumn fx:id="maxSeatCol" prefWidth="100.0" text="Max helyek" />
-            <TableColumn fx:id="seatCol" prefWidth="100.0" text="Szabad helyek" />
-            <TableColumn fx:id="ticketCol" prefWidth="90.0" text="Jegyek száma" />
-            <TableColumn fx:id="actionCol" prefWidth="153.0" text="Művelet" />
+            <TableColumn fx:id="withCol" editable="false" sortable="false" prefWidth="170.0" text="Repülőgép" />
+            <TableColumn fx:id="maxSeatCol" editable="false" sortable="false" prefWidth="100.0" text="Max helyek" />
+            <TableColumn fx:id="seatCol" editable="false" sortable="false" prefWidth="100.0" text="Szabad helyek" />
+            <TableColumn fx:id="ticketCol" editable="false" sortable="false" prefWidth="90.0" text="Jegyek száma" />
+            <TableColumn fx:id="alertCol" editable="false" prefWidth="30.0" sortable="false" />
+            <TableColumn fx:id="actionCol" editable="false" sortable="false" prefWidth="153.0" text="Művelet" />
         </columns>
       </TableView>
       <Label fx:id="noBookingsLabel" layoutX="127.0" layoutY="95.0" text="Nincs egyetlen foglalásod sem">
