@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.OwnFlightController">
    <children>
@@ -18,5 +19,10 @@
             <TableColumn fx:id="actionCol" prefWidth="153.0" text="Művelet" />
         </columns>
       </TableView>
+      <Label fx:id="noBookingsLabel" layoutX="127.0" layoutY="95.0" text="Nincs egyetlen foglalásod sem">
+         <font>
+            <Font name="Cambria" size="27.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

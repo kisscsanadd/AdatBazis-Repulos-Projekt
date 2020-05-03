@@ -49,6 +49,20 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public boolean delete(int id) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(DELETE_FLIGHT)){
+
+            st.setInt(1, id);
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Deleted flight with " + id + " id");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed delete flight");
+        }
         return false;
     }
 

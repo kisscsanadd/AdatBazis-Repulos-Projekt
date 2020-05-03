@@ -58,7 +58,7 @@
           <TableColumn fx:id="actionCol" editable="false" prefWidth="100.0" sortable="false" text="Foglalás" />
         </columns>
       </TableView>
-      <Label fx:id="infoText" layoutX="423.0" layoutY="124.0" text="Állítsd be a szűrőket">
+      <Label fx:id="infoText" layoutX="423.0" layoutY="122.0" text="Állítsd be a szűrőket">
          <font>
             <Font name="Cambria" size="27.0" />
          </font>

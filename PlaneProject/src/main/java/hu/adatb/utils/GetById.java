@@ -259,9 +259,10 @@ public class GetById {
         return null;
     }
 
-    public static int GetTicketNumberByBookingId(Connection conn, int booking_id) {
+    public static int GetTicketNumberByBookingId(int booking_id) {
         int ticketNumber = 0;
-        try (PreparedStatement st = conn.prepareStatement(SELECT_TICKET_BY_BOOKING_ID)){
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_TICKET_BY_BOOKING_ID)){
 
             st.setInt(1, booking_id);
 
@@ -271,7 +272,7 @@ public class GetById {
                 ticketNumber++;
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 

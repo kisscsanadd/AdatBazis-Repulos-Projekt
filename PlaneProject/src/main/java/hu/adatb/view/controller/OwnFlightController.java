@@ -5,6 +5,7 @@ import hu.adatb.controller.*;
 import hu.adatb.model.*;
 import hu.adatb.model.Alert;
 import hu.adatb.utils.DistanceCalculator;
+import hu.adatb.utils.GetById;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -53,6 +54,9 @@ public class OwnFlightController implements Initializable {
 
     @FXML
     private TableColumn<Booking, Void> actionCol;
+
+    @FXML
+    Label noBookingsLabel;
 
     public List<Booking> bookings;
     private List<Airport> airports;
@@ -113,37 +117,11 @@ public class OwnFlightController implements Initializable {
                         deleteButton.setOnAction(actionEvent -> {
                             Booking selectedBooking = table.getItems().get(getIndex());
 
-                            var deletedBookings = bookings.stream().filter(b -> b.getFlight().getId() == selectedBooking.getFlight().getId()).collect(Collectors.toList());
-
                             var type = Utils.showConfirmation();
 
                             type.ifPresent(buttonType -> {
-                                if(buttonType == ButtonType.YES) {
-                                    var countOfTickets = 0;
-                                    for (var booking : deletedBookings) {
-                                        var tickets = BookingController.getInstance().delete(booking);
-                                        if(tickets == -1) {
-                                            try {
-                                                throw new Exception("Nem sikerült lekérni a foglaláshoz tartozó jegyeket");
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        } else {
-                                            countOfTickets += tickets;
-                                        }
-                                    }
-                                    refreshTable();
-
-                                    var flight = deletedBookings.get(0).getFlight();
-                                    var newCountOfFreeSeats = flight.getFreeSeats() + countOfTickets;
-
-                                    flight.setFreeSeats(newCountOfFreeSeats);
-                                    FlightController.getInstance().update(flight);
-
-                                    if(newCountOfFreeSeats > 10) {
-                                        var relation = new FlightAlertRelation(flight, new Alert(1));
-                                        FlightAlertRelationController.getInstance().delete(relation);
-                                    }
+                                if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
+                                    DeleteOwnFlight(selectedBooking);
                                 }
                             });
                         });
@@ -166,6 +144,37 @@ public class OwnFlightController implements Initializable {
         );
     }
 
+    public void DeleteOwnFlight(Booking selectedBooking) {
+        var deletedBookings = bookings.stream().filter(b -> b.getFlight().getId() == selectedBooking.getFlight().getId()).collect(Collectors.toList());
+
+        var countOfTickets = 0;
+        for (var booking : deletedBookings) {
+            var tickets = GetById.GetTicketNumberByBookingId(booking.getId());
+
+            if(!BookingController.getInstance().delete(booking)) {
+                try {
+                    throw new Exception("Nem sikerült lekérni a foglaláshoz tartozó jegyeket");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                countOfTickets += tickets;
+            }
+        }
+        refreshTable();
+
+        var flight = deletedBookings.get(0).getFlight();
+        var newCountOfFreeSeats = flight.getFreeSeats() + countOfTickets;
+
+        flight.setFreeSeats(newCountOfFreeSeats);
+        FlightController.getInstance().update(flight);
+
+        if(newCountOfFreeSeats > 10) {
+            var relation = new FlightAlertRelation(flight, new Alert(1));
+            FlightAlertRelationController.getInstance().delete(relation);
+        }
+    }
+
     public void refreshTable() {
         var filteredBookingsByUser = bookings.stream().filter(booking ->
                 booking.getUser().getId() == LoginUserController.getUser().getId()
@@ -180,6 +189,14 @@ public class OwnFlightController implements Initializable {
                 filteredBookings.add(booking);
                 flightIds.add(booking.getFlight().getId());
             }
+        }
+
+        if(filteredBookings.size() > 0) {
+            noBookingsLabel.setVisible(false);
+            table.setVisible(true);
+        } else {
+            noBookingsLabel.setVisible(true);
+            table.setVisible(false);
         }
 
         table.setItems(FXCollections.observableList(filteredBookings));

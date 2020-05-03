@@ -1,6 +1,7 @@
 package hu.adatb.utils;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.StageStyle;
 
@@ -26,9 +27,17 @@ public class Utils {
     }
 
     public static Optional<ButtonType> showConfirmation() {
+        return showConfirmation("");
+    }
+
+    public static Optional<ButtonType> showConfirmation(String statement) {
+       var yesButton = new ButtonType("Igen", ButtonBar.ButtonData.YES);
+       var noButton = new ButtonType("Nem", ButtonBar.ButtonData.NO);
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Biztos törölni akarsz?", ButtonType.YES, ButtonType.NO);
+                "Biztos törölni akarsz?\n" + statement, yesButton, noButton);
         alert.initStyle(StageStyle.UNDECORATED);
+        alert.setHeaderText("Megerősítés");
 
         return alert.showAndWait();
     }

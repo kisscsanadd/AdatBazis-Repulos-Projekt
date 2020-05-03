@@ -26,7 +26,7 @@ public class BookingController {
         return dao.add(booking);
     }
 
-    public int delete(Booking booking) {
+    public boolean delete(Booking booking) {
         return dao.delete(booking);
     }
 

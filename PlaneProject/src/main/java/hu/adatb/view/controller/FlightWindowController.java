@@ -1,10 +1,8 @@
 package hu.adatb.view.controller;
 
 import hu.adatb.App;
-import hu.adatb.controller.AirportController;
-import hu.adatb.controller.FlightController;
-import hu.adatb.model.Airport;
-import hu.adatb.model.Flight;
+import hu.adatb.controller.*;
+import hu.adatb.model.*;
 import hu.adatb.utils.DistanceCalculator;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,8 +17,10 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class FlightWindowController implements Initializable {
 
@@ -52,6 +52,8 @@ public class FlightWindowController implements Initializable {
     private TableColumn<Flight, Void> actionsCol;
 
     private List<Airport> airports;
+    private List<Booking> bookings;
+    private List<FlightAlertRelation> relations;
 
     @FXML
     public void addFlight() {
@@ -63,9 +65,6 @@ public class FlightWindowController implements Initializable {
         refreshTable();
     }
 
-    public FlightWindowController() {
-    }
-
     public void refreshTable() {
         List<Flight> list = FlightController.getInstance().getAll();
         table.setItems(FXCollections.observableList(list));
@@ -73,10 +72,12 @@ public class FlightWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Flight> list = FlightController.getInstance().getAll();
+        var flights = FlightController.getInstance().getAll();
         airports = AirportController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
+        bookings = BookingController.getInstance().getAll();
+        relations = FlightAlertRelationController.getInstance().getAll();
 
+        table.setItems(FXCollections.observableList(flights));
         InitTable();
     }
 
@@ -105,7 +106,14 @@ public class FlightWindowController implements Initializable {
 
                     deleteBtn.setOnAction(event -> {
                         Flight flight = getTableView().getItems().get(getIndex());
-                        refreshTable();
+
+                        var type = Utils.showConfirmation("Törlődni fog minden foglalás és figyelmezetés is!");
+
+                        type.ifPresent(buttonType -> {
+                            if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
+                                DeleteFlight(flight);
+                            }
+                        });
                     });
 
                     editBtn.setOnAction(event -> {
@@ -137,5 +145,36 @@ public class FlightWindowController implements Initializable {
             };
 
         });
+    }
+
+    public void DeleteFlight(Flight deletedFlight) {
+        var deletedBookings = bookings.stream().filter(booking -> booking.getFlight().getId() == deletedFlight.getId())
+                .collect(Collectors.toList());
+
+        var deletedRelations = relations.stream().filter(relation -> relation.getFlight().getId() == deletedFlight.getId())
+                .collect(Collectors.toList());
+
+        boolean canDeleteFlight = true;
+
+        for(var deletedRelation : deletedRelations) {
+            if(!FlightAlertRelationController.getInstance().delete(deletedRelation)) {
+                Utils.showWarning("Nem sikerült törölni egy figyelmeztetést ami a járathoz tartozik");
+                canDeleteFlight = false;
+            };
+        }
+
+        for(var deletedBooking : deletedBookings) {
+            if(!BookingController.getInstance().delete(deletedBooking)) {
+                Utils.showWarning("Nem sikerült törölni egy foglalást ami a járathoz tartozik");
+                canDeleteFlight = false;
+            }
+        }
+
+        if(canDeleteFlight) {
+            if(FlightController.getInstance().delete(deletedFlight.getId())) {
+                refreshTable();
+            }
+        }
+
     }
 }

@@ -83,7 +83,7 @@ public class HotelWindowController implements Initializable {
                         var type = Utils.showConfirmation();
 
                         type.ifPresent(buttonType -> {
-                            if(buttonType == ButtonType.YES) {
+                            if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
                                 HotelController.getInstance().delete(hotel.getId());
                             }
                         });

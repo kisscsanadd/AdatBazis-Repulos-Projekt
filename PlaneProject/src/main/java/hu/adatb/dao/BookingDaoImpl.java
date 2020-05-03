@@ -39,25 +39,23 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public int delete(Booking booking) {
+    public boolean delete(Booking booking) {
         try (Connection conn = Database.ConnectionToDatabase();
              PreparedStatement st = conn.prepareStatement(DELETE_BOOKING)){
 
             st.setInt(1, booking.getId());
 
-            var ticketNumber = GetById.GetTicketNumberByBookingId(conn, booking.getId());
-
             int res = st.executeUpdate();
 
             if (res == 1) {
                 System.out.println(App.CurrentTime() + "Deleted booking with " + booking.getId() + " id");
-                return ticketNumber;
+                return true;
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(App.CurrentTime() + "Failed delete booking");
         }
 
-        return -1;
+        return false;
     }
 
     @Override
