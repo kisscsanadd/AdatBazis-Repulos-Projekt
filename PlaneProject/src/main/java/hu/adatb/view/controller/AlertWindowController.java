@@ -67,10 +67,11 @@ public class AlertWindowController implements Initializable {
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
                 private final Button deleteBtn = new Button();
-                private final Button editBtn = new Button("Módosítás");
+                private final Button editBtn = new Button();
 
                 {
                     deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+                    editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
 
                     deleteBtn.setOnAction(event -> {
                         Alert a = getTableView().getItems().get(getIndex());

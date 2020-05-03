@@ -2,14 +2,12 @@ package hu.adatb.controller;
 
 import hu.adatb.dao.FlightDao;
 import hu.adatb.dao.FlightDaoImpl;
-import hu.adatb.model.Flight;
-import hu.adatb.model.FlightAlertRelation;
-import hu.adatb.model.Hotel;
-import hu.adatb.model.Plane;
+import hu.adatb.model.*;
 import hu.adatb.utils.DistanceCalculator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -41,6 +39,10 @@ public class FlightController {
 
     public List<Flight> getAll() {
         return dao.getAll();
+    }
+
+    public String SetTimeFormat(int time) {
+        return (time < 10 ? ("0" + time) : Integer.toString(time));
     }
 
     public String GetDateTimeInRightFormat(LocalDateTime dateTime) {
@@ -79,6 +81,18 @@ public class FlightController {
         }
 
         return allHotelsInCity;
+    }
+
+    public List<Ticket> GetTicketNumber(List<Booking> bookings, Flight flight) {
+        var tickets = TicketController.getInstance().getAll();
+        List<Ticket> filteredTickets = new ArrayList<>();
+        var filteredBookings = bookings.stream().filter(booking -> booking.getFlight().getId() == flight.getId()).collect(Collectors.toList());
+
+        for (var booking: filteredBookings) {
+            filteredTickets.addAll(tickets.stream().filter(ticket -> ticket.getBooking().getId() == booking.getId()).collect(Collectors.toList()));
+        }
+
+        return filteredTickets;
     }
 
     public List<FlightAlertRelation> GetAlerts(Flight flight) {

@@ -55,10 +55,8 @@ public class FlightWindowController implements Initializable {
 
     @FXML
     public void addFlight() {
-        DialogFlightController.setIsAdd(true);
-
         try {
-            App.DialogDeliver("dialog_flight.fxml", "Járat hozzáadás");
+            App.DialogDeliver("add_flight.fxml", "Járat hozzáadás");
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
@@ -99,11 +97,11 @@ public class FlightWindowController implements Initializable {
         actionsCol.setCellFactory(param -> {
             return new TableCell<>() {
                 private final Button deleteBtn = new Button();
-                private final Button editBtn = new Button("Módosítás");
-                private final Button addAlertBtn = new Button("Figyelmeztetés hozzáadása");
+                private final Button editBtn = new Button();
 
                 {
                     deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+                    editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
 
                     deleteBtn.setOnAction(event -> {
                         Flight flight = getTableView().getItems().get(getIndex());
@@ -111,27 +109,16 @@ public class FlightWindowController implements Initializable {
                     });
 
                     editBtn.setOnAction(event -> {
-                        // TODO
-                        refreshTable();
-                    });
-
-                    addAlertBtn.setOnAction(event -> {
                         Flight flight = getTableView().getItems().get(getIndex());
+                        EditFlightController.setSelectedFlight(flight);
 
-                        var countOfAlerts = FlightController.getInstance().GetAlerts(flight).size();
-                        if(countOfAlerts >= 3) {
-                            Utils.showWarning("Egy járathoz maximum 3 figyelmeztetés adható hozzá!");
-                            return;
-                        }
-
-                        AddFlightAlertRelationController.setSelectedFlight(flight);
                         try {
-                            App.DialogDeliver("add_flightAlertRel.fxml", "Figyelmeztetés hozzáadása járathoz");
+                            App.DialogDeliver("edit_flight.fxml", "Járat módosítás");
                         } catch (IOException e) {
-                            Utils.showWarning("Nem sikerült megnyitni a figyelmeztetés hozzáadás járathoz ablakot");
-                            e.printStackTrace();
+                            Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
                         }
 
+                        refreshTable();
                     });
             }
 
@@ -143,7 +130,7 @@ public class FlightWindowController implements Initializable {
                     } else {
                         HBox container = new HBox();
                         container.setSpacing(10);
-                        container.getChildren().addAll(editBtn, addAlertBtn, deleteBtn);
+                        container.getChildren().addAll(editBtn, deleteBtn);
                         setGraphic(container);
                     }
                 }

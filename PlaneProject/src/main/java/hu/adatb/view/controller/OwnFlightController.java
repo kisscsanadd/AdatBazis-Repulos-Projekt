@@ -86,7 +86,8 @@ public class OwnFlightController implements Initializable {
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getFlight().getPlane().getName()));
         maxSeatCol.setCellValueFactory(__ -> new SimpleStringProperty(Integer.toString(__.getValue().getFlight().getPlane().getSeats())));
         seatCol.setCellValueFactory(__ -> new SimpleStringProperty(Integer.toString(__.getValue().getFlight().getFreeSeats())));
-        ticketCol.setCellValueFactory(__-> new SimpleStringProperty(GetTicketNumber(__.getValue().getFlight())));
+        ticketCol.setCellValueFactory(__-> new SimpleStringProperty(
+                Integer.toString(FlightController.getInstance().GetTicketNumber(bookings, __.getValue().getFlight()).size())));
 
         actionCol.setCellFactory(param ->
                 new TableCell<>(){
@@ -168,7 +169,7 @@ public class OwnFlightController implements Initializable {
     public void refreshTable() {
         var filteredBookingsByUser = bookings.stream().filter(booking ->
                 booking.getUser().getId() == LoginUserController.getUser().getId()
-                        && Integer.parseInt(GetTicketNumber(booking.getFlight())) > 0)
+                        && FlightController.getInstance().GetTicketNumber(bookings, booking.getFlight()).size() > 0)
                 .collect(Collectors.toList());
 
         List<Integer> flightIds = new ArrayList<>();
@@ -182,18 +183,6 @@ public class OwnFlightController implements Initializable {
         }
 
         table.setItems(FXCollections.observableList(filteredBookings));
-    }
-
-    private String GetTicketNumber(Flight flight) {
-        var tickets = TicketController.getInstance().getAll();
-        List<Ticket> filteredTickets = new ArrayList<>();
-        var filteredBookings = bookings.stream().filter(booking -> booking.getFlight().getId() == flight.getId()).collect(Collectors.toList());
-
-        for (var booking: filteredBookings) {
-            filteredTickets.addAll(tickets.stream().filter(ticket -> ticket.getBooking().getId() == booking.getId()).collect(Collectors.toList()));
-        }
-
-        return Integer.toString(filteredTickets.size());
     }
 
     public static String getToAirportHotelNames() {

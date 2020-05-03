@@ -3,6 +3,7 @@ package hu.adatb.view.controller;
 import hu.adatb.controller.AirportController;
 import hu.adatb.controller.AlertController;
 import hu.adatb.controller.FlightAlertRelationController;
+import hu.adatb.controller.FlightController;
 import hu.adatb.model.Alert;
 import hu.adatb.model.City;
 import hu.adatb.model.Flight;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class AddFlightAlertRelationController implements Initializable {
 
@@ -42,16 +44,32 @@ public class AddFlightAlertRelationController implements Initializable {
     private Button saveButton;
 
     public static Flight selectedFlight;
+    private List<FlightAlertRelation> alertsForSelectedFlight;
+    private final String basicAlertPromptText = "Válassz figyelmeztetést";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         PopulateComboBoxes();
 
+        alertsForSelectedFlight = FlightController.getInstance().GetAlerts(selectedFlight);
+
+        if (alertsForSelectedFlight.size() > 0) {
+            firstAlertComboBox.setPromptText(alertsForSelectedFlight.get(0).getAlert().getMessage());
+            if(alertsForSelectedFlight.size() > 1) {
+                secondAlertComboBox.setPromptText(alertsForSelectedFlight.get(1).getAlert().getMessage());
+                if(alertsForSelectedFlight.size() > 2) {
+                    thirdAlertComboBox.setPromptText(alertsForSelectedFlight.get(2).getAlert().getMessage());
+                }
+            }
+        }
+
         FieldValidator();
     }
 
     private void PopulateComboBoxes() {
-        List<Alert> alerts = AlertController.getInstance().getAll();
+        List<Alert> alerts = new ArrayList<>();
+        alerts.add(new Alert(-1, "---"));
+        alerts.addAll(AlertController.getInstance().getAll());
         ObservableList<Alert> obsAlerts = FXCollections.observableList(alerts);
 
         firstAlertComboBox.getItems().addAll(obsAlerts);
@@ -76,39 +94,54 @@ public class AddFlightAlertRelationController implements Initializable {
         thirdAlertComboBox.setButtonCell(factory.call(null));
     }
 
-    private void FieldValidator() {
-        saveButton.disableProperty().bind(firstAlertComboBox.valueProperty().isNull());
-
-        secondAlertComboBox.disableProperty().bind(firstAlertComboBox.valueProperty().isNull());
-        thirdAlertComboBox.disableProperty().bind(firstAlertComboBox.valueProperty().isNull().or(
-                secondAlertComboBox.valueProperty().isNull()
-        ));
-    }
-
     @FXML
     private void save(ActionEvent event) {
         var alerts = new ArrayList<Alert>();
-        alerts.add(firstAlertComboBox.getValue());
 
-        if (secondAlertComboBox.getValue() != null) alerts.add(secondAlertComboBox.getValue());
-        if (thirdAlertComboBox.getValue() != null) alerts.add(thirdAlertComboBox.getValue());
-
-        int counter = 0;
-        for (var alert: alerts) {
-            var relation = new FlightAlertRelation(selectedFlight, alert);
-
-            if (FlightAlertRelationController.getInstance().add(relation)) {
-                counter++;
-            } else {
-                Utils.showWarning("Nem sikerült menteni az új relációt");
-            }
+        if(firstAlertComboBox.getPromptText().equals(basicAlertPromptText)) {
+            alerts.add(firstAlertComboBox.getValue());
+        } else {
+            if(firstAlertComboBox.getValue() == null)
+                alerts.add(alertsForSelectedFlight.get(0).getAlert());
         }
 
-        if(counter == alerts.size()) {
-            Utils.showInformation("Sikeresen hozzáadtál a járathoz " + alerts.size() + " figyelmeztetést");
-            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.close();
+        if (secondAlertComboBox.getPromptText().equals(basicAlertPromptText)) {
+            if(secondAlertComboBox.getValue() != null)
+                alerts.add(secondAlertComboBox.getValue());
+        } else {
+            if(secondAlertComboBox.getValue() == null)
+                alerts.add(alertsForSelectedFlight.get(1).getAlert());
         }
+
+        if (thirdAlertComboBox.getPromptText().equals(basicAlertPromptText)) {
+            if(thirdAlertComboBox.getValue() != null)
+                alerts.add(thirdAlertComboBox.getValue());
+        } else {
+            if(thirdAlertComboBox.getValue() == null)
+                alerts.add(alertsForSelectedFlight.get(2).getAlert());
+        }
+
+        for(var relation : alertsForSelectedFlight) {
+            FlightAlertRelationController.getInstance().delete(relation);
+        }
+
+        var filteredAlerts = alerts.stream().filter(alert -> alert.getId() != -1).collect(Collectors.toList());
+
+        EditFlightController.setSelectedAlerts(filteredAlerts);
+
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    private void FieldValidator() {
+        saveButton.disableProperty().bind(firstAlertComboBox.valueProperty().isNull()
+                .and(firstAlertComboBox.promptTextProperty().isEqualTo(basicAlertPromptText)));
+
+        secondAlertComboBox.disableProperty().bind(firstAlertComboBox.valueProperty().isNull()
+                .and(firstAlertComboBox.promptTextProperty().isEqualTo(basicAlertPromptText)));
+        thirdAlertComboBox.disableProperty().bind((firstAlertComboBox.valueProperty().isNull().or(
+                secondAlertComboBox.valueProperty().isNull()).and(firstAlertComboBox.promptTextProperty().isEqualTo(basicAlertPromptText).and(secondAlertComboBox.promptTextProperty().isEqualTo(basicAlertPromptText)))
+        ));
     }
 
     public static void setSelectedFlight(Flight selectedFlight) {

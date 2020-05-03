@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class DialogFlightController implements Initializable {
+public class AddFlightController implements Initializable {
 
     @FXML
     ComboBox<Airport> fromAirport;
@@ -32,13 +32,10 @@ public class DialogFlightController implements Initializable {
     ComboBox<Airport> toAirport;
 
     @FXML
-    DatePicker dateBegin;
-
-    @FXML
     ComboBox<Plane> planes;
 
     @FXML
-    Button addButton;
+    DatePicker dateBegin;
 
     @FXML
     Spinner<Integer> hourSpinner;
@@ -47,23 +44,17 @@ public class DialogFlightController implements Initializable {
     Spinner<Integer> minuteSpinner;
 
     @FXML
-    Button editButton;
+    Button addButton;
 
     private Flight flight = new Flight();
-    private static Flight selectedFlight;
-    private static boolean isAdd;
 
-    public DialogFlightController() {
-    }
-
-    private String SetTimeFormat(int time) {
-        return (time < 10 ? ("0" + time) : Integer.toString(time));
+    public AddFlightController() {
     }
 
     @FXML
     private void save(ActionEvent event) {
-        var time = (SetTimeFormat(hourSpinner.getValue())) + ":"
-                + (SetTimeFormat(minuteSpinner.getValue()));
+        var time = (FlightController.getInstance().SetTimeFormat(hourSpinner.getValue())) + ":"
+                + (FlightController.getInstance().SetTimeFormat(minuteSpinner.getValue()));
 
         LocalDateTime dateTime = LocalDateTime.of(dateBegin.getValue(), LocalTime.parse(time));
 
@@ -82,16 +73,6 @@ public class DialogFlightController implements Initializable {
     }
 
     @FXML
-    public void edit(ActionEvent event) {
-       /* if (FlightController.getInstance().update(flight)) {
-            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.close();
-        } else {
-            Utils.showWarning("Nem sikerült menteni a módosított járatot");
-        }*/
-    }
-
-    @FXML
     private void cancel(ActionEvent event){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
@@ -105,9 +86,9 @@ public class DialogFlightController implements Initializable {
         List<Airport> airportList = AirportController.getInstance().getAll();
         ObservableList<Airport> obsAirportList = FXCollections.observableList(airportList);
 
-        planes.getItems().addAll(obsPlaneList);
         fromAirport.getItems().addAll(obsAirportList);
         toAirport.getItems().addAll(obsAirportList);
+        planes.getItems().addAll(obsPlaneList);
 
         Callback<ListView<Plane>, ListCell<Plane>> factoryPlane = lv -> new ListCell<>() {
             @Override
@@ -133,30 +114,13 @@ public class DialogFlightController implements Initializable {
         planes.setCellFactory(factoryPlane);
         planes.setButtonCell(factoryPlane.call(null));
 
-        hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
-                1, 24));
+        hourSpinner.setValueFactory(
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 24));
 
-        minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
-                1, 60));
+        minuteSpinner.setValueFactory(
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 60));
     }
 
     private void FieldValidator() {
     }
-
-    private void InitTable() {
-/*
-        flight.nameProperty().bind(nameField.textProperty());
-        flight.seatsProperty().bind(seatsSpinner.valueProperty());
-        flight.speedProperty().bind(speedSpinner.valueProperty());
-        flight.setId(selectedPlane.getId());*/
-    }
-
-    public static void setIsAdd(boolean isAdd) {
-        DialogFlightController.isAdd = isAdd;
-    }
-
-    public static void setSelectedFlight(Flight flight) {
-        selectedFlight = flight;
-    }
-
 }
