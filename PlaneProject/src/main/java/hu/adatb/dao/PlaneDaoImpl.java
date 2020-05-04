@@ -66,6 +66,21 @@ public class PlaneDaoImpl implements PlaneDao {
 
     @Override
     public boolean delete(int id) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(DELETE_PLANE)){
+
+            st.setInt(1, id);
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Deleted plane with " + id + " id");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed delete plane");
+        }
+
         return false;
     }
 

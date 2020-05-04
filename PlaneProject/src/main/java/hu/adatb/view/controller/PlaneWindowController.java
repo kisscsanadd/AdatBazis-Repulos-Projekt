@@ -1,7 +1,9 @@
 package hu.adatb.view.controller;
 
 import hu.adatb.App;
+import hu.adatb.controller.FlightController;
 import hu.adatb.controller.PlaneController;
+import hu.adatb.model.Flight;
 import hu.adatb.model.Plane;
 import hu.adatb.utils.Utils;
 import javafx.collections.FXCollections;
@@ -35,6 +37,8 @@ public class PlaneWindowController implements Initializable {
     @FXML
     private TableColumn<Plane, Void> actionsCol;
 
+    public List<Flight> flights;
+
     @FXML
     public void addPlane() {
         DialogPlaneController.setIsAdd(true);
@@ -47,19 +51,11 @@ public class PlaneWindowController implements Initializable {
         refreshTable();
     }
 
-    public PlaneWindowController() {
-    }
-
-    public void refreshTable() {
-        List<Plane> list = PlaneController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Plane> list = PlaneController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
+        flights = FlightController.getInstance().getAll();
 
+        refreshTable();
         InitTable();
     }
 
@@ -77,8 +73,23 @@ public class PlaneWindowController implements Initializable {
                     editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
 
                     deleteBtn.setOnAction(event -> {
-                        Plane p = getTableView().getItems().get(getIndex());
-                        refreshTable();
+                        Plane selectedPlane = getTableView().getItems().get(getIndex());
+
+                        var countOfFlights = (int)flights.stream().filter(flight -> flight.getPlane().getId() == selectedPlane.getId()).count();
+
+                        if(countOfFlights != 0) {
+                            Utils.showWarning("Nem törölhető a repülőgép típus, amíg van hozzátartozó járat!");
+                        } else {
+                            var type = Utils.showConfirmation();
+
+                            type.ifPresent(buttonType -> {
+                                if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
+                                    PlaneController.getInstance().delete(selectedPlane.getId());
+                                    refreshTable();
+                                }
+                            });
+
+                        }
                     });
 
                     editBtn.setOnAction(event -> {
@@ -111,5 +122,11 @@ public class PlaneWindowController implements Initializable {
             };
 
         });
+    }
+
+
+    public void refreshTable() {
+        var planes = PlaneController.getInstance().getAll();
+        table.setItems(FXCollections.observableList(planes));
     }
 }
