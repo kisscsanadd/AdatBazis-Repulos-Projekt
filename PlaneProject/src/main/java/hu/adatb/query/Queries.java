@@ -49,6 +49,7 @@ public class Queries {
     public static final String DELETE_HOTEL = "DELETE FROM SZALLODA WHERE ID = ?";
     public static final String DELETE_FLIGHT = "DELETE FROM JARAT WHERE ID = ?";
     public static final String DELETE_AIRPORT = "DELETE FROM REPULOTER WHERE ID = ?";
+    public static final String DELETE_ALERT = "DELETE FROM FIGYELMEZTETES WHERE ID = ?";
 
 
 }

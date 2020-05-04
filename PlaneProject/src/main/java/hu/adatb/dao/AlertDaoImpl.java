@@ -60,6 +60,21 @@ public class AlertDaoImpl implements AlertDao {
 
     @Override
     public boolean delete(int id) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(DELETE_ALERT)){
+
+            st.setInt(1, id);
+
+            int res = st.executeUpdate();
+
+            if (res == 1) {
+                System.out.println(App.CurrentTime() + "Deleted alert with " + id + " id");
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(App.CurrentTime() + "Failed delete alert");
+        }
+
         return false;
     }
 

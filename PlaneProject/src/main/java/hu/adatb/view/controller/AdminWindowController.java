@@ -62,7 +62,7 @@ public class AdminWindowController {
 
     @FXML
     public void getAlertScreen(ActionEvent actionEvent) {
-        System.out.println(App.CurrentTime() + " Opened alert screen");
+        System.out.println(App.CurrentTime() + "Opened alert screen");
         Pane view = MainFxmlLoader.getPage("AlertScreen.fxml", true);
         SetTitle(actionEvent, "Figyelmeztetés");
         mainPane.setCenter(view);

@@ -2,17 +2,17 @@ package hu.adatb.view.controller;
 
 import hu.adatb.App;
 import hu.adatb.controller.AlertController;
+import hu.adatb.controller.FlightAlertRelationController;
+import hu.adatb.controller.FlightController;
 import hu.adatb.controller.PlaneController;
 import hu.adatb.model.Alert;
+import hu.adatb.model.FlightAlertRelation;
 import hu.adatb.model.Plane;
 import hu.adatb.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.image.Image;
@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class AlertWindowController implements Initializable {
 
@@ -33,6 +34,8 @@ public class AlertWindowController implements Initializable {
 
     @FXML
     private TableColumn<Alert, Void> actionsCol;
+
+    public List<FlightAlertRelation> relations;
 
     @FXML
     public void addAlert() {
@@ -46,19 +49,11 @@ public class AlertWindowController implements Initializable {
         refreshTable();
     }
 
-    public AlertWindowController() {
-    }
-
-    public void refreshTable() {
-        List<Alert> list = AlertController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Alert> list = AlertController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
+        relations = FlightAlertRelationController.getInstance().getAll();
 
+        refreshTable();
         InitTable();
     }
 
@@ -74,8 +69,16 @@ public class AlertWindowController implements Initializable {
                     editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
 
                     deleteBtn.setOnAction(event -> {
-                        Alert a = getTableView().getItems().get(getIndex());
-                        refreshTable();
+                        Alert selectedAlert = getTableView().getItems().get(getIndex());
+
+                        var type = Utils.showConfirmation("Törlődni fognak a figyelmeztetéshez tartozó járat\n figyelmezetések is!");
+
+                        type.ifPresent(buttonType ->  {
+                            if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
+                                DeleteAlert(selectedAlert);
+                                refreshTable();
+                            }
+                        });
                     });
 
                     editBtn.setOnAction(event -> {
@@ -108,5 +111,23 @@ public class AlertWindowController implements Initializable {
             };
 
         });
+    }
+
+    public void DeleteAlert(Alert selectedAlert) {
+        var filteredRelations = relations.stream().filter(relation -> relation.getAlert().getId() == selectedAlert.getId())
+                .collect(Collectors.toList());
+
+        if(filteredRelations.size() != 0) {
+            for(var filteredRelation : filteredRelations) {
+                FlightAlertRelationController.getInstance().delete(filteredRelation);
+            }
+        }
+
+        AlertController.getInstance().delete(selectedAlert.getId());
+    }
+
+    public void refreshTable() {
+        var alerts = AlertController.getInstance().getAll();
+        table.setItems(FXCollections.observableList(alerts));
     }
 }
