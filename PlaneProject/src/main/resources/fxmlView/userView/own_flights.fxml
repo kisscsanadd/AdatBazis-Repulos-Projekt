@@ -6,18 +6,18 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.OwnFlightController">
    <children>
-      <TableView fx:id="table" layoutX="200.0" layoutY="91.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="table" layoutX="200.0" layoutY="26.0" prefHeight="374.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
         <columns>
-            <TableColumn fx:id="fromCol" editable="false" sortable="false" prefWidth="235.0" text="Honnan" />
-            <TableColumn fx:id="toCol" editable="false" sortable="false" prefWidth="235.0" text="Hova" />
+            <TableColumn fx:id="fromCol" editable="false" prefWidth="235.0" sortable="false" text="Honnan" />
+            <TableColumn fx:id="toCol" editable="false" prefWidth="235.0" sortable="false" text="Hova" />
             <TableColumn fx:id="whenCol" prefWidth="155.0" text="Indulási idő" />
             <TableColumn fx:id="timeCol" prefWidth="120.0" text="Menetidő" />
-            <TableColumn fx:id="withCol" editable="false" sortable="false" prefWidth="170.0" text="Repülőgép" />
-            <TableColumn fx:id="maxSeatCol" editable="false" sortable="false" prefWidth="100.0" text="Max helyek" />
-            <TableColumn fx:id="seatCol" editable="false" sortable="false" prefWidth="100.0" text="Szabad helyek" />
-            <TableColumn fx:id="ticketCol" editable="false" sortable="false" prefWidth="90.0" text="Jegyek száma" />
+            <TableColumn fx:id="withCol" editable="false" prefWidth="170.0" sortable="false" text="Repülőgép" />
+            <TableColumn fx:id="maxSeatCol" editable="false" prefWidth="100.0" sortable="false" text="Max helyek" />
+            <TableColumn fx:id="seatCol" editable="false" prefWidth="100.0" sortable="false" text="Szabad helyek" />
+            <TableColumn fx:id="ticketCol" editable="false" prefWidth="90.0" sortable="false" text="Jegyek száma" />
             <TableColumn fx:id="alertCol" editable="false" prefWidth="30.0" sortable="false" />
-            <TableColumn fx:id="actionCol" editable="false" sortable="false" prefWidth="153.0" text="Művelet" />
+            <TableColumn fx:id="actionCol" editable="false" prefWidth="153.0" sortable="false" text="Művelet" />
         </columns>
       </TableView>
       <Label fx:id="noBookingsLabel" layoutX="127.0" layoutY="95.0" text="Nincs egyetlen foglalásod sem">
@@ -25,5 +25,6 @@
             <Font name="Cambria" size="27.0" />
          </font>
       </Label>
+      <Label fx:id="countOfBookingsLabel" layoutX="14.0" layoutY="6.0" text="Foglalások száma: 0" />
    </children>
 </AnchorPane>

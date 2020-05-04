@@ -62,14 +62,16 @@ public class OwnFlightController implements Initializable {
     private TableColumn<Booking, Void> actionCol;
 
     @FXML
-    Label noBookingsLabel;
+    private Label noBookingsLabel;
+
+    @FXML
+    private Label countOfBookingsLabel;
 
     public List<Booking> bookings;
     private List<Airport> airports;
     public List<Hotel> hotels;
 
     public static String toAirportHotelNames;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -201,6 +203,10 @@ public class OwnFlightController implements Initializable {
         for (var booking : deletedBookings) {
             var tickets = GetById.GetTicketNumberByBookingId(booking.getId());
 
+            if(tickets == -1) {
+                return;
+            }
+
             if(!BookingController.getInstance().delete(booking)) {
                 try {
                     throw new Exception("Nem sikerült lekérni a foglaláshoz tartozó jegyeket");
@@ -248,6 +254,9 @@ public class OwnFlightController implements Initializable {
             noBookingsLabel.setVisible(true);
             table.setVisible(false);
         }
+
+        var countOfBookings = GetById.GetBookingNumberByUserId(LoginUserController.getUser().getId());
+        countOfBookingsLabel.setText("Foglalások száma: " + countOfBookings);
 
         table.setItems(FXCollections.observableList(filteredBookings));
     }

@@ -260,7 +260,6 @@ public class GetById {
     }
 
     public static int GetTicketNumberByBookingId(int booking_id) {
-        int ticketNumber = 0;
         try (Connection conn = Database.ConnectionToDatabase();
              PreparedStatement st = conn.prepareStatement(SELECT_TICKET_BY_BOOKING_ID)){
 
@@ -268,14 +267,33 @@ public class GetById {
 
             ResultSet rs = st.executeQuery();
 
-            while(rs.next()) {
-                ticketNumber++;
+            if(rs.next()) {
+                return rs.getInt("jegyek_szama");
             }
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        return ticketNumber;
+        return -1;
+    }
+
+    public static int GetBookingNumberByUserId(int user_id) {
+        try (Connection conn = Database.ConnectionToDatabase();
+             PreparedStatement st = conn.prepareStatement(SELECT_BOOKING_COUNT_BY_USER_ID)){
+
+            st.setInt(1, user_id);
+
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()) {
+                return rs.getInt("foglalasok_szama");
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 }
