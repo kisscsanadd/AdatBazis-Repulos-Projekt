@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -79,7 +80,7 @@ public class EditFlightController implements Initializable {
 
         minuteSpinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(
-                        0, 60, selectedFlight.getDateTime().toLocalTime().getMinute(), 15));
+                        0, 59, selectedFlight.getDateTime().toLocalTime().getMinute(), 15));
 
         dateBegin.setValue(selectedFlight.getDateTime().toLocalDate());
     }
@@ -144,8 +145,9 @@ public class EditFlightController implements Initializable {
         var scene = new Scene(root);
         stage.getIcons().add(new Image(App.class.getResourceAsStream("/pictures/icon.jpg")));
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("Figyelmeztetés hozzáadása járathoz");
-        stage.show();
+        stage.showAndWait();
     }
 
     public static void setSelectedFlight(Flight flight) {

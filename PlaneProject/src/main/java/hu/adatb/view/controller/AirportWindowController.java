@@ -2,7 +2,9 @@ package hu.adatb.view.controller;
 
 import hu.adatb.App;
 import hu.adatb.controller.AirportController;
+import hu.adatb.controller.FlightController;
 import hu.adatb.model.Airport;
+import hu.adatb.model.Flight;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -39,10 +41,7 @@ public class AirportWindowController implements Initializable {
     @FXML
     private TableColumn<Airport, Void> actionsCol;
 
-    public void refreshTable() {
-        List<Airport> list = AirportController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
-    }
+    public List<Flight> flights;
 
     @FXML
     public void addAirport() {
@@ -54,13 +53,10 @@ public class AirportWindowController implements Initializable {
         refreshTable();
     }
 
-    public AirportWindowController() {
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Airport> list = AirportController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
+        flights = FlightController.getInstance().getAll();
+        refreshTable();
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         longitudeCol.setCellValueFactory(new PropertyValueFactory<>("longitude"));
@@ -74,9 +70,8 @@ public class AirportWindowController implements Initializable {
                     deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
 
                     deleteBtn.setOnAction(event -> {
-                        Airport a = getTableView().getItems().get(getIndex());
-                        deleteAirport(a);
-                        refreshTable();
+                        Airport selectedAirport = getTableView().getItems().get(getIndex());
+                        DeleteAirport(selectedAirport);
                     });
                 }
 
@@ -97,12 +92,26 @@ public class AirportWindowController implements Initializable {
         });
     }
 
-    private void editAirport(Airport a) {
-
-        // TODO - create edit
+    public void refreshTable() {
+        var airports = AirportController.getInstance().getAll();
+        table.setItems(FXCollections.observableList(airports));
     }
 
-    private void deleteAirport(Airport a){
-        // TODO - create delete
+    public void DeleteAirport(Airport selectedAirport){
+        var countOfFlights = (int)flights.stream().filter(flight -> flight.getFromAirport().getId() == selectedAirport.getId()
+                || flight.getToAirport().getId() == selectedAirport.getId()).count();
+
+        if(countOfFlights != 0) {
+            Utils.showWarning("Ehhez a reptérhez tartozik még járat\nTörölni csak akkor lehet ha már nem lesz forglama");
+        } else {
+            var type = Utils.showConfirmation();
+
+            type.ifPresent(buttonType -> {
+                if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
+                    AirportController.getInstance().delete(selectedAirport.getId());
+                    refreshTable();
+                }
+            });
+        }
     }
 }

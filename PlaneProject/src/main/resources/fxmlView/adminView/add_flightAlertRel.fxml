@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="262.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.AddFlightAlertRelationController">
+<AnchorPane prefHeight="300.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.AddFlightAlertRelationController">
    <children>
       <Label layoutX="31.0" layoutY="25.0" text="Egy járathoz maximum 3 figyelmeztetés adható meg">
          <font>

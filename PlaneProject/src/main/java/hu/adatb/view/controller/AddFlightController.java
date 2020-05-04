@@ -118,7 +118,7 @@ public class AddFlightController implements Initializable {
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 24));
 
         minuteSpinner.setValueFactory(
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 60));
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59,0, 15));
     }
 
     private void FieldValidator() {
