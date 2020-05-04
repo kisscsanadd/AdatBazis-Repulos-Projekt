@@ -5,9 +5,6 @@ import hu.adatb.query.Database;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 import static hu.adatb.query.Queries.*;
 
@@ -261,7 +258,7 @@ public class GetById {
 
     public static int GetTicketNumberByBookingId(int booking_id) {
         try (Connection conn = Database.ConnectionToDatabase();
-             PreparedStatement st = conn.prepareStatement(SELECT_TICKET_BY_BOOKING_ID)){
+             PreparedStatement st = conn.prepareStatement(SELECT_TICKET_COUNT_BY_BOOKING_ID)){
 
             st.setInt(1, booking_id);
 

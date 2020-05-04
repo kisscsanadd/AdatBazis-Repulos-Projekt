@@ -26,7 +26,7 @@ public class Queries {
     public static final String SELECT_TICKET = "SELECT * FROM JEGY";
     public static final String SELECT_FLIGHT_ALERT_RELATION = "SELECT * FROM JARATFIGYREL";
 
-    public static final String SELECT_TICKET_BY_BOOKING_ID = "SELECT COUNT(*) AS jegyek_szama FROM JEGY WHERE FOGLALASI_ID = ?";
+    public static final String SELECT_TICKET_COUNT_BY_BOOKING_ID = "SELECT COUNT(*) AS jegyek_szama FROM JEGY WHERE FOGLALASI_ID = ?";
     public static final String SELECT_BOOKING_COUNT_BY_USER_ID = "SELECT COUNT(*) AS foglalasok_szama FROM FOGLALAS WHERE FELH_ID = (SELECT ID FROM FELHASZNALO WHERE ID = ?)";
 
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
