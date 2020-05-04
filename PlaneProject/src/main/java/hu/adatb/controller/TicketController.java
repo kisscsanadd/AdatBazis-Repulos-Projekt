@@ -26,7 +26,11 @@ public class TicketController {
         return dao.getAll();
     }
 
-    public int getCountOfTicketInMonth(int month) {
-        return dao.getCountOfTicketInMonth(month);
+    public int getCountOfAllTicketInMonth(int month) {
+        return dao.getCountOfAllTicketInMonth(month);
+    }
+
+    public int getCountOfSoldTicketInMonth(int month) {
+        return dao.getCountOfSoldTicketInMonth(month);
     }
 }

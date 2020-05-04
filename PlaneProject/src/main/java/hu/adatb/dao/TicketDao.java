@@ -12,5 +12,7 @@ public interface TicketDao {
 
     public List<Ticket> getAll();
 
-    public int getCountOfTicketInMonth(int month);
+    public int getCountOfAllTicketInMonth(int month);
+
+    public int getCountOfSoldTicketInMonth(int month);
 }
