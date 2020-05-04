@@ -286,7 +286,6 @@ public class GetById {
             if(rs.next()) {
                 return rs.getInt("foglalasok_szama");
             }
-
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

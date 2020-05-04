@@ -11,4 +11,6 @@ public interface TicketDao {
     public boolean delete(int id);
 
     public List<Ticket> getAll();
+
+    public int getCountOfTicketInMonth(int month);
 }

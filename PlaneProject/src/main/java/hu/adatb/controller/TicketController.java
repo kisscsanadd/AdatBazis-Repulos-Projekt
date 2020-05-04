@@ -25,4 +25,8 @@ public class TicketController {
     public List<Ticket> getAll() {
         return dao.getAll();
     }
+
+    public int getCountOfTicketInMonth(int month) {
+        return dao.getCountOfTicketInMonth(month);
+    }
 }

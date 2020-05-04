@@ -83,4 +83,24 @@ public class TicketDaoImpl implements TicketDao {
 
         return result;
     }
+
+    @Override
+    public int getCountOfTicketInMonth(int month) {
+        try(Connection conn = Database.ConnectionToDatabase();
+            PreparedStatement st = conn.prepareStatement(SELECT_SOLD_TICKET_NUMBER_IN_MONTH)) {
+
+            st.setInt(1, month);
+
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()) {
+                return rs.getInt("eladott_jegyek_szama");
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
 }

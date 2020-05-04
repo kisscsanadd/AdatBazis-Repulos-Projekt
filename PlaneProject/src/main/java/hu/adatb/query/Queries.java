@@ -28,6 +28,7 @@ public class Queries {
 
     public static final String SELECT_TICKET_COUNT_BY_BOOKING_ID = "SELECT COUNT(*) AS jegyek_szama FROM JEGY WHERE FOGLALASI_ID = ?";
     public static final String SELECT_BOOKING_COUNT_BY_USER_ID = "SELECT COUNT(*) AS foglalasok_szama FROM FOGLALAS WHERE FELH_ID = ?";
+    public static final String SELECT_SOLD_TICKET_NUMBER_IN_MONTH = "SELECT COUNT(*) AS eladott_jegyek_szama FROM JEGY LEFT JOIN FOGLALAS ON foglalasi_id = foglalas.id LEFT JOIN JARAT ON jarat_id = jarat.id WHERE EXTRACT(MONTH FROM felszallas_datum) = ? AND EXTRACT (YEAR FROM felszallas_datum) = (SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL)";
 
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
     public static final String INSERT_PLANE = "INSERT INTO REPULOGEP (nev, sebesseg, ferohely) values(?, ?, ?)";
