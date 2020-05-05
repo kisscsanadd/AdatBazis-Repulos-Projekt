@@ -2,17 +2,12 @@ package hu.adatb.dao;
 
 import hu.adatb.App;
 import hu.adatb.model.Flight;
-import hu.adatb.model.Plane;
 import hu.adatb.query.Database;
 import hu.adatb.utils.GetById;
-import hu.adatb.utils.GetByIdException;
 import hu.adatb.utils.Utils;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 

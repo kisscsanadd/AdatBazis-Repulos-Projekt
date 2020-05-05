@@ -31,7 +31,10 @@
             </opaqueInsets>
         </Button>
         <Button fx:id="saveButton" defaultButton="true" mnemonicParsing="false" onAction="#save" text="OK" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-        <Label fx:id="errorMsgName" prefHeight="17.0" prefWidth="219.0" styleClass="warning" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label fx:id="errorMsgName" prefHeight="18.0" prefWidth="155.0" styleClass="warning" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="100.0" />
+         </GridPane.margin></Label>
       <ComboBox fx:id="cities" promptText="Válassz várost" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     </children>
     <opaqueInsets>

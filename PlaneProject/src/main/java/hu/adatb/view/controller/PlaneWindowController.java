@@ -46,7 +46,7 @@ public class PlaneWindowController implements Initializable {
         try {
             App.DialogDeliver("dialog_plane.fxml", "Repülőgép hozzáadás");
         } catch (IOException e) {
-            Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
+            Utils.showWarning("Nem sikerült megnyitni a repülőgép hozzáadása ablakot");
         }
         refreshTable();
     }

@@ -40,9 +40,6 @@ public class DialogPlaneController implements Initializable {
     private static Plane selectedPlane;
     private static boolean isAdd;
 
-    public DialogPlaneController() {
-    }
-
     @FXML
     private void save(ActionEvent event) {
         if (PlaneController.getInstance().add(plane)) {
@@ -55,6 +52,8 @@ public class DialogPlaneController implements Initializable {
 
     @FXML
     public void edit(ActionEvent event) {
+        plane.setId(selectedPlane.getId());
+
         if (PlaneController.getInstance().update(plane)) {
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.close();
@@ -116,7 +115,6 @@ public class DialogPlaneController implements Initializable {
         plane.nameProperty().bind(nameField.textProperty());
         plane.seatsProperty().bind(seatsSpinner.valueProperty());
         plane.speedProperty().bind(speedSpinner.valueProperty());
-        plane.setId(selectedPlane.getId());
     }
 
     public static void setIsAdd(boolean isAdd) {
