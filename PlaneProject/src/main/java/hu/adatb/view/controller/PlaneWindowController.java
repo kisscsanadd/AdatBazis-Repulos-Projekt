@@ -63,64 +63,61 @@ public class PlaneWindowController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         speedCol.setCellValueFactory(new PropertyValueFactory<>("speed"));
         seatsCol.setCellValueFactory(new PropertyValueFactory<>("seats"));
-        actionsCol.setCellFactory(param -> {
-            return new TableCell<>() {
-                private final Button deleteBtn = new Button();
-                private final Button editBtn = new Button();
+        actionsCol.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteBtn = new Button();
+            private final Button editBtn = new Button();
 
-                {
-                    deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
-                    editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
+            {
+                deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+                editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
 
-                    deleteBtn.setOnAction(event -> {
-                        Plane selectedPlane = getTableView().getItems().get(getIndex());
+                deleteBtn.setOnAction(event -> {
+                    Plane selectedPlane = getTableView().getItems().get(getIndex());
 
-                        var countOfFlights = (int)flights.stream().filter(flight -> flight.getPlane().getId() == selectedPlane.getId()).count();
+                    var countOfFlights = (int)flights.stream().filter(flight -> flight.getPlane().getId() == selectedPlane.getId()).count();
 
-                        if(countOfFlights != 0) {
-                            Utils.showWarning("Nem törölhető a repülőgép típus, amíg van hozzátartozó járat!");
-                        } else {
-                            var type = Utils.showConfirmation();
-
-                            type.ifPresent(buttonType -> {
-                                if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
-                                    PlaneController.getInstance().delete(selectedPlane.getId());
-                                    refreshTable();
-                                }
-                            });
-
-                        }
-                    });
-
-                    editBtn.setOnAction(event -> {
-                        var selectedPlane = getTableView().getItems().get(getIndex());
-
-                        DialogPlaneController.setSelectedPlane(selectedPlane);
-                        DialogPlaneController.setIsAdd(false);
-
-                        try {
-                            App.DialogDeliver("dialog_plane.fxml", "Repülőgép módosítás","style.css");
-                        } catch (IOException e) {
-                            Utils.showWarning("Nem sikerült megnyitni a repülőgép módosító ablakot");
-                        }
-                        refreshTable();
-                    });
-                }
-
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
+                    if(countOfFlights != 0) {
+                        Utils.showWarning("Nem törölhető a repülőgép típus, amíg van hozzátartozó járat!");
                     } else {
-                        HBox container = new HBox();
-                        container.setSpacing(10);
-                        container.getChildren().addAll(editBtn, deleteBtn);
-                        setGraphic(container);
-                    }
-                }
-            };
+                        var type = Utils.showConfirmation();
 
+                        type.ifPresent(buttonType -> {
+                            if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
+                                PlaneController.getInstance().delete(selectedPlane.getId());
+                                refreshTable();
+                            }
+                        });
+
+                    }
+                });
+
+                editBtn.setOnAction(event -> {
+                    var selectedPlane = getTableView().getItems().get(getIndex());
+
+                    DialogPlaneController.setSelectedPlane(selectedPlane);
+                    DialogPlaneController.setIsAdd(false);
+
+                    try {
+                        App.DialogDeliver("dialog_plane.fxml", "Repülőgép módosítás","style.css");
+                    } catch (IOException e) {
+                        Utils.showWarning("Nem sikerült megnyitni a repülőgép módosító ablakot");
+                    }
+                    refreshTable();
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox container = new HBox();
+                    container.setSpacing(10);
+                    container.getChildren().addAll(editBtn, deleteBtn);
+                    setGraphic(container);
+                }
+            }
         });
     }
 

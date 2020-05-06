@@ -59,57 +59,54 @@ public class AlertWindowController implements Initializable {
 
     private void InitTable() {
         messageCol.setCellValueFactory(new PropertyValueFactory<>("message"));
-        actionsCol.setCellFactory(param -> {
-            return new TableCell<>() {
-                private final Button deleteBtn = new Button();
-                private final Button editBtn = new Button();
+        actionsCol.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteBtn = new Button();
+            private final Button editBtn = new Button();
 
-                {
-                    deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
-                    editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
+            {
+                deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+                editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
 
-                    deleteBtn.setOnAction(event -> {
-                        Alert selectedAlert = getTableView().getItems().get(getIndex());
+                deleteBtn.setOnAction(event -> {
+                    Alert selectedAlert = getTableView().getItems().get(getIndex());
 
-                        var type = Utils.showConfirmation("Törlődni fognak a figyelmeztetéshez tartozó járat\n figyelmezetések is!");
+                    var type = Utils.showConfirmation("Törlődni fognak a figyelmeztetéshez tartozó járat\n figyelmezetések is!");
 
-                        type.ifPresent(buttonType ->  {
-                            if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
-                                DeleteAlert(selectedAlert);
-                                refreshTable();
-                            }
-                        });
-                    });
-
-                    editBtn.setOnAction(event -> {
-                        var selectedAlert = getTableView().getItems().get(getIndex());
-
-                        DialogAlertController.setSelectedAlert(selectedAlert);
-                        DialogAlertController.setIsAdd(false);
-
-                        try {
-                            App.DialogDeliver("dialog_alert.fxml", "Figyelmeztetés módosítás", "style.css");
-                        } catch (IOException e) {
-                            Utils.showWarning("Nem sikerült megnyitni a figyelmeztetés módosító ablakot");
+                    type.ifPresent(buttonType ->  {
+                        if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
+                            DeleteAlert(selectedAlert);
+                            refreshTable();
                         }
-                        refreshTable();
                     });
-                }
+                });
 
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-                    } else {
-                        HBox container = new HBox();
-                        container.setSpacing(10);
-                        container.getChildren().addAll(editBtn, deleteBtn);
-                        setGraphic(container);
+                editBtn.setOnAction(event -> {
+                    var selectedAlert = getTableView().getItems().get(getIndex());
+
+                    DialogAlertController.setSelectedAlert(selectedAlert);
+                    DialogAlertController.setIsAdd(false);
+
+                    try {
+                        App.DialogDeliver("dialog_alert.fxml", "Figyelmeztetés módosítás", "style.css");
+                    } catch (IOException e) {
+                        Utils.showWarning("Nem sikerült megnyitni a figyelmeztetés módosító ablakot");
                     }
-                }
-            };
+                    refreshTable();
+                });
+            }
 
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox container = new HBox();
+                    container.setSpacing(10);
+                    container.getChildren().addAll(editBtn, deleteBtn);
+                    setGraphic(container);
+                }
+            }
         });
     }
 

@@ -68,58 +68,55 @@ public class HotelWindowController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         starsCol.setCellValueFactory(new PropertyValueFactory<>("stars"));
         cityCol.setCellValueFactory(cityName -> new SimpleStringProperty(cityName.getValue().getCity().getName()));
-        actionsCol.setCellFactory(param -> {
-            return new TableCell<>() {
-                private final Button deleteBtn = new Button();
-                private final Button editBtn = new Button();
+        actionsCol.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteBtn = new Button();
+            private final Button editBtn = new Button();
 
-                {
-                    deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
-                    editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
+            {
+                deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+                editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
 
-                    deleteBtn.setOnAction(event -> {
-                        Hotel hotel = getTableView().getItems().get(getIndex());
+                deleteBtn.setOnAction(event -> {
+                    Hotel hotel = getTableView().getItems().get(getIndex());
 
-                        var type = Utils.showConfirmation();
+                    var type = Utils.showConfirmation();
 
-                        type.ifPresent(buttonType -> {
-                            if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
-                                HotelController.getInstance().delete(hotel.getId());
-                            }
-                        });
-
-                        refreshTable();
-                    });
-
-                    editBtn.setOnAction(event -> {
-                        var selectedHotel = getTableView().getItems().get(getIndex());
-
-                        DialogHotelController.setSelectedHotel(selectedHotel);
-                        DialogHotelController.setIsAdd(false);
-
-                        try {
-                            App.DialogDeliver("dialog_hotel.fxml", "Szálloda módosítás", "style.css");
-                        } catch (IOException e) {
-                            Utils.showWarning("Nem sikerült megnyitni a szálloda módosító ablakot");
+                    type.ifPresent(buttonType -> {
+                        if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
+                            HotelController.getInstance().delete(hotel.getId());
                         }
-                        refreshTable();
                     });
-                }
 
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-                    } else {
-                        HBox container = new HBox();
-                        container.setSpacing(10);
-                        container.getChildren().addAll(editBtn, deleteBtn);
-                        setGraphic(container);
+                    refreshTable();
+                });
+
+                editBtn.setOnAction(event -> {
+                    var selectedHotel = getTableView().getItems().get(getIndex());
+
+                    DialogHotelController.setSelectedHotel(selectedHotel);
+                    DialogHotelController.setIsAdd(false);
+
+                    try {
+                        App.DialogDeliver("dialog_hotel.fxml", "Szálloda módosítás", "style.css");
+                    } catch (IOException e) {
+                        Utils.showWarning("Nem sikerült megnyitni a szálloda módosító ablakot");
                     }
-                }
-            };
+                    refreshTable();
+                });
+            }
 
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox container = new HBox();
+                    container.setSpacing(10);
+                    container.getChildren().addAll(editBtn, deleteBtn);
+                    setGraphic(container);
+                }
+            }
         });
     }
 }

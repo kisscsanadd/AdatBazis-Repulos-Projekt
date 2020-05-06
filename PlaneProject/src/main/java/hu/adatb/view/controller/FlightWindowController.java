@@ -95,55 +95,52 @@ public class FlightWindowController implements Initializable {
                                 __.getValue().getPlane())));
         withCol.setCellValueFactory(__-> new SimpleStringProperty(__.getValue().getPlane().getName()));
         seatCol.setCellValueFactory(new PropertyValueFactory<>("freeSeats"));
-        actionsCol.setCellFactory(param -> {
-            return new TableCell<>() {
-                private final Button deleteBtn = new Button();
-                private final Button editBtn = new Button();
+        actionsCol.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteBtn = new Button();
+            private final Button editBtn = new Button();
 
-                {
-                    deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
-                    editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
+            {
+                deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+                editBtn.setEffect(new ImageInput(new Image("pictures/edit.png")));
 
-                    deleteBtn.setOnAction(event -> {
-                        Flight flight = getTableView().getItems().get(getIndex());
+                deleteBtn.setOnAction(event -> {
+                    Flight flight = getTableView().getItems().get(getIndex());
 
-                        var type = Utils.showConfirmation("Törlődni fog minden foglalás és figyelmezetés is!");
+                    var type = Utils.showConfirmation("Törlődni fog minden foglalás és figyelmezetés is!");
 
-                        type.ifPresent(buttonType -> {
-                            if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
-                                DeleteFlight(flight);
-                            }
-                        });
-                    });
-
-                    editBtn.setOnAction(event -> {
-                        Flight flight = getTableView().getItems().get(getIndex());
-                        EditFlightController.setSelectedFlight(flight);
-
-                        try {
-                            App.DialogDeliver("edit_flight.fxml", "Járat módosítás");
-                        } catch (IOException e) {
-                            Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
+                    type.ifPresent(buttonType -> {
+                        if(buttonType.getButtonData() == ButtonBar.ButtonData.YES) {
+                            DeleteFlight(flight);
                         }
-
-                        refreshTable();
                     });
-            }
+                });
 
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-                    } else {
-                        HBox container = new HBox();
-                        container.setSpacing(10);
-                        container.getChildren().addAll(editBtn, deleteBtn);
-                        setGraphic(container);
+                editBtn.setOnAction(event -> {
+                    Flight flight = getTableView().getItems().get(getIndex());
+                    EditFlightController.setSelectedFlight(flight);
+
+                    try {
+                        App.DialogDeliver("edit_flight.fxml", "Járat módosítás");
+                    } catch (IOException e) {
+                        Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
                     }
-                }
-            };
 
+                    refreshTable();
+                });
+        }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox container = new HBox();
+                    container.setSpacing(10);
+                    container.getChildren().addAll(editBtn, deleteBtn);
+                    setGraphic(container);
+                }
+            }
         });
     }
 

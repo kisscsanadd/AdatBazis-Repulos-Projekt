@@ -62,33 +62,30 @@ public class AirportWindowController implements Initializable {
         longitudeCol.setCellValueFactory(new PropertyValueFactory<>("longitude"));
         latitudeCol.setCellValueFactory(new PropertyValueFactory<>("latitude"));
         cityCol.setCellValueFactory(cityName -> new SimpleStringProperty(cityName.getValue().getCity().getName()));
-        actionsCol.setCellFactory(param -> {
-            return new TableCell<>() {
-                private final Button deleteBtn = new Button();
+        actionsCol.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteBtn = new Button();
 
-                {
-                    deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
+            {
+                deleteBtn.setEffect(new ImageInput(new Image("pictures/delete.png")));
 
-                    deleteBtn.setOnAction(event -> {
-                        Airport selectedAirport = getTableView().getItems().get(getIndex());
-                        DeleteAirport(selectedAirport);
-                    });
+                deleteBtn.setOnAction(event -> {
+                    Airport selectedAirport = getTableView().getItems().get(getIndex());
+                    DeleteAirport(selectedAirport);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox container = new HBox();
+                    container.setSpacing(10);
+                    container.getChildren().addAll(deleteBtn);
+                    setGraphic(container);
                 }
-
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
-                    } else {
-                        HBox container = new HBox();
-                        container.setSpacing(10);
-                        container.getChildren().addAll(deleteBtn);
-                        setGraphic(container);
-                    }
-                }
-            };
-
+            }
         });
     }
 
