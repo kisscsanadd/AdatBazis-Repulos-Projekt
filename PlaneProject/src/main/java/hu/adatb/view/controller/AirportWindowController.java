@@ -50,7 +50,6 @@ public class AirportWindowController implements Initializable {
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
-        refreshTable();
     }
 
     @Override
@@ -89,11 +88,6 @@ public class AirportWindowController implements Initializable {
         });
     }
 
-    public void refreshTable() {
-        var airports = AirportController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(airports));
-    }
-
     public void DeleteAirport(Airport selectedAirport){
         var countOfFlights = (int)flights.stream().filter(flight -> flight.getFromAirport().getId() == selectedAirport.getId()
                 || flight.getToAirport().getId() == selectedAirport.getId()).count();
@@ -110,5 +104,10 @@ public class AirportWindowController implements Initializable {
                 }
             });
         }
+    }
+
+    public void refreshTable() {
+        table.setItems(FXCollections.observableList(
+                AirportController.getInstance().getAll()));
     }
 }

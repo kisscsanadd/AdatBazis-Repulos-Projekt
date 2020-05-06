@@ -124,7 +124,7 @@ public class AlertWindowController implements Initializable {
     }
 
     public void refreshTable() {
-        var alerts = AlertController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(alerts));
+        table.setItems(FXCollections.observableList(
+                AlertController.getInstance().getAll()));
     }
 }

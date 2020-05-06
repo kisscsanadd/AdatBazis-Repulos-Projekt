@@ -94,20 +94,6 @@ public class FlightListController implements Initializable {
     LocalDate selectedDateBegin;
     LocalDate selectedDateEnd;
 
-    public void refreshTable() {
-        filteredFlights = flights.stream()
-                .filter(flight-> flight.getFromAirport().getName().equals(selectedFromAirport)
-                        && flight.getToAirport().getName().equals(selectedToAirport)
-                        && ((flight.getDateTime().toLocalDate()).isAfter(selectedDateBegin)
-                        || (flight.getDateTime().toLocalDate()).isEqual(selectedDateBegin))
-                        && ((flight.getDateTime().toLocalDate()).isBefore(selectedDateEnd)
-                        || (flight.getDateTime().toLocalDate()).isEqual(selectedDateEnd))
-                        && flight.getFreeSeats() > 0
-                ).collect(Collectors.toList());
-
-        table.setItems(FXCollections.observableList(filteredFlights));
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         flights = FlightController.getInstance().getAll();
@@ -245,6 +231,19 @@ public class FlightListController implements Initializable {
         }
     }
 
+    public void refreshTable() {
+        filteredFlights = flights.stream()
+                .filter(flight-> flight.getFromAirport().getName().equals(selectedFromAirport)
+                        && flight.getToAirport().getName().equals(selectedToAirport)
+                        && ((flight.getDateTime().toLocalDate()).isAfter(selectedDateBegin)
+                        || (flight.getDateTime().toLocalDate()).isEqual(selectedDateBegin))
+                        && ((flight.getDateTime().toLocalDate()).isBefore(selectedDateEnd)
+                        || (flight.getDateTime().toLocalDate()).isEqual(selectedDateEnd))
+                        && flight.getFreeSeats() > 0
+                ).collect(Collectors.toList());
+
+        table.setItems(FXCollections.observableList(filteredFlights));
+    }
 
     public static Flight getBookedFlight() {
         return bookedFlight;

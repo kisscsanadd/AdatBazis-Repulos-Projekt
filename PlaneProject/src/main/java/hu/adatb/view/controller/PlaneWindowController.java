@@ -48,7 +48,6 @@ public class PlaneWindowController implements Initializable {
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a repülőgép hozzáadása ablakot");
         }
-        refreshTable();
     }
 
     @Override
@@ -121,9 +120,8 @@ public class PlaneWindowController implements Initializable {
         });
     }
 
-
     public void refreshTable() {
-        var planes = PlaneController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(planes));
+        table.setItems(FXCollections.observableList(
+                PlaneController.getInstance().getAll()));
     }
 }

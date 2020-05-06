@@ -45,15 +45,6 @@ public class HotelWindowController implements Initializable {
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
-        refreshTable();
-    }
-
-    public HotelWindowController() {
-    }
-
-    public void refreshTable() {
-        List<Hotel> list = HotelController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
     }
 
     @Override
@@ -118,5 +109,10 @@ public class HotelWindowController implements Initializable {
                 }
             }
         });
+    }
+
+    public void refreshTable() {
+        table.setItems(FXCollections.observableList
+                (HotelController.getInstance().getAll()));
     }
 }

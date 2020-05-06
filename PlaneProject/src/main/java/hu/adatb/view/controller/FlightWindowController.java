@@ -59,12 +59,6 @@ public class FlightWindowController implements Initializable {
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
-        refreshTable();
-    }
-
-    public void refreshTable() {
-        List<Flight> list = FlightController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
     }
 
     @Override
@@ -169,6 +163,10 @@ public class FlightWindowController implements Initializable {
                 refreshTable();
             }
         }
+    }
 
+    public void refreshTable() {
+        table.setItems(FXCollections.observableList(
+                FlightController.getInstance().getAll()));
     }
 }
