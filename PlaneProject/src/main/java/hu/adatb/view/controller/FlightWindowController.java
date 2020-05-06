@@ -46,9 +46,6 @@ public class FlightWindowController implements Initializable {
     private TableColumn<Flight, Integer> seatCol;
 
     @FXML
-    private TableColumn<Flight, String> hotelCol;
-
-    @FXML
     private TableColumn<Flight, Void> actionsCol;
 
     private List<Airport> airports;
@@ -151,23 +148,23 @@ public class FlightWindowController implements Initializable {
         var deletedRelations = relations.stream().filter(relation -> relation.getFlight().getId() == deletedFlight.getId())
                 .collect(Collectors.toList());
 
-        boolean canDeleteFlight = true;
+        boolean shouldDeleteFlight = true;
 
         for(var deletedRelation : deletedRelations) {
             if(!FlightAlertRelationController.getInstance().delete(deletedRelation)) {
                 Utils.showWarning("Nem sikerült törölni egy figyelmeztetést ami a járathoz tartozik");
-                canDeleteFlight = false;
+                shouldDeleteFlight = false;
             };
         }
 
         for(var deletedBooking : deletedBookings) {
             if(!BookingController.getInstance().delete(deletedBooking)) {
                 Utils.showWarning("Nem sikerült törölni egy foglalást ami a járathoz tartozik");
-                canDeleteFlight = false;
+                shouldDeleteFlight = false;
             }
         }
 
-        if(canDeleteFlight) {
+        if(shouldDeleteFlight) {
             if(FlightController.getInstance().delete(deletedFlight.getId())) {
                 refreshTable();
             }
