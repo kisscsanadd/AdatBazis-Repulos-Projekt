@@ -20,7 +20,7 @@
     <children>
         <Label text="Üzenet" />
         <TextField fx:id="messageField" GridPane.columnIndex="1" />
-        <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Cancel" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+        <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Mégse" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>

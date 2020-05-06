@@ -16,6 +16,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static hu.adatb.utils.Utils.SetErrorMessage;
+
 
 public class DialogAlertController implements Initializable {
 
@@ -82,23 +84,25 @@ public class DialogAlertController implements Initializable {
     }
 
     private void FieldValidator() {
-        addButton.disableProperty().bind(messageField.textProperty().isEmpty());
+        addButton.disableProperty().bind(messageField.textProperty().isEmpty()
+                .or(errorMsgName.textProperty().isNotEmpty()));
+
+        addButton.disableProperty().bind(messageField.textProperty().isEmpty()
+                .or(errorMsgName.textProperty().isNotEmpty()));
 
         messageField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             var match = false;
             for (var alert: alerts) {
                 if (newValue.equals(alert.getMessage())) {
-                    match = true;
+                    if (isAdd) {
+                        match = true;
+                    } else if (!newValue.equals(selectedAlert.getMessage())) {
+                        match = true;
+                    }
                 }
             }
 
-            if (!match) {
-                errorMsgName.setText("");
-                FieldValidator();
-            } else {
-                errorMsgName.setText("Ilyen üzenet már létezik");
-                addButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
-            }
+            errorMsgName.setText(SetErrorMessage(match));
         });
     }
 

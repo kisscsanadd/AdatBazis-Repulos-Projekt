@@ -18,6 +18,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static hu.adatb.utils.Utils.SetErrorMessage;
+
 
 public class AddUserController implements Initializable {
 
@@ -90,12 +92,7 @@ public class AddUserController implements Initializable {
                 }
             }
 
-            if (!match) {
-                errorMsgName.setText("");
-                FieldValidator();
-            } else {
-                errorMsgName.setText("Ilyen név már létezik");
-            }
+            errorMsgName.setText(SetErrorMessage(match));
         });
 
         emailField.textProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -103,7 +100,6 @@ public class AddUserController implements Initializable {
             if (newValue.matches("\\S+@\\S+\\.\\S\\S") ||
                     newValue.matches("\\S+@\\S+\\.\\S\\S\\S")) {
                 errorMsgEmail.setText("");
-                FieldValidator();
             } else {
                 errorMsgEmail.setText("Érvénytelen email cím");
             }

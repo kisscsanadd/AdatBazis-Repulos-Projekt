@@ -44,7 +44,7 @@ public class PlaneWindowController implements Initializable {
         DialogPlaneController.setIsAdd(true);
 
         try {
-            App.DialogDeliver("dialog_plane.fxml", "Repülőgép hozzáadás");
+            App.DialogDeliver("dialog_plane.fxml", "Repülőgép hozzáadás", "style.css");
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a repülőgép hozzáadása ablakot");
         }
@@ -99,7 +99,7 @@ public class PlaneWindowController implements Initializable {
                         DialogPlaneController.setIsAdd(false);
 
                         try {
-                            App.DialogDeliver("dialog_plane.fxml", "Repülőgép módosítás");
+                            App.DialogDeliver("dialog_plane.fxml", "Repülőgép módosítás","style.css");
                         } catch (IOException e) {
                             Utils.showWarning("Nem sikerült megnyitni a repülőgép módosító ablakot");
                         }

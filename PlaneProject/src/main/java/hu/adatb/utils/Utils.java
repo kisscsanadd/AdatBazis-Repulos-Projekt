@@ -41,4 +41,8 @@ public class Utils {
 
         return alert.showAndWait();
     }
+
+    public static String SetErrorMessage (boolean match) {
+        return match ? "Ilyen név már létezik" : "";
+    }
 }

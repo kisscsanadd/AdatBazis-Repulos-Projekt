@@ -43,7 +43,7 @@ public class App extends Application {
         return StageDeliver(fileName, title, "");
     }
 
-    public static Stage DialogDeliver(String fileName, String title, boolean isAdmin) throws IOException {
+    public static Stage DialogDeliver(String fileName, String title, boolean isAdmin, String styleName) throws IOException {
         Parent root = null;
 
         if (isAdmin) {
@@ -54,6 +54,10 @@ public class App extends Application {
 
         var scene = new Scene(root);
 
+        if (!styleName.equals("")) {
+            scene.getStylesheets().add(App.class.getResource("/css/" + styleName).toExternalForm());
+        }
+
         dialogStage.getIcons().add(new Image(App.class.getResourceAsStream("/pictures/icon.jpg")));
         dialogStage.setScene(scene);
         dialogStage.setTitle(title);
@@ -63,7 +67,15 @@ public class App extends Application {
     }
 
     public static Stage DialogDeliver(String fileName, String title) throws  IOException {
-        return  DialogDeliver(fileName, title, true);
+        return DialogDeliver(fileName, title, true, "");
+    }
+
+    public static Stage DialogDeliver(String fileName, String title, boolean isAdmin) throws  IOException {
+        return DialogDeliver(fileName, title, isAdmin, "");
+    }
+
+    public static Stage DialogDeliver(String fileName, String title, String styleName) throws  IOException {
+        return DialogDeliver(fileName, title, true, styleName);
     }
 
     @Override

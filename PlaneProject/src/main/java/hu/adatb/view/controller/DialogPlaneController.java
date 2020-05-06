@@ -14,6 +14,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static hu.adatb.utils.Utils.SetErrorMessage;
+
 
 public class DialogPlaneController implements Initializable {
 
@@ -85,23 +87,25 @@ public class DialogPlaneController implements Initializable {
     }
 
     private void FieldValidator() {
-        addButton.disableProperty().bind(nameField.textProperty().isEmpty());
+        addButton.disableProperty().bind(nameField.textProperty().isEmpty()
+                .or(errorMsgName.textProperty().isNotEmpty()));
+
+        editButton.disableProperty().bind(nameField.textProperty().isEmpty()
+                .or(errorMsgName.textProperty().isNotEmpty()));
 
         nameField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             var match = false;
             for (var plane: planes) {
                 if (newValue.equals(plane.getName())) {
-                    match = true;
+                    if(isAdd) {
+                        match = true;
+                    } else if(!newValue.equals(selectedPlane.getName())) {
+                        match = true;
+                    }
                 }
             }
 
-            if (!match) {
-                errorMsgName.setText("");
-                FieldValidator();
-            } else {
-                errorMsgName.setText("Ilyen név már létezik");
-                addButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
-            }
+            errorMsgName.setText(SetErrorMessage(match));
         });
     }
 

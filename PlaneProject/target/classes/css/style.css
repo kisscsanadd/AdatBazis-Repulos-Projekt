@@ -1,14 +1,5 @@
-.errorMsg_reg {
-    -fx-text-fill: red;
-}
-
 .button:hover {
     -fx-opacity: 0.8;
-}
-
-#kepesRegi {
-    -fx-graphic: url('../pictures/registrationPic.jpg');
-    -fx-arc-width: 50;
 }
 
 .warning {

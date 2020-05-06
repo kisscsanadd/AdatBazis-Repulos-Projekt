@@ -42,7 +42,7 @@ public class AlertWindowController implements Initializable {
         DialogAlertController.setIsAdd(true);
 
         try {
-            App.DialogDeliver("dialog_alert.fxml", "Figyelmeztetés hozzáadás");
+            App.DialogDeliver("dialog_alert.fxml", "Figyelmeztetés hozzáadás", "style.css");
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
@@ -88,7 +88,7 @@ public class AlertWindowController implements Initializable {
                         DialogAlertController.setIsAdd(false);
 
                         try {
-                            App.DialogDeliver("dialog_alert.fxml", "Figyelmeztetés módosítás");
+                            App.DialogDeliver("dialog_alert.fxml", "Figyelmeztetés módosítás", "style.css");
                         } catch (IOException e) {
                             Utils.showWarning("Nem sikerült megnyitni a figyelmeztetés módosító ablakot");
                         }

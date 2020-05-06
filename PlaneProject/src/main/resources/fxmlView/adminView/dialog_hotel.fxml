@@ -23,7 +23,7 @@
         <Label fx:id="cityLabel" text="Város" GridPane.rowIndex="2" />
         <TextField fx:id="nameField" GridPane.columnIndex="1" />
         <Spinner fx:id="starsSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Cancel" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+        <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Mégse" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
             <opaqueInsets>
                 <Insets />
             </opaqueInsets>

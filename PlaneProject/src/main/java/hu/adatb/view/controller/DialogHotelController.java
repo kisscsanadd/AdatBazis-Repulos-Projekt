@@ -1,12 +1,9 @@
 package hu.adatb.view.controller;
 
-import hu.adatb.controller.AirportController;
 import hu.adatb.controller.CityController;
 import hu.adatb.controller.HotelController;
-import hu.adatb.controller.PlaneController;
 import hu.adatb.model.City;
 import hu.adatb.model.Hotel;
-import hu.adatb.model.Plane;
 import hu.adatb.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +20,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static hu.adatb.utils.GetById.GetCityById;
+import static hu.adatb.utils.Utils.SetErrorMessage;
 
 
 public class DialogHotelController implements Initializable {
@@ -124,26 +122,28 @@ public class DialogHotelController implements Initializable {
     }
 
     private void FieldValidator() {
-        addButton.disableProperty().bind(nameField.textProperty().isEmpty());
+        addButton.disableProperty().bind(nameField.textProperty().isEmpty()
+                .or(cities.valueProperty().isNull())
+                .or(errorMsgName.textProperty().isNotEmpty()));
+
+        editButton.disableProperty().bind(nameField.textProperty().isEmpty()
+                .or(errorMsgName.textProperty().isNotEmpty()));
 
         nameField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             var match = false;
             for (var hotel: hotels) {
                 if (newValue.equals(hotel.getName())) {
-                    match = true;
+                    if(isAdd) {
+                        match = true;
+                    } else if(!newValue.equals(selectedHotel.getName())) {
+                        match = true;
+                    }
                 }
             }
 
-            if (!match) {
-                errorMsgName.setText("");
-                FieldValidator();
-            } else {
-                errorMsgName.setText("Ilyen név már létezik");
-                addButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
-            }
+            errorMsgName.setText(SetErrorMessage(match));
         });
     }
-
 
     public static void setIsAdd(boolean isAdd) {
         DialogHotelController.isAdd = isAdd;

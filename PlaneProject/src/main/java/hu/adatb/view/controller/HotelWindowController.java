@@ -41,7 +41,7 @@ public class HotelWindowController implements Initializable {
         DialogHotelController.setIsAdd(true);
 
         try {
-            App.DialogDeliver("dialog_hotel.fxml", "Szálloda hozzáadás");
+            App.DialogDeliver("dialog_hotel.fxml", "Szálloda hozzáadás", "style.css");
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
@@ -98,7 +98,7 @@ public class HotelWindowController implements Initializable {
                         DialogHotelController.setIsAdd(false);
 
                         try {
-                            App.DialogDeliver("dialog_hotel.fxml", "Szálloda módosítás");
+                            App.DialogDeliver("dialog_hotel.fxml", "Szálloda módosítás", "style.css");
                         } catch (IOException e) {
                             Utils.showWarning("Nem sikerült megnyitni a szálloda módosító ablakot");
                         }

@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import static hu.adatb.utils.Utils.SetErrorMessage;
+
 public class AddAirportController implements Initializable {
 
     @FXML
@@ -102,7 +104,8 @@ public class AddAirportController implements Initializable {
 
     private void FieldValidator() {
         saveButton.disableProperty().bind(nameField.textProperty().isEmpty()
-                .or(cities.valueProperty().isNull()));
+                .or(cities.valueProperty().isNull())
+                .or(errorMsgName.textProperty().isNotEmpty()));
 
         nameField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             var match = false;
@@ -112,13 +115,7 @@ public class AddAirportController implements Initializable {
                 }
             }
 
-            if (!match) {
-                errorMsgName.setText("");
-                FieldValidator();
-            } else {
-                errorMsgName.setText("Ilyen név már létezik");
-                saveButton.disableProperty().bind(errorMsgName.textProperty().isNotEmpty());
-            }
+            errorMsgName.setText(SetErrorMessage(match));
         });
     }
 }

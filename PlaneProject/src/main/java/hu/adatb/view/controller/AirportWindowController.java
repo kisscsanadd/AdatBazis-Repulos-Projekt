@@ -46,7 +46,7 @@ public class AirportWindowController implements Initializable {
     @FXML
     public void addAirport() {
         try {
-            App.DialogDeliver("add_airport.fxml","Repülőtér hozzáadása");
+            App.DialogDeliver("add_airport.fxml","Repülőtér hozzáadása", "style.css");
         } catch (IOException e) {
             Utils.showWarning("Nem sikerült megnyitni a hozzáadás ablakot");
         }
