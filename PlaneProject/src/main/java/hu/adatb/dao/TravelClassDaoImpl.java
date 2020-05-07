@@ -2,7 +2,9 @@ package hu.adatb.dao;
 
 import hu.adatb.model.TravelClass;
 import hu.adatb.query.Database;
+import hu.adatb.utils.DataHelper;
 import hu.adatb.utils.Utils;
+import javafx.util.Pair;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -40,8 +42,8 @@ public class TravelClassDaoImpl implements TravelClassDao {
     }
 
     @Override
-    public HashMap<String, Integer> getCountOfTicketGroupByTravelClass() {
-        var dictionary = new HashMap<String, Integer>();
+    public ArrayList<DataHelper> getCountOfTicketGroupByTravelClass() {
+        var dictionary = new ArrayList<DataHelper>();
 
         try (Connection conn = Database.ConnectionToDatabase();
              Statement stmt = conn.createStatement()){
@@ -52,15 +54,13 @@ public class TravelClassDaoImpl implements TravelClassDao {
                 var id = rs.getInt("utazasi_osztaly_id");
                 var travelClassName = rs.getString("nev");
                 var countOfTicket = rs.getInt("darabszam");
+                var month = rs.getInt("honap");
 
                 if(id == 0) {
-                    countOfTicket = 0;
+                    continue;
                 }
 
-                dictionary.put(
-                        travelClassName,
-                        countOfTicket
-                );
+                dictionary.add(new DataHelper(travelClassName, month, countOfTicket));
             }
 
         } catch (SQLException | ClassNotFoundException e) {
