@@ -1,10 +1,12 @@
 package hu.adatb.view.controller;
 
+import hu.adatb.controller.AirportController;
 import hu.adatb.controller.TravelClassController;
 import hu.adatb.utils.DataHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 
@@ -20,20 +22,26 @@ public class GraphWindowController implements Initializable {
     @FXML
     private BarChart<String, Integer> ticketGroupByTravelClassChart;
 
+    @FXML
+    private LineChart<String, Integer> countOfToAirportChart;
+
     private final String countOfTicketGroupByTravelClass = "Jegyek száma utazási osztály szerint";
+    private final String countOfToAirport = "Legnépszerűbb repülőterek";
     private final List<String> months = Arrays.asList("Április","Május", "Június");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        graphComboBox.getItems().addAll(countOfTicketGroupByTravelClass, "asd");
+        graphComboBox.getItems().addAll(countOfTicketGroupByTravelClass, countOfToAirport);
         PopulateTicketNumberChart();
-
+        PopulateCountOfToAirport();
 
         graphComboBox.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue.equals(countOfTicketGroupByTravelClass)) {
                 ticketGroupByTravelClassChart.setVisible(true);
-            } else {
+                countOfToAirportChart.setVisible(false);
+            } else if (newValue.equals(countOfToAirport)) {
                 ticketGroupByTravelClassChart.setVisible(false);
+                countOfToAirportChart.setVisible(true);
             }
         });
     }
@@ -68,6 +76,23 @@ public class GraphWindowController implements Initializable {
 
         ticketGroupByTravelClassChart.getData().addAll(set1, set2, set3);
     }
+
+    private void PopulateCountOfToAirport() {
+        var airports = AirportController.getInstance().getAll();
+        var dictionary = AirportController.getInstance().getCountOfToAirport();
+
+        var series = new XYChart.Series<String, Integer>();
+
+        for (var airport : airports) {
+            series.getData().add(new XYChart.Data<>(
+                    airport.getName(),
+                    dictionary.get(airport.getName()))
+            );
+        }
+
+        countOfToAirportChart.getData().add(series);
+    }
+
 }
 
 class SortByMonth implements Comparator<DataHelper> {

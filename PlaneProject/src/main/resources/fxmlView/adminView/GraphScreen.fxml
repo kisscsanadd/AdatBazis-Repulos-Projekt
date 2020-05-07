@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adatb.view.controller.GraphWindowController">
    <children>
-      <ComboBox fx:id="graphComboBox" layoutX="51.0" layoutY="46.0" prefWidth="150.0" promptText="Válassz grafikont" />
+      <ComboBox fx:id="graphComboBox" layoutX="51.0" layoutY="46.0" prefHeight="26.0" prefWidth="206.0" promptText="Válassz grafikont" />
       <BarChart fx:id="ticketGroupByTravelClassChart" barGap="5.0" layoutX="51.0" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" title="Jegyek száma utazási osztályok szerint" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="94.0">
         <xAxis>
           <CategoryAxis label="Hónap" side="BOTTOM" />
@@ -15,5 +15,13 @@
           <NumberAxis label="Jegyek száma" side="LEFT" />
         </yAxis>
       </BarChart>
+      <LineChart fx:id="countOfToAirportChart" layoutX="14.0" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" title="Repülőterek népszerűsége" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="94.0">
+        <xAxis>
+          <CategoryAxis label="Repülőterek" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis label="Járatok száma" side="LEFT" />
+        </yAxis>
+      </LineChart>
    </children>
 </AnchorPane>

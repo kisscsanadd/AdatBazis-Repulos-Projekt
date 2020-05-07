@@ -5,6 +5,7 @@ import hu.adatb.dao.AirportDaoImpl;
 import hu.adatb.model.Airport;
 import hu.adatb.model.Plane;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class AirportController {
@@ -32,5 +33,18 @@ public class AirportController {
 
     public List<Airport> getAll() {
         return dao.getAll();
+    }
+
+    public HashMap<String, Integer> getCountOfToAirport() {
+        var airports = AirportController.getInstance().getAll();
+        var dictionary = dao.getCountOfToAirport();
+
+        for (var airport : airports) {
+            if(!dictionary.containsKey(airport.getName())) {
+                dictionary.put(airport.getName(), 0);
+            }
+        }
+
+        return dictionary;
     }
 }

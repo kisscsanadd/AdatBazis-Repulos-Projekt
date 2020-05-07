@@ -31,6 +31,7 @@ public class Queries {
     public static final String SELECT_SOLD_TICKET_NUMBER_IN_MONTH = "SELECT COUNT(*) AS eladott_jegyek_szama FROM JEGY LEFT JOIN FOGLALAS ON foglalasi_id = foglalas.id LEFT JOIN JARAT ON jarat_id = jarat.id WHERE EXTRACT(MONTH FROM felszallas_datum) = ? AND EXTRACT (YEAR FROM felszallas_datum) = (SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL)";
     public static final String SELECT_SUM_TICKET_NUMBER_IN_MONTH = "SELECT SUM(ferohely) AS osszes_jegy FROM REPULOGEP LEFT JOIN JARAT ON repulogep.id = jarat.repulogep_id WHERE EXTRACT(MONTH FROM felszallas_datum) = ? AND EXTRACT (YEAR FROM felszallas_datum) = (SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL)";
     public static final String SELECT_TICKET_COUNT_GROUP_BY_TRAVEL_CLASS = "SELECT utazasi_osztaly_id, nev, COUNT(*) AS darabszam, EXTRACT(MONTH FROM felszallas_datum) AS honap FROM utazasiosztaly LEFT JOIN JEGY ON utazasiosztaly.id = utazasi_osztaly_id LEFT JOIN FOGLALAS ON foglalas.id = jegy.foglalasi_id LEFT JOIN JARAT ON jarat.id = foglalas.jarat_id GROUP BY utazasi_osztaly_id, felszallas_datum, nev ORDER BY utazasi_osztaly_id";
+    public static final String SELECT_COUNT_TO_AIRPORT = "SELECT repuloter.nev, COUNT(*) AS darabszam FROM jarat LEFT JOIN repuloter ON repuloter_id_le = repuloter.id GROUP BY repuloter.nev";
 
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
     public static final String INSERT_PLANE = "INSERT INTO REPULOGEP (nev, sebesseg, ferohely) values(?, ?, ?)";
