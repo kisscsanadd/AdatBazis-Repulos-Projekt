@@ -23,6 +23,7 @@ public class AdminWindowController {
     public AdminWindowController() {
     }
 
+    @FXML
     public static void goToMainForAdmin() {
         try {
             System.out.println("\n"+ App.CurrentTime() + "Destroyed login page");
@@ -35,14 +36,6 @@ public class AdminWindowController {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    public void buttonAction1(ActionEvent actionEvent) {
-        System.out.println(App.CurrentTime() + "Opened Screen1");
-        Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
-        mainPane.setCenter(view);
-    }
-
 
     @FXML
     public void getPlaneScreen(ActionEvent actionEvent) {
@@ -69,19 +62,6 @@ public class AdminWindowController {
     }
 
     @FXML
-    public void buttonAction4(ActionEvent actionEvent) {
-        System.out.println(App.CurrentTime() + "Opened Screen2");
-        Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
-        mainPane.setCenter(view);
-    }
-    @FXML
-    public void buttonAction5(ActionEvent actionEvent) {
-        System.out.println(App.CurrentTime() + "Opened Screen2");
-        Pane view = MainFxmlLoader.getPage("Screen2.fxml", true);
-        mainPane.setCenter(view);
-    }
-
-    @FXML
     public void logout(ActionEvent event) {
         try {
             Stage stage = App.StageDeliver("login_user.fxml", "Bejelentkezés");
@@ -104,12 +84,14 @@ public class AdminWindowController {
         mainPane.setCenter(view);
     }
 
+    @FXML
     public void navigateUserPage(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         stage.close();
         UserWindowController.goToMainForUser();
     }
 
+    @FXML
     public void getHotelScreen(ActionEvent actionEvent) {
         System.out.println(App.CurrentTime() + " Opened hotel screen");
         Pane view = MainFxmlLoader.getPage("HotelScreen.fxml", true);
@@ -128,6 +110,12 @@ public class AdminWindowController {
     public void listingFlights (ActionEvent actionEvent){
         System.out.println(App.CurrentTime() + "Opened flights");
         Pane view = MainFxmlLoader.getPage("FlightScreen.fxml", true);
+        mainPane.setCenter(view);
+    }
+
+    public void getChartScreen(ActionEvent actionEvent) {
+        System.out.println(App.CurrentTime() + "Opened chart screen");
+        Pane view = MainFxmlLoader.getPage("GraphScreen.fxml", true);
         mainPane.setCenter(view);
     }
 }

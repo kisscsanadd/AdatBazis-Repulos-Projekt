@@ -2,6 +2,8 @@ package hu.adatb.view.controller;
 
 import hu.adatb.App;
 import hu.adatb.controller.HotelController;
+import hu.adatb.controller.TicketController;
+import hu.adatb.controller.TravelClassController;
 import hu.adatb.model.Hotel;
 import hu.adatb.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
@@ -49,9 +51,7 @@ public class HotelWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<Hotel> list = HotelController.getInstance().getAll();
-        table.setItems(FXCollections.observableList(list));
-
+        refreshTable();
         InitTable();
     }
 

@@ -4,6 +4,7 @@ import hu.adatb.dao.TravelClassDao;
 import hu.adatb.dao.TravelClassDaoImpl;
 import hu.adatb.model.TravelClass;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class TravelClassController {
@@ -20,5 +21,9 @@ public class TravelClassController {
 
     public List<TravelClass> getAll() {
         return dao.getAll();
+    }
+
+    public HashMap<String, Integer> getCountOfTicketGroupByTravelClass() {
+        return dao.getCountOfTicketGroupByTravelClass();
     }
 }
