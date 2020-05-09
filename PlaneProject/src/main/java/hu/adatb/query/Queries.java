@@ -5,7 +5,7 @@ public class Queries {
     public static final String SELECT_CITY_BY_ID = "SELECT * FROM VAROS WHERE ID = ?";
     public static final String SELECT_AIRPORT = "SELECT * FROM REPULOTER";
     public static final String SELECT_AIRPORT_BY_ID = "SELECT * FROM REPULOTER WHERE ID = ?";
-    public static final String SELECT_FLIGHT = "SELECT * FROM JARAT";
+    public static final String SELECT_FLIGHT = "SELECT * FROM JARAT ORDER BY felszallas_datum";
     public static final String SELECT_FLIGHT_BY_ID = "SELECT * FROM JARAT WHERE ID = ?";
     public static final String SELECT_USER = "SELECT * FROM FELHASZNALO";
     public static final String SELECT_USER_BY_ID = "SELECT * FROM FELHASZNALO WHERE ID = ?";
