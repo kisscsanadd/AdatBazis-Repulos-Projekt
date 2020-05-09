@@ -23,5 +23,21 @@
           <NumberAxis label="Járatok száma" side="LEFT" />
         </yAxis>
       </LineChart>
+       <LineChart fx:id="countOfCategoryChart" layoutX="14.0" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" title="Kedvezmény kategóriák gyakorisága" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="94.0">
+           <xAxis>
+               <CategoryAxis label="Kategóriák" side="BOTTOM" />
+           </xAxis>
+           <yAxis>
+               <NumberAxis label="Jegyek száma" side="LEFT" />
+           </yAxis>
+       </LineChart>
+       <LineChart fx:id="countOfPlaneChart" layoutX="14.0" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" title="Repülőgépek népszerűsége" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="94.0">
+           <xAxis>
+               <CategoryAxis label="Repülőgépek" side="BOTTOM" />
+           </xAxis>
+           <yAxis>
+               <NumberAxis label="Járatok száma" side="LEFT" />
+           </yAxis>
+       </LineChart>
    </children>
 </AnchorPane>

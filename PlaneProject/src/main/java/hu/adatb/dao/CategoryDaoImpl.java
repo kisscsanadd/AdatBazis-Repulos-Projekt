@@ -10,9 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import static hu.adatb.query.Queries.SELECT_CATEGORY;
+import static hu.adatb.query.Queries.*;
 
 public class CategoryDaoImpl implements  CategoryDao{
     @Override
@@ -40,5 +41,28 @@ public class CategoryDaoImpl implements  CategoryDao{
         }
 
         return result;
+    }
+
+    @Override
+    public HashMap<String, Integer> getCountOfCategory() {
+        var dictionary = new HashMap<String, Integer>();
+
+        try(Connection conn = Database.ConnectionToDatabase();
+            Statement stmt = conn.createStatement()) {
+
+            ResultSet rs = stmt.executeQuery(SELECT_COUNT_CATEGORY);
+
+            while (rs.next()) {
+                dictionary.put(
+                        rs.getString("nev"),
+                        rs.getInt("darabszam")
+                );
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            Utils.showWarning("Nem sikerült lekérni a kedvezmény kategóriák gyakoriságát");
+        }
+
+        return dictionary;
     }
 }

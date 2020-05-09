@@ -4,6 +4,7 @@ import hu.adatb.dao.PlaneDao;
 import hu.adatb.dao.PlaneDaoImpl;
 import hu.adatb.model.Plane;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class PlaneController {
@@ -32,5 +33,18 @@ public class PlaneController {
 
     public List<Plane> getAll() {
         return dao.getAll();
+    }
+
+    public HashMap<String, Integer> getCountOfPlane() {
+        var planes = PlaneController.getInstance().getAll();
+        var dictionary = dao.getCountOfPlane();
+
+        for (var plane : planes) {
+            if(!dictionary.containsKey(plane.getName())) {
+                dictionary.put(plane.getName(), 0);
+            }
+        }
+
+        return dictionary;
     }
 }

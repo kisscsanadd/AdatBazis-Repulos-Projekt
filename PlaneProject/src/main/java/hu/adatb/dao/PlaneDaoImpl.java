@@ -7,6 +7,7 @@ import hu.adatb.utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static hu.adatb.query.Queries.*;
@@ -109,5 +110,28 @@ public class PlaneDaoImpl implements PlaneDao {
         }
 
         return result;
+    }
+
+    @Override
+    public HashMap<String, Integer> getCountOfPlane() {
+        var dictionary = new HashMap<String, Integer>();
+
+        try(Connection conn = Database.ConnectionToDatabase();
+            Statement stmt = conn.createStatement()) {
+
+            ResultSet rs = stmt.executeQuery(SELECT_COUNT_PLANE);
+
+            while (rs.next()) {
+                dictionary.put(
+                        rs.getString("nev"),
+                        rs.getInt("darabszam")
+                );
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            Utils.showWarning("Nem sikerült lekérni a repülőgépek darabszámát");
+        }
+
+        return dictionary;
     }
 }

@@ -2,6 +2,7 @@ package hu.adatb.dao;
 
 import hu.adatb.model.Plane;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface PlaneDao {
@@ -13,4 +14,7 @@ public interface PlaneDao {
     public boolean delete (int id);
 
     public List<Plane> getAll();
+
+    public HashMap<String, Integer> getCountOfPlane();
+
 }
