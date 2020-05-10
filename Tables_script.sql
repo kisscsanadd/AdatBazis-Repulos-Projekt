@@ -362,6 +362,7 @@ insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-12 20:30' ,1 ,14 ,5 ,425);
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-10 22:00' ,6 ,11 ,1 ,320);
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-11 05:30' ,10 ,14 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-07-11 15:45' ,1 ,3 ,4 ,40);
 
 
 CREATE TABLE Foglalas

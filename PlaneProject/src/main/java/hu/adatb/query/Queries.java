@@ -35,6 +35,22 @@ public class Queries {
     public static final String SELECT_COUNT_TO_AIRPORT = "SELECT repuloter.nev, COUNT(*) AS darabszam FROM jarat LEFT JOIN repuloter ON repuloter_id_le = repuloter.id GROUP BY repuloter.nev";
     public static final String SELECT_COUNT_PLANE = "SELECT repulogep.nev, COUNT(*) AS darabszam FROM jarat LEFT JOIN repulogep ON repulogep_id = repulogep.id GROUP BY repulogep.nev";
     public static final String SELECT_COUNT_CATEGORY = "SELECT kategoria.nev, COUNT(*) AS darabszam FROM JEGY LEFT JOIN kategoria ON kategoria_id = kategoria.id GROUP BY kategoria.nev";
+    public static final String SELECT_COUNT_ALL_RECORDS = "SELECT (" +
+                                                            "(SELECT COUNT(*) FROM varos)" +
+                                                            "+ (SELECT COUNT(*) FROM orszag)" +
+                                                            "+ (SELECT COUNT(*) FROM jarat)" +
+                                                            "+ (SELECT COUNT(*) FROM utazasiosztaly)" +
+                                                            "+ (SELECT COUNT(*) FROM foglalas)" +
+                                                            "+ (SELECT COUNT(*) FROM jegy)" +
+                                                            "+ (SELECT COUNT(*) FROM fizetesimod)" +
+                                                            "+ (SELECT COUNT(*) FROM felhasznalo)" +
+                                                            "+ (SELECT COUNT(*) FROM jaratfigyrel)" +
+                                                            "+ (SELECT COUNT(*) FROM repulogep)" +
+                                                            "+ (SELECT COUNT(*) FROM repuloter)" +
+                                                            "+ (SELECT COUNT(*) FROM figyelmeztetes)" +
+                                                            "+ (SELECT COUNT(*) FROM szalloda)" +
+                                                            "+ (SELECT COUNT(*) FROM kategoria)" +
+                                                            ") AS összes_rekord FROM dual";
 
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
     public static final String INSERT_PLANE = "INSERT INTO REPULOGEP (nev, sebesseg, ferohely) values(?, ?, ?)";
