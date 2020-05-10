@@ -12,6 +12,7 @@ public class Queries {
     public static final String SELECT_PLANE = "SELECT * FROM REPULOGEP";
     public static final String SELECT_PLANE_BY_ID = "SELECT * FROM REPULOGEP WHERE ID = ?";
     public static final String SELECT_COUNTRY = "SELECT * FROM ORSZAG";
+    public static final String SELECT_COUNTRY_BY_ID = "SELECT * FROM ORSZAG WHERE ID = ?";
     public static final String SELECT_HOTEL = "SELECT * FROM SZALLODA";
     public static final String SELECT_PAYMENT = "SELECT * FROM FIZETESIMOD";
     public static final String SELECT_PAYMENT_BY_ID = "SELECT * FROM FIZETESIMOD WHERE ID = ?";

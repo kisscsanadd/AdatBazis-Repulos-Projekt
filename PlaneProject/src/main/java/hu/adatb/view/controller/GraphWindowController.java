@@ -1,14 +1,13 @@
 package hu.adatb.view.controller;
 
-import hu.adatb.controller.AirportController;
-import hu.adatb.controller.CategoryController;
-import hu.adatb.controller.PlaneController;
-import hu.adatb.controller.TravelClassController;
+import hu.adatb.controller.*;
 import hu.adatb.utils.DataHelper;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 
@@ -33,42 +32,83 @@ public class GraphWindowController implements Initializable {
     @FXML
     private LineChart<String, Integer> countOfCategoryChart;
 
+    @FXML
+    ComboBox<String> monthComboBox;
+
+    @FXML
+    private PieChart soldTicketPieChart;
+
     private final String countOfTicketGroupByTravelClass = "Jegyek száma utazási osztály szerint";
     private final String countOfPlane = "Legnépszerűbb repülőgépek";
     private final String countOfToAirport = "Legnépszerűbb repülőterek";
     private final String countOfCategory = "Kedvezmény kategóriák gyakorisága";
+    private final String countOfSoldTicket = "Eladott jegyek";
     private final List<String> months = Arrays.asList("Április","Május", "Június");
+    private final List<String> allMonths = Arrays.asList(
+            "Január", "Február", "Március",
+            "Április", "Május", "Június",
+            "Július", "Augusztus", "Szeptember",
+            "Október", "November", "December");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        graphComboBox.getItems().addAll(countOfTicketGroupByTravelClass, countOfToAirport, countOfPlane, countOfCategory);
+        graphComboBox.getItems().addAll(countOfTicketGroupByTravelClass, countOfToAirport,
+                countOfPlane, countOfCategory, countOfSoldTicket);
+
+        monthComboBox.getItems().addAll(allMonths);
+
         PopulateTicketNumberChart();
         PopulateCountOfToAirport();
         PopulateCountOfPlane();
         PopulateCountOfCategory();
+        PopulateSoldTicketPieChart();
 
         graphComboBox.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (newValue.equals(countOfTicketGroupByTravelClass)) {
-                ticketGroupByTravelClassChart.setVisible(true);
-                countOfPlaneChart.setVisible(false);
-                countOfToAirportChart.setVisible(false);
-                countOfCategoryChart.setVisible(false);
-            } else if (newValue.equals(countOfToAirport)) {
-                countOfToAirportChart.setVisible(true);
-                ticketGroupByTravelClassChart.setVisible(false);
-                countOfPlaneChart.setVisible(false);
-                countOfCategoryChart.setVisible(false);
-            } else if (newValue.equals(countOfPlane)) {
-                ticketGroupByTravelClassChart.setVisible(false);
-                countOfToAirportChart.setVisible(false);
-                countOfCategoryChart.setVisible(false);
-                countOfPlaneChart.setVisible(true);
-            } else if (newValue.equals(countOfCategory)) {
-                ticketGroupByTravelClassChart.setVisible(false);
-                countOfToAirportChart.setVisible(false);
-                countOfCategoryChart.setVisible(true);
-                countOfPlaneChart.setVisible(false);
+            switch (newValue) {
+                case countOfTicketGroupByTravelClass:
+                    ticketGroupByTravelClassChart.setVisible(true);
+                    countOfPlaneChart.setVisible(false);
+                    countOfToAirportChart.setVisible(false);
+                    countOfCategoryChart.setVisible(false);
+                    soldTicketPieChart.setVisible(false);
+                    monthComboBox.setVisible(false);
+                    break;
+                case countOfToAirport:
+                    countOfToAirportChart.setVisible(true);
+                    ticketGroupByTravelClassChart.setVisible(false);
+                    countOfPlaneChart.setVisible(false);
+                    countOfCategoryChart.setVisible(false);
+                    soldTicketPieChart.setVisible(false);
+                    monthComboBox.setVisible(false);
+                    break;
+                case countOfPlane:
+                    ticketGroupByTravelClassChart.setVisible(false);
+                    countOfToAirportChart.setVisible(false);
+                    countOfCategoryChart.setVisible(false);
+                    countOfPlaneChart.setVisible(true);
+                    soldTicketPieChart.setVisible(false);
+                    monthComboBox.setVisible(false);
+                    break;
+                case countOfCategory:
+                    ticketGroupByTravelClassChart.setVisible(false);
+                    countOfToAirportChart.setVisible(false);
+                    countOfCategoryChart.setVisible(true);
+                    countOfPlaneChart.setVisible(false);
+                    soldTicketPieChart.setVisible(false);
+                    monthComboBox.setVisible(false);
+                    break;
+                case countOfSoldTicket:
+                    soldTicketPieChart.setVisible(true);
+                    ticketGroupByTravelClassChart.setVisible(false);
+                    countOfToAirportChart.setVisible(false);
+                    countOfCategoryChart.setVisible(false);
+                    countOfPlaneChart.setVisible(false);
+                    monthComboBox.setVisible(true);
             }
+        });
+
+        monthComboBox.valueProperty().addListener(observable -> {
+            PopulateSoldTicketPieChart();
         });
     }
 
@@ -151,6 +191,38 @@ public class GraphWindowController implements Initializable {
         countOfPlaneChart.getData().add(series);
     }
 
+    private void PopulateSoldTicketPieChart() {
+        var selectedMonth = getMonth(monthComboBox.getValue());
+
+        if (selectedMonth == -1) {
+            monthComboBox.setValue("Május");
+            selectedMonth = 5;
+        }
+
+        var countOfAllTicket = TicketController.getInstance().getCountOfAllTicketInMonth(selectedMonth);
+        var countOfSoldTicket = TicketController.getInstance().getCountOfSoldTicketInMonth(selectedMonth);
+        var countOfNotSoldTicket = countOfAllTicket - countOfSoldTicket;
+
+        var pieChart = FXCollections.observableArrayList(
+                new PieChart.Data("Eladott jegyek (" + countOfSoldTicket + ")", countOfSoldTicket),
+                new PieChart.Data("Nem eladott jegyek (" + countOfNotSoldTicket + ")", countOfNotSoldTicket)
+        );
+
+        soldTicketPieChart.setData(pieChart);
+        soldTicketPieChart.setTitle("Össz jegyek száma: " + countOfAllTicket);
+    }
+
+    private int getMonth(String selectedMonth) {
+        int i = 1;
+        for (var month: allMonths) {
+            if(month.equals(selectedMonth)) {
+                return i;
+            }
+            i++;
+        }
+
+        return -1;
+    }
 }
 
 class SortByMonth implements Comparator<DataHelper> {

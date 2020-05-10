@@ -2,6 +2,7 @@ package hu.adatb.dao;
 
 import hu.adatb.model.City;
 import hu.adatb.query.Database;
+import hu.adatb.utils.GetById;
 import hu.adatb.utils.Utils;
 
 import java.sql.Connection;
@@ -35,9 +36,12 @@ public class CityDaoImpl implements CityDao {
             ResultSet rs = stmt.executeQuery(SELECT_CITY);
 
             while (rs.next()) {
+                var country = GetById.GetCountryById(conn, rs.getInt("orszag_id"));
+
                 City city = new City(
                         rs.getInt("id"),
-                        rs.getString("nev")
+                        rs.getString("nev"),
+                        country
                 );
 
                 result.add(city);

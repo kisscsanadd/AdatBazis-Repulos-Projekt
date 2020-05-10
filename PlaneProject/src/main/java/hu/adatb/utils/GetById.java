@@ -18,9 +18,12 @@ public class GetById {
             ResultSet rs = st.executeQuery();
 
             if(rs.next()) {
+                var country = GetCountryById(conn, rs.getInt("orszag_id"));
+
                 return new City (
                     rs.getInt("id"),
-                    rs.getString("nev")
+                    rs.getString("nev"),
+                        country
                 );
             }
 
@@ -291,5 +294,26 @@ public class GetById {
         }
 
         return -1;
+    }
+
+    public static Country GetCountryById(Connection conn, int id) {
+        try (PreparedStatement st = conn.prepareStatement(SELECT_COUNTRY_BY_ID)){
+
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()) {
+                return new Country(
+                        rs.getInt("id"),
+                        rs.getString("nev")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

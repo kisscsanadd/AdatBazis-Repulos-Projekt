@@ -86,7 +86,7 @@ public class AddAirportController implements Initializable {
             @Override
             protected void updateItem(City item, boolean empty){
                 super.updateItem(item, empty);
-                setText(empty ? "" : item.getName());
+                setText(empty ? "" : item.getName() + " (" + item.getCountry().getName() + ")");
             }
         };
 

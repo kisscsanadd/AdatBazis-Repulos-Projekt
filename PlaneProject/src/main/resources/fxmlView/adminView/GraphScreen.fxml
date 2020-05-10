@@ -39,5 +39,7 @@
                <NumberAxis label="Járatok száma" side="LEFT" />
            </yAxis>
        </LineChart>
+      <PieChart fx:id="soldTicketPieChart" layoutX="86.0" layoutY="94.0" prefHeight="306.0" prefWidth="600.0" startAngle="90.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="94.0" />
+      <ComboBox fx:id="monthComboBox" layoutX="362.0" layoutY="47.0" prefWidth="150.0" promptText="Válassz hónapot" visible="false" />
    </children>
 </AnchorPane>

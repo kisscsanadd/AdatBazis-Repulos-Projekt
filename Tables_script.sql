@@ -347,6 +347,21 @@ insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-06-07 23:30' ,8 ,4 ,1 ,320);
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-06-05 09:15' ,2 ,1 ,5 ,425);
 insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-06-11 07:30' ,1 ,2 ,3 ,150);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-03-19 14:30' ,7 ,14 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-03-12 11:00' ,3 ,12 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-03-04 17:30' ,11 ,7 ,5 ,425);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-03-18 21:00' ,1 ,4 ,3 ,150);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-03-13 12:15' ,2 ,1 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-03-06 15:00' ,5 ,2 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-03-21 10:30' ,7 ,10 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-03-20 07:00' ,14 ,10 ,5 ,425);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-28 12:30' ,1 ,8 ,2 ,420);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-19 16:15' ,2 ,5 ,3 ,150);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-20 10:30' ,4 ,2 ,4 ,40);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-04 18:00' ,8 ,16 ,5 ,425);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-12 20:30' ,1 ,14 ,5 ,425);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-10 22:00' ,6 ,11 ,1 ,320);
+insert into Jarat(felszallas_datum, repuloter_id_fel, repuloter_id_le, repulogep_id, szabad_helyek) values('2020-02-11 05:30' ,10 ,14 ,1 ,320);
 
 
 CREATE TABLE Foglalas
@@ -454,6 +469,21 @@ insert into Szalloda(nev, csillagok_szama, varos_id) values('Nobis Hotel', 5, 9)
 insert into Szalloda(nev, csillagok_szama, varos_id) values('Berns Hotel', 5, 9);
 insert into Szalloda(nev, csillagok_szama, varos_id) values('Rokin', 3, 5);
 insert into Szalloda(nev, csillagok_szama, varos_id) values('Magna Pars Suites', 3, 14);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Glo Hotel Kluuvi', 4, 11);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Hotel Arthur', 3, 11);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('The Hotel Brussels', 4, 6);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Le Vaudeville', 3, 6);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Am Museum', 3, 13);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Capima', 5, 13);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('The Qvest', 3, 13);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Sercotel Coliseo', 4, 16);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Hotel Gran', 4, 16);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Occidental', 5, 16);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Hotel Abbazia', 3, 15);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Kalispera', 4, 15);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Scalinata di Spagna', 3, 4);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Lindner Hotel', 3, 12);
+insert into Szalloda(nev, csillagok_szama, varos_id) values('Hampton', 4, 12);
 
 
 

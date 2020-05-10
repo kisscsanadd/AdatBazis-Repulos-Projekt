@@ -9,10 +9,12 @@ public class City {
 
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
+    private Country country;
 
-    public City(int id, String name) {
+    public City(int id, String name, Country country) {
         this.id.set(id);
         this.name.set(name);
+        this.country = country;
     }
 
     public String getName() {
@@ -37,5 +39,13 @@ public class City {
 
     public void setId(int id) {
         this.id.set(id);
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 }
