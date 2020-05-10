@@ -528,3 +528,46 @@ BEGIN
     END IF;
 END;
 /
+
+
+
+SET SERVEROUTPUT ON
+DECLARE
+    v_q1 NUMBER;
+    v_q2 NUMBER;
+    v_q3 NUMBER;
+    v_q4 NUMBER;
+    v_jarat DATE;
+    v_month NUMBER;
+    CURSOR negyed_ev IS
+        SELECT felszallas_datum FROM JARAT;
+BEGIN
+    v_q1 := 0;
+    v_q2 := 0;
+    v_q3 := 0;
+    v_q4 := 0;
+
+    OPEN negyed_ev;
+    LOOP
+        FETCH negyed_ev
+        INTO v_jarat;
+        EXIT WHEN negyed_ev%NOTFOUND;
+            v_month := EXTRACT(MONTH FROM v_jarat); 
+            IF v_month  <= 3 THEN
+                v_q1 := v_q1 + 1;
+            ELSIF (v_month > 3) AND (v_month <= 6) THEN
+                v_q2 := v_q2 + 1;
+            ELSIF (v_month > 6) AND (v_month <= 9) THEN
+                v_q3 := v_q3 + 1;
+            ELSE
+                v_q4 := v_q4 + 1;
+            END IF;
+    END LOOP;
+    CLOSE negyed_ev;
+    
+    DBMS_OUTPUT.PUT_LINE('Első negyed év: ' || v_q1);
+    DBMS_OUTPUT.PUT_LINE('Második negyed év: ' || v_q2);
+    DBMS_OUTPUT.PUT_LINE('Harmadik negyed év: ' || v_q3);
+    DBMS_OUTPUT.PUT_LINE('Negyedik negyed év: ' || v_q4);
+END;
+/
