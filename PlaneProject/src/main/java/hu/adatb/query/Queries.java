@@ -28,6 +28,7 @@ public class Queries {
     public static final String SELECT_FLIGHT_ALERT_RELATION = "SELECT * FROM JARATFIGYREL";
 
     public static final String SELECT_TICKET_COUNT_BY_BOOKING_ID = "SELECT COUNT(*) AS jegyek_szama FROM JEGY WHERE FOGLALASI_ID = ?";
+    public static final String SELECT_TOURIST_TICKETS = "SELECT * FROM jegy WHERE utazasi_osztaly_id = (SELECT id FROM utazasiosztaly WHERE nev = 'Turista')";
     public static final String SELECT_BOOKING_COUNT_BY_USER_ID = "SELECT COUNT(*) AS foglalasok_szama FROM FOGLALAS WHERE FELH_ID = ?";
     public static final String SELECT_SOLD_TICKET_NUMBER_IN_MONTH = "SELECT COUNT(*) AS eladott_jegyek_szama FROM JEGY LEFT JOIN FOGLALAS ON foglalasi_id = foglalas.id LEFT JOIN JARAT ON jarat_id = jarat.id WHERE EXTRACT(MONTH FROM felszallas_datum) = ? AND EXTRACT (YEAR FROM felszallas_datum) = (SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL)";
     public static final String SELECT_SUM_TICKET_NUMBER_IN_MONTH = "SELECT SUM(ferohely) AS osszes_jegy FROM REPULOGEP LEFT JOIN JARAT ON repulogep.id = jarat.repulogep_id WHERE EXTRACT(MONTH FROM felszallas_datum) = ? AND EXTRACT (YEAR FROM felszallas_datum) = (SELECT EXTRACT(YEAR FROM sysdate) FROM DUAL)";
@@ -55,6 +56,7 @@ public class Queries {
     public static final String SELECT_HOTEL_COUNT_BY_STAR = "SELECT csillagok_szama, COUNT(*) FROM szalloda GROUP BY csillagok_szama ORDER BY csillagok_szama";
     public static final String SELECT_COUNT_PAYMENT_BY_NAME = "SELECT nev, COUNT(*) AS darabszam FROM fizetesimod LEFT JOIN foglalas ON foglalas.fizetesi_mod_id = fizetesimod.id GROUP BY nev";
     public static final String SELECT_COUNT_HOUR_FROM_DATE_GROUP_BY_HOUR = "SELECT TO_CHAR(felszallas_datum,'HH24') AS ora, COUNT(*) AS darabszam FROM jarat GROUP BY TO_CHAR(felszallas_datum,'HH24') ORDER BY ora";
+    public static final String SELECT_ADMIN_BOOKING = "SELECT * FROM foglalas WHERE felh_id = (SELECT id FROM felhasznalo WHERE felh_nev = 'admin')";
 
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
     public static final String INSERT_PLANE = "INSERT INTO REPULOGEP (nev, sebesseg, ferohely) values(?, ?, ?)";
