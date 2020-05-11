@@ -54,6 +54,8 @@ public class Queries {
     public static final String SELECT_BOOKING_COUNT_GROUP_BY_USER = "SELECT felh_nev, COUNT(*) AS foglalasok_szama FROM foglalas LEFT JOIN felhasznalo ON foglalas.felh_id = felhasznalo.id GROUP BY felh_nev";
     public static final String SELECT_HOTEL_COUNT_BY_STAR = "SELECT csillagok_szama, COUNT(*) FROM szalloda GROUP BY csillagok_szama ORDER BY csillagok_szama";
     public static final String SELECT_COUNT_PAYMENT_BY_NAME = "SELECT nev, COUNT(*) AS darabszam FROM fizetesimod LEFT JOIN foglalas ON foglalas.fizetesi_mod_id = fizetesimod.id GROUP BY nev";
+    public static final String SELECT_COUNT_HOUR_FROM_DATE_GROUP_BY_HOUR = "SELECT TO_CHAR(felszallas_datum,'HH24') AS ora, COUNT(*) AS darabszam FROM jarat GROUP BY TO_CHAR(felszallas_datum,'HH24') ORDER BY ora";
+
     public static final String INSERT_USER = "INSERT INTO FELHASZNALO (felh_nev, jelszo, isAdmin, email) values(?, ?, ?, ?)";
     public static final String INSERT_PLANE = "INSERT INTO REPULOGEP (nev, sebesseg, ferohely) values(?, ?, ?)";
     public static final String INSERT_HOTEL = "INSERT INTO SZALLODA (nev, csillagok_szama, varos_id) values(?, ?, ?)";
